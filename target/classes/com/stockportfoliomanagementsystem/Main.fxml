@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.MainController">
+   <children>
+      <Pane layoutX="209.0" layoutY="156.0" prefHeight="389.0" prefWidth="782.0" style="-fx-background-color: #ffffff;">
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" height="23.93" width="18.07" />
+         </effect>
+         <children>
+            <ImageView fitHeight="167.0" fitWidth="228.0" layoutX="61.0" layoutY="103.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@../../../../../Images/pngwing.com.png" />
+               </image>
+            </ImageView>
+            <Label contentDisplay="CENTER" layoutX="355.0" layoutY="50.0" prefHeight="53.0" prefWidth="134.0" text="Login">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <effect>
+                  <Blend />
+               </effect>
+            </Label>
+            <Group layoutX="340.0" layoutY="129.0">
+               <children>
+                  <JFXTextField fx:id="txtUserName" focusColor="GREEN" labelFloat="true" layoutX="15.0" prefHeight="25.0" prefWidth="364.0" promptText="Username" unFocusColor="BLACK">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXPasswordField fx:id="txtPwd" focusColor="GREEN" labelFloat="true" layoutX="15.0" layoutY="66.0" prefHeight="25.0" prefWidth="364.0" promptText="Password" unFocusColor="BLACK">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXPasswordField>
+                  <JFXButton fx:id="btnClear" buttonType="RAISED" layoutX="15.0" layoutY="159.0" onAction="#clearText" onMouseEntered="#changeColorClearEnter" onMouseExited="#changeColorClearExit" prefHeight="35.0" prefWidth="169.0" ripplerFill="WHITE" style="-fx-background-color: #aee8a5;" text="Clear">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btnLogin" buttonType="RAISED" defaultButton="true" layoutX="210.0" layoutY="159.0" onMouseClicked="#onLoginButton" onMouseEntered="#changeColorLoginEnter" onMouseExited="#changeColorLoginExit" prefHeight="35.0" prefWidth="169.0" ripplerFill="WHITE" style="-fx-background-color: #aee8a5;" text="Log in">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </Group>
+            <Label fx:id="lblWarning" layoutX="355.0" layoutY="243.0" prefHeight="27.0" prefWidth="364.0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label layoutX="207.0" layoutY="105.0" text="STOCK MANAGEMENT SYSTEM">
+         <font>
+            <Font name="Dubai Medium" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
