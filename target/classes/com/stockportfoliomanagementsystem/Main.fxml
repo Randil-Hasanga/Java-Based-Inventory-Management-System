@@ -23,7 +23,7 @@
          <children>
             <ImageView fitHeight="167.0" fitWidth="228.0" layoutX="61.0" layoutY="103.0" pickOnBounds="true" smooth="false">
                <image>
-                  <Image url="@../../../../../Images/pngwing.com.png" />
+                  <Image url="@../../../../../pngwing.com.png" />
                </image>
             </ImageView>
             <Label contentDisplay="CENTER" layoutX="355.0" layoutY="50.0" prefHeight="53.0" prefWidth="134.0" text="Login">

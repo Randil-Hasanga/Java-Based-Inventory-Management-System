@@ -47,7 +47,8 @@ public class MainController {
 
     @FXML
     void clearText(ActionEvent event) {
-
+        txtUserName.setText("");
+        txtPwd.setText("");
     }
 
     @FXML
