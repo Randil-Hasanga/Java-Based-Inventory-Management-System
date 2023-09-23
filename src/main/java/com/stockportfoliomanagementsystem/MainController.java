@@ -5,9 +5,14 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,6 +25,7 @@ public class MainController {
     Connection conn = MySqlCon.MysqlMethod();
     private String DBUsername;
     private String DBPwd;
+    private String position;
     private String username;
     private String password;
 
@@ -37,6 +43,11 @@ public class MainController {
 
     @FXML
     private Label lblWarning;
+
+    @FXML
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     @FXML
     public void initialize(){
@@ -60,9 +71,7 @@ public class MainController {
         if((username.isEmpty())&&(password.isEmpty())){
             lblWarning.setText("Please Fill All The Fields");
         }else{
-
-
-            String sql = "SELECT Password FROM Users WHERE Username = ?";
+            String sql = "SELECT Password, Position FROM Users WHERE Username = ?";
 
             try(PreparedStatement pstmt = conn.prepareStatement(sql)){
                 pstmt.setString(1,username);
@@ -70,6 +79,7 @@ public class MainController {
 
                 while(rs.next()){
                     DBPwd = rs.getString("Password");
+                    position = rs.getString("Position");
                 }
 
                 if((DBPwd!=null)&&(DBPwd.equals(password))){
@@ -81,6 +91,13 @@ public class MainController {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        }
+        if(position.equals("Manager")){
+            root = FXMLLoader.load(getClass().getResource("Admin.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         }
     }
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.AdminController">
+   <children>
+      <Pane layoutX="-2.0" layoutY="-7.0" prefHeight="715.0" prefWidth="276.0" style="-fx-background-color: #075E54;">
+         <children>
+            <JFXButton layoutX="8.0" layoutY="259.0" prefHeight="43.0" prefWidth="260.0" ripplerFill="WHITE" style="-fx-background-color: #25D366;" text="4" />
+            <JFXButton layoutX="8.0" layoutY="112.0" prefHeight="43.0" prefWidth="260.0" ripplerFill="WHITE" style="-fx-background-color: #25D366;" text="1" />
+            <JFXButton layoutX="8.0" layoutY="161.0" prefHeight="43.0" prefWidth="260.0" ripplerFill="WHITE" style="-fx-background-color: #25D366;" text="2" />
+            <JFXButton layoutX="8.0" layoutY="210.0" prefHeight="43.0" prefWidth="260.0" ripplerFill="WHITE" style="-fx-background-color: #25D366;" text="3" />
+            <FontAwesomeIconView layoutX="232.0" layoutY="696.0" size="30">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.11056286841630936" green="0.7236841917037964" blue="0.38646745681762695" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </FontAwesomeIconView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

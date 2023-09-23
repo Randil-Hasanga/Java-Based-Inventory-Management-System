@@ -6,6 +6,7 @@ module com.example.stockportfoliomanagementsystem {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires com.jfoenix;
+    requires de.jensd.fx.glyphs.fontawesome;
 
     opens com.stockportfoliomanagementsystem to javafx.fxml;
     exports com.stockportfoliomanagementsystem;

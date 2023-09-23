@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.AdminController">
+   <children>
+      <Pane layoutX="-2.0" layoutY="-7.0" prefHeight="715.0" prefWidth="276.0" style="-fx-background-color: #075E54;">
+         <children>
+            <JFXButton layoutX="8.0" layoutY="259.0" prefHeight="43.0" prefWidth="260.0" ripplerFill="WHITE" style="-fx-background-color: #25D366; -fx-background-radius: 7;" text="4" />
+            <JFXButton layoutX="8.0" layoutY="112.0" prefHeight="43.0" prefWidth="260.0" ripplerFill="WHITE" style="-fx-background-color: #25D366; -fx-background-radius: 7;" text="1" />
+            <JFXButton layoutX="8.0" layoutY="161.0" prefHeight="43.0" prefWidth="260.0" ripplerFill="WHITE" style="-fx-background-color: #25D366; -fx-background-radius: 7;" text="2" />
+            <JFXButton layoutX="8.0" layoutY="210.0" prefHeight="43.0" prefWidth="260.0" ripplerFill="WHITE" style="-fx-background-color: #25D366; -fx-background-radius: 7;" text="3" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
