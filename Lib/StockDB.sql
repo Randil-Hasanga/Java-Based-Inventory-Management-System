@@ -17,4 +17,4 @@ CREATE TABLE if not exists users
 INSERT INTO users
 (User_id, FName, Lname, NIC, Position, Contact)
 VALUES
-("U001","randil@gmail.con","randil@123", "John", "Dorie", "1234356V","Manager", "0711234567");
+("U001","randil@gmail.com","randil@123", "John", "Dorie", "1234356V","Manager", "0711234567");
