@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,16 +17,19 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.MainController">
    <children>
-      <Pane layoutX="209.0" layoutY="156.0" prefHeight="389.0" prefWidth="782.0" style="-fx-background-color: #ffffff;">
+      <ImageView fitHeight="700.0" fitWidth="1208.0" layoutX="-3.0" layoutY="1.0" pickOnBounds="true">
+         <image>
+            <Image url="@Images/861d8e76b8e796f40fb8d4b8e8cdba40.jpg" />
+         </image>
+         <effect>
+            <GaussianBlur radius="11.48" />
+         </effect>
+      </ImageView>
+      <Pane layoutX="345.0" layoutY="157.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="389.0" prefWidth="782.0" style="-fx-background-color: #ffffff; -fx-background-radius: 15;">
          <effect>
             <DropShadow blurType="ONE_PASS_BOX" height="23.93" width="18.07" />
          </effect>
          <children>
-            <ImageView fitHeight="167.0" fitWidth="228.0" layoutX="61.0" layoutY="103.0" pickOnBounds="true" smooth="false">
-               <image>
-                  <Image url="@../../../../../pngwing.com.png" />
-               </image>
-            </ImageView>
             <Label contentDisplay="CENTER" layoutX="355.0" layoutY="50.0" prefHeight="53.0" prefWidth="134.0" text="Login">
                <font>
                   <Font size="36.0" />
@@ -62,18 +66,23 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
+                  <Label fx:id="lblWarning" prefHeight="27.0" prefWidth="364.0" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
                </children>
             </Group>
-            <Label fx:id="lblWarning" layoutX="355.0" layoutY="243.0" prefHeight="27.0" prefWidth="364.0" textFill="RED">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
+            <ImageView fitHeight="241.0" fitWidth="296.0" layoutX="29.0" layoutY="57.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/logoFinal.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
-      <Label layoutX="207.0" layoutY="105.0" text="STOCK MANAGEMENT SYSTEM">
+      <Label layoutX="345.0" layoutY="112.0" text="INVENTORY MANAGEMENT SYSTEM">
          <font>
-            <Font name="Dubai Medium" size="24.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
       </Label>
    </children>
