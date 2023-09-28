@@ -1,0 +1,33 @@
+.anchorPane{
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #195e53);
+    -fx-pref-height: 660;
+    -fx-pref-width: 1200;
+}
+
+.container_{
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 15;
+}
+
+.gradientButton{
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #2db09e, #2db09e);
+    -fx-background-radius: 7;
+}
+
+.loginContainer{
+    -fx-background-color: rgba(255,255,255,0.7);
+    -fx-background-radius: 15;
+}
+
+/* Define the default button style */
+.default-button {
+    -fx-background-color: #aee8a5;
+    -fx-text-fill: black;
+}
+
+/* Define the hover (mouse entered) button style */
+.default-button:hover {
+    -fx-background-color: #03c62a;
+    -fx-text-fill: white;
+}
+

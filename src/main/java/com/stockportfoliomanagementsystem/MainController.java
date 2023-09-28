@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -95,29 +94,34 @@ public class MainController {
         if(position.equals("Manager")){
             root = FXMLLoader.load(getClass().getResource("Admin.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1200);
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }
     }
 
-    public void changeColorLoginEnter(MouseEvent event) throws IOException{
-        btnLogin.setStyle("-fx-background-color: #03c62a;");
-        btnLogin.setTextFill(Color.WHITE);
-    }
+//    public void changeColorLoginEnter(MouseEvent event) throws IOException{
+//        btnLogin.setStyle("-fx-background-color: #03c62a;");
+//        btnLogin.setTextFill(Color.WHITE);
+//    }
+//
+//    public void changeColorLoginExit(MouseEvent event) throws IOException{
+//        btnLogin.setStyle("-fx-background-color: #aee8a5;");
+//        btnLogin.setTextFill(Color.BLACK);
+//    }
+//
+//    public void changeColorClearEnter(MouseEvent event) throws IOException{
+//        btnClear.setStyle("-fx-background-color: #03c62a;");
+//        btnClear.setTextFill(Color.WHITE);
+//    }
+//
+//    public void changeColorClearExit(MouseEvent event) throws IOException{
+//        btnClear.setStyle("-fx-background-color: #aee8a5;");
+//        btnClear.setTextFill(Color.BLACK);
+//    }
 
-    public void changeColorLoginExit(MouseEvent event) throws IOException{
-        btnLogin.setStyle("-fx-background-color: #aee8a5;");
-        btnLogin.setTextFill(Color.BLACK);
-    }
 
-    public void changeColorClearEnter(MouseEvent event) throws IOException{
-        btnClear.setStyle("-fx-background-color: #03c62a;");
-        btnClear.setTextFill(Color.WHITE);
-    }
 
-    public void changeColorClearExit(MouseEvent event) throws IOException{
-        btnClear.setStyle("-fx-background-color: #aee8a5;");
-        btnClear.setTextFill(Color.BLACK);
-    }
 }

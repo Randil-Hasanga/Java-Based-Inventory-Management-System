@@ -7,7 +7,6 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,18 +16,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.MainController">
    <children>
-      <ImageView fitHeight="700.0" fitWidth="1208.0" layoutX="-3.0" layoutY="1.0" pickOnBounds="true">
+      <ImageView fitHeight="742.0" fitWidth="1234.0" layoutX="-18.0" layoutY="-24.0" pickOnBounds="true">
          <image>
-            <Image url="@Images/861d8e76b8e796f40fb8d4b8e8cdba40.jpg" />
+            <Image url="@Images/20bd1d2760182382257fc4494595b8c1.jpg" />
          </image>
          <effect>
-            <GaussianBlur radius="11.48" />
+            <GaussianBlur radius="6.29" />
          </effect>
       </ImageView>
-      <Pane layoutX="345.0" layoutY="157.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="389.0" prefWidth="782.0" style="-fx-background-color: #ffffff; -fx-background-radius: 15;">
-         <effect>
-            <DropShadow blurType="ONE_PASS_BOX" height="23.93" width="18.07" />
-         </effect>
+      <Pane layoutX="345.0" layoutY="157.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="389.0" prefWidth="782.0" styleClass="loginContainer" stylesheets="@CSS/styles.css">
          <children>
             <Label contentDisplay="CENTER" layoutX="355.0" layoutY="50.0" prefHeight="53.0" prefWidth="134.0" text="Login">
                <font>
@@ -50,7 +46,7 @@
                         <Font size="14.0" />
                      </font>
                   </JFXPasswordField>
-                  <JFXButton fx:id="btnClear" buttonType="RAISED" layoutX="15.0" layoutY="159.0" onAction="#clearText" onMouseEntered="#changeColorClearEnter" onMouseExited="#changeColorClearExit" prefHeight="35.0" prefWidth="169.0" ripplerFill="WHITE" style="-fx-background-color: #aee8a5;" text="Clear">
+                  <JFXButton fx:id="btnClear" buttonType="RAISED" layoutX="15.0" layoutY="159.0" onAction="#clearText" prefHeight="35.0" prefWidth="169.0" ripplerFill="WHITE" styleClass="default-button" stylesheets="@CSS/styles.css" text="Clear">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -58,7 +54,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <JFXButton fx:id="btnLogin" buttonType="RAISED" defaultButton="true" layoutX="210.0" layoutY="159.0" onMouseClicked="#onLoginButton" onMouseEntered="#changeColorLoginEnter" onMouseExited="#changeColorLoginExit" prefHeight="35.0" prefWidth="169.0" ripplerFill="WHITE" style="-fx-background-color: #aee8a5;" text="Log in">
+                  <JFXButton fx:id="btnLogin" buttonType="RAISED" defaultButton="true" layoutX="210.0" layoutY="159.0" onMouseClicked="#onLoginButton" prefHeight="35.0" prefWidth="169.0" ripplerFill="WHITE" styleClass="default-button" stylesheets="@CSS/styles.css" text="Log in">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -73,9 +69,9 @@
                   </Label>
                </children>
             </Group>
-            <ImageView fitHeight="241.0" fitWidth="296.0" layoutX="29.0" layoutY="57.0" pickOnBounds="true">
+            <ImageView fitHeight="213.0" fitWidth="247.0" layoutX="56.0" layoutY="77.0" pickOnBounds="true">
                <image>
-                  <Image url="@Images/logoFinal.png" />
+                  <Image url="@Images/logoFinal2.png" />
                </image>
             </ImageView>
          </children>
