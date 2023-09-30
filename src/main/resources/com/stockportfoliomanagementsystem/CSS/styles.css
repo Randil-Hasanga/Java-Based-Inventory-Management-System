@@ -20,14 +20,140 @@
 }
 
 /* Define the default button style */
-.default-button {
+.login-button {
     -fx-background-color: #aee8a5;
     -fx-text-fill: black;
 }
 
 /* Define the hover (mouse entered) button style */
-.default-button:hover {
-    -fx-background-color: #03c62a;
+.login-button:hover {
+    /*-fx-background-color: #03c62a;*/
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #195e53);
     -fx-text-fill: white;
 }
+
+.line-color{
+    -fx-background-color: #283836;
+}
+
+
+.button-transparent {
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 15;
+    -fx-text-fill: black;
+}
+
+/* Define the hover (mouse entered) button style */
+.button-transparent:hover {
+    -fx-background-color: rgba(26, 206, 143, 0.71);
+    -fx-background-radius: 15;
+    -fx-text-fill: white;
+}
+
+.svgIcons{
+    -fx-pref-width: 1.333em;
+    -fx-pref-height: 1.333em;
+}
+
+.default-color0.chart-pie {
+    -fx-pie-color: #2db09e;
+}
+
+.default-color1.chart-pie {
+    -fx-pie-color: #aee8a5;
+}
+
+.default-color2.chart-pie {
+    -fx-pie-color: #03c62a;
+}
+
+.default-color3.chart-pie {
+    -fx-pie-color: #158675;
+}
+
+.default-color4.chart-pie {
+    -fx-pie-color: #195e53;
+}
+
+.default-color5.chart-pie {
+    -fx-pie-color: #283836;
+}
+
+.default-color6.chart-pie {
+    -fx-pie-color: #71e75d;
+}
+
+.chart-pie-label-line {
+    -fx-stroke: #000000;
+}
+
+.chart-pie-label {
+    -fx-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+.default-color0.chart-bar {
+    -fx-bar-fill: #2db09e;
+}
+
+/* Line chart */
+
+.default-color0.chart-series-line {
+    -fx-stroke: #2db09e;
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: #17500d;
+}
+
+.default-color2.chart-series-line {
+    -fx-stroke: #03c62a;
+}
+
+/*Legend color in line chart*/
+
+.default-color0.chart-legend-item-symbol {
+    -fx-background-color: #2db09e;
+}
+
+.default-color1.chart-legend-item-symbol {
+    -fx-background-color: #17500d;
+}
+
+.default-color2.chart-legend-item-symbol {
+    -fx-background-color: #03c62a;
+}
+
+.axis-label {
+    -fx-text-fill: #000000;
+}
+
+/* Change the barchart title font */
+
+.chart-title {
+    -fx-font-family: Calibri;
+    -fx-font-weight: bold;
+}
+
+/* Change the line chart axis labels */
+
+.axis{
+    -fx-fill: #000000;
+    -fx-tick-label-fill: #000000;
+}
+
+.shadow{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10.0,0.0,0.0,10.0);
+}
+
+.selected-button {
+    -fx-background-color: transparent;
+}
+
+.selected-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+/*Need to set chart legend background transparent*/
 

@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
@@ -24,9 +25,9 @@
             <GaussianBlur radius="6.29" />
          </effect>
       </ImageView>
-      <Pane layoutX="345.0" layoutY="157.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="389.0" prefWidth="782.0" styleClass="loginContainer" stylesheets="@CSS/styles.css">
+      <Pane layoutX="345.0" layoutY="157.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="389.0" prefWidth="782.0" stylesheets="@CSS/styles.css">
          <children>
-            <Label contentDisplay="CENTER" layoutX="355.0" layoutY="50.0" prefHeight="53.0" prefWidth="134.0" text="Login">
+            <Label contentDisplay="CENTER" layoutX="355.0" layoutY="50.0" prefHeight="53.0" prefWidth="134.0" styleClass="shadow" stylesheets="@CSS/styles.css" text="Login">
                <font>
                   <Font size="36.0" />
                </font>
@@ -36,17 +37,17 @@
             </Label>
             <Group layoutX="340.0" layoutY="129.0">
                <children>
-                  <JFXTextField fx:id="txtUserName" focusColor="GREEN" labelFloat="true" layoutX="15.0" prefHeight="25.0" prefWidth="364.0" promptText="Username" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtUserName" focusColor="GREEN" labelFloat="true" layoutX="15.0" prefHeight="25.0" prefWidth="364.0" promptText="Username" styleClass="shadow" stylesheets="@CSS/styles.css" unFocusColor="BLACK">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXPasswordField fx:id="txtPwd" focusColor="GREEN" labelFloat="true" layoutX="15.0" layoutY="66.0" prefHeight="25.0" prefWidth="364.0" promptText="Password" unFocusColor="BLACK">
+                  <JFXPasswordField fx:id="txtPwd" focusColor="GREEN" labelFloat="true" layoutX="15.0" layoutY="66.0" prefHeight="25.0" prefWidth="364.0" promptText="Password" styleClass="shadow" stylesheets="@CSS/styles.css" unFocusColor="BLACK">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </JFXPasswordField>
-                  <JFXButton fx:id="btnClear" buttonType="RAISED" layoutX="15.0" layoutY="159.0" onAction="#clearText" prefHeight="35.0" prefWidth="169.0" ripplerFill="WHITE" styleClass="default-button" stylesheets="@CSS/styles.css" text="Clear">
+                  <JFXButton fx:id="btnClear" buttonType="RAISED" layoutX="15.0" layoutY="159.0" onAction="#clearText" prefHeight="35.0" prefWidth="169.0" ripplerFill="WHITE" styleClass="login-button" stylesheets="@CSS/styles.css" text="Clear">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -54,7 +55,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <JFXButton fx:id="btnLogin" buttonType="RAISED" defaultButton="true" layoutX="210.0" layoutY="159.0" onMouseClicked="#onLoginButton" prefHeight="35.0" prefWidth="169.0" ripplerFill="WHITE" styleClass="default-button" stylesheets="@CSS/styles.css" text="Log in">
+                  <JFXButton fx:id="btnLogin" buttonType="RAISED" defaultButton="true" layoutX="210.0" layoutY="159.0" onMouseClicked="#onLoginButton" prefHeight="35.0" prefWidth="169.0" ripplerFill="WHITE" styleClass="login-button" stylesheets="@CSS/styles.css" text="Log in">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -62,21 +63,25 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <Label fx:id="lblWarning" layoutX="15.0" layoutY="107.0" prefHeight="27.0" prefWidth="364.0" textFill="RED">
+                  <Label fx:id="lblWarning" layoutX="15.0" layoutY="107.0" prefHeight="27.0" prefWidth="364.0" styleClass="shadow" stylesheets="@CSS/styles.css" textFill="RED">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
             </Group>
-            <ImageView fitHeight="213.0" fitWidth="247.0" layoutX="56.0" layoutY="77.0" pickOnBounds="true">
+            <ImageView fitHeight="213.0" fitWidth="247.0" layoutX="56.0" layoutY="77.0" pickOnBounds="true" styleClass="shadow">
                <image>
                   <Image url="@Images/logoFinal2.png" />
                </image>
             </ImageView>
          </children>
+         <styleClass>
+            <String fx:value="loginContainer" />
+            <String fx:value="shadow" />
+         </styleClass>
       </Pane>
-      <Label layoutX="345.0" layoutY="112.0" text="INVENTORY MANAGEMENT SYSTEM">
+      <Label layoutX="345.0" layoutY="112.0" styleClass="shadow" stylesheets="@CSS/styles.css" text="INVENTORY MANAGEMENT SYSTEM">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

@@ -10,4 +10,6 @@ module com.example.stockportfoliomanagementsystem {
 
     opens com.stockportfoliomanagementsystem to javafx.fxml;
     exports com.stockportfoliomanagementsystem;
+    exports com.stockportfoliomanagementsystem.PortfolioManager;
+    opens com.stockportfoliomanagementsystem.PortfolioManager to javafx.fxml;
 }
