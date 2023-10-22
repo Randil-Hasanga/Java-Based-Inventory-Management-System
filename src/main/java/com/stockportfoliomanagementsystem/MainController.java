@@ -27,6 +27,8 @@ public class MainController {
     private String position;
     private String username;
     private String password;
+    private static String Fname;
+    private static String Lname;
 
     @FXML
     private JFXButton btnClear;
@@ -48,12 +50,25 @@ public class MainController {
     private Scene scene;
     private Parent root;
 
-    @FXML
-    public void initialize(){
-        if(btnClear.isFocused()){
-            btnClear.setStyle("-fx-background-color: #03c62a;");
-        }
+    public void setFname(String Fname){
+        this.Fname = Fname;
     }
+    public static String getFname(){
+        return Fname;
+    }
+    public void setLname(String Lname){
+        this.Lname = Lname;
+    }
+    public static String getLname(){
+        return Lname;
+    }
+
+//    @FXML
+//    public void initialize(){
+//        if(btnClear.isFocused()){
+//            btnClear.setStyle("-fx-background-color: #03c62a;");
+//        }
+//    }
 
     @FXML
     void clearText(ActionEvent event) {
@@ -70,7 +85,7 @@ public class MainController {
         if((username.isEmpty())&&(password.isEmpty())){
             lblWarning.setText("Please Fill All The Fields");
         }else{
-            String sql = "SELECT Password, Position FROM Users WHERE Username = ?";
+            String sql = "SELECT Password, Position, Fname, Lname FROM Users WHERE Username = ?";
 
             try(PreparedStatement pstmt = conn.prepareStatement(sql)){
                 pstmt.setString(1,username);
@@ -79,7 +94,13 @@ public class MainController {
                 while(rs.next()){
                     DBPwd = rs.getString("Password");
                     position = rs.getString("Position");
+                    Fname = rs.getString("Fname");
+                    Lname = rs.getString("Lname");
                 }
+                System.out.println(Fname+" "+Lname);
+                MainController mainController = new MainController();
+                mainController.setFname(Fname);
+                mainController.setLname(Lname);
 
                 if((DBPwd!=null)&&(DBPwd.equals(password))){
                     lblWarning.setText("Password correct");
@@ -91,7 +112,7 @@ public class MainController {
                 throw new RuntimeException(e);
             }
         }
-        if(position.equals("Manager")){
+        if(position.equals("Portfolio Manager")){
             root = FXMLLoader.load(getClass().getResource("PortfolioManagerDashboard.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setHeight(700);
@@ -100,10 +121,33 @@ public class MainController {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
+        }else if(position.equals("HR Manager")) {
+            root = FXMLLoader.load(getClass().getResource("HRManagerDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        }else if(position.equals("Accounting Manager")) {
+            root = FXMLLoader.load(getClass().getResource("AccountingManagerDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        }else if(position.equals("Stock keeper")) {
+            root = FXMLLoader.load(getClass().getResource("StockKeeperDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
         }
     }
-
-
-
-
 }

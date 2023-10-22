@@ -1,20 +1,32 @@
 package com.stockportfoliomanagementsystem.PortfolioManager;
 
+import com.stockportfoliomanagementsystem.MainController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PortfolioManagerController implements Initializable{
 
+    MainController mainController = new MainController();
+    String Fname = mainController.getFname();
+    String Lname = mainController.getLname();
     @FXML
     private FontAwesomeIconView IconSignOut;
 
@@ -25,13 +37,36 @@ public class PortfolioManagerController implements Initializable{
     private PieChart pieChart;
 
     @FXML
+    private Label txtName;
+
+    @FXML
     private SVGPath svgIco;
 
     @FXML
     private VBox legendContainer;
 
+    @FXML
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    @FXML
+    public void manageUsers(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/ManageUsers.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println(Fname+" PM "+Lname);
+        txtName.setText(Fname+" "+Lname);
+
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Pens", 1200),
