@@ -139,9 +139,9 @@
                 <JFXButton layoutX="31.0" layoutY="14.0" styleClass="shadow" stylesheets="@CSS/styles.css" text="Edit Profile" textFill="#94ffeb" />
             </children>
         </Pane>
-      <Pane layoutX="293.0" layoutY="117.0" prefHeight="295.0" prefWidth="892.0" styleClass="table_pane" stylesheets="@CSS/styles.css">
+      <Pane layoutX="293.0" layoutY="129.0" prefHeight="428.0" prefWidth="892.0" styleClass="table_pane" stylesheets="@CSS/styles.css">
          <children>
-            <TableView fx:id="tblUsers" layoutX="12.0" prefHeight="295.0" prefWidth="867.0" styleClass="table_properties" stylesheets="@CSS/styles.css">
+            <TableView fx:id="tblUsers" layoutX="12.0" prefHeight="372.0" prefWidth="867.0" styleClass="table_properties" stylesheets="@CSS/styles.css">
               <columns>
                 <TableColumn prefWidth="75.0" text="User ID" />
                 <TableColumn prefWidth="157.0" text="Username" />
@@ -154,10 +154,31 @@
             </TableView>
          </children>
       </Pane>
-      <Button fx:id="btnDelete" layoutX="1062.0" layoutY="423.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" stylesheets="@CSS/styles.css" text="Delete">
+      <Button fx:id="btnDelete" layoutX="1051.0" layoutY="510.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" stylesheets="@CSS/styles.css" text="Delete">
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="red-button" />
+         </styleClass>
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button layoutX="924.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#onAddBtnClick" prefHeight="25.0" prefWidth="121.0" stylesheets="@CSS/styles.css" text="Add">
          <styleClass>
             <String fx:value="login-button" />
             <String fx:value="shadow" />
-         </styleClass></Button>
+         </styleClass>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="797.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#onRefresh" prefHeight="25.0" prefWidth="121.0" stylesheets="@CSS/styles.css" text="Refresh">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="yellow-button" />
+         </styleClass>
+      </Button>
     </children>
 </AnchorPane>

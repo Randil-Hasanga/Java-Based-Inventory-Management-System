@@ -46,7 +46,7 @@ public class ManageUsersCtrl implements Initializable {
         tblUsers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
-    private void loadFromDB() {
+    public void loadFromDB() {
         ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblUsers.getColumns();
         columns.clear();
 
@@ -112,6 +112,22 @@ public class ManageUsersCtrl implements Initializable {
     }
 
     @FXML
+    void onRefresh(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/ManageUsers.fxml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
     void onBackButton(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManagerDashboard.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -123,5 +139,28 @@ public class ManageUsersCtrl implements Initializable {
         stage.show();
     }
 
+    @FXML
+    void onAddBtnClick(MouseEvent event) {
+        try {
+            // Load the FXML file for the new window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/AddUser.fxml"));
+            Parent root = loader.load();
+
+            // Create a new stage
+            Stage addItemStage = new Stage();
+
+            // Set the FXML content as the scene for the new stage
+            Scene scene = new Scene(root);
+            addItemStage.setScene(scene);
+
+            // Set the title for the new stage
+            addItemStage.setTitle("Add New User");
+
+            // Show the new stage
+            addItemStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

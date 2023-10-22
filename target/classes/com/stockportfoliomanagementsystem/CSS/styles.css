@@ -170,3 +170,23 @@
     -fx-background-radius: 10;
     -fx-background-color: white;
 }
+
+.anchorPane_newWindow{
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #195e53);
+    -fx-pref-height: 620;
+    -fx-pref-width: 850;
+}
+
+.font_calibi{
+    -fx-font-family: Calibri;
+}
+
+.red-button {
+    -fx-background-color: #d05252;
+    -fx-text-fill: #000000;
+}
+
+.yellow-button {
+    -fx-background-color: #e5e565;
+    -fx-text-fill: #000000;
+}
