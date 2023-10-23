@@ -141,23 +141,47 @@ public class ManageUsersCtrl implements Initializable {
 
     @FXML
     void onAddBtnClick(MouseEvent event) {
+//        try {
+//            // Load the FXML file for the new window
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/AddUser.fxml"));
+//            Parent root = loader.load();
+//
+//            // Create a new stage
+//            Stage addItemStage = new Stage();
+//
+//            // Set the FXML content as the scene for the new stage
+//            Scene scene = new Scene(root);
+//            addItemStage.setScene(scene);
+//
+//            // Set the title for the new stage
+//            addItemStage.setTitle("Add New User");
+//
+//            // Show the new stage
+//            addItemStage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
         try {
             // Load the FXML file for the new window
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/AddUser.fxml"));
             Parent root = loader.load();
 
             // Create a new stage
-            Stage addItemStage = new Stage();
+            Stage newStage = new Stage();
 
             // Set the FXML content as the scene for the new stage
             Scene scene = new Scene(root);
-            addItemStage.setScene(scene);
-
-            // Set the title for the new stage
-            addItemStage.setTitle("Add New User");
+            newStage.setScene(scene);
+            newStage.setResizable(false);
 
             // Show the new stage
-            addItemStage.show();
+            newStage.show();
+
+            // close current stage
+            Node source = (Node) event.getSource();
+            Stage currentStage = (Stage) source.getScene().getWindow();
+            currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

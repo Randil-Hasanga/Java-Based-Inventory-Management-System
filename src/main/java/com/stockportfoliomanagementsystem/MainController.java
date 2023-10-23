@@ -22,7 +22,7 @@ import java.sql.SQLException;
 public class MainController {
 
     Connection conn = MySqlCon.MysqlMethod();
-    private String DBUsername;
+    private static String DBUsername;
     private String DBPwd;
     private String position;
     private String username;
@@ -49,6 +49,7 @@ public class MainController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private static String DBPw;
 
     public void setFname(String Fname){
         this.Fname = Fname;
@@ -63,12 +64,19 @@ public class MainController {
         return Lname;
     }
 
-//    @FXML
-//    public void initialize(){
-//        if(btnClear.isFocused()){
-//            btnClear.setStyle("-fx-background-color: #03c62a;");
-//        }
-//    }
+    public void setPwd(String pwd){
+        this.DBPw = pwd;
+    }
+    public static String getPwd(){
+        return DBPw;
+    }
+    public void setUsername(String username){
+        this.DBUsername = username;
+    }
+    public static String getUsername(){
+        return DBUsername;
+    }
+
 
     @FXML
     void clearText(ActionEvent event) {
@@ -104,6 +112,8 @@ public class MainController {
 
                 if((DBPwd!=null)&&(DBPwd.equals(password))){
                     lblWarning.setText("Password correct");
+                    mainController.setPwd(DBPwd);
+                    mainController.setUsername(username);
                 }else{
                     lblWarning.setText("Incorrect Username or Password");
                 }

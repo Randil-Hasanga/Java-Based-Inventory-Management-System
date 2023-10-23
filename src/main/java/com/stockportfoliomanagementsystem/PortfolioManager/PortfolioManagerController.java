@@ -1,6 +1,7 @@
 package com.stockportfoliomanagementsystem.PortfolioManager;
 
 import com.stockportfoliomanagementsystem.MainController;
+import com.stockportfoliomanagementsystem.MySqlCon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,20 +14,32 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class PortfolioManagerController implements Initializable{
 
+    Connection conn = MySqlCon.MysqlMethod();
     MainController mainController = new MainController();
     String Fname = mainController.getFname();
     String Lname = mainController.getLname();
+    String username = mainController.getUsername();
+    String password = mainController.getPwd();
+
+    byte[] image = new byte[1024];
     @FXML
     private FontAwesomeIconView IconSignOut;
 
@@ -51,6 +64,13 @@ public class PortfolioManagerController implements Initializable{
     private Parent root;
 
     @FXML
+    private ImageView imageView;
+
+    @FXML
+    private Image image1;
+
+
+    @FXML
     public void manageUsers(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/ManageUsers.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -62,11 +82,79 @@ public class PortfolioManagerController implements Initializable{
         stage.show();
     }
 
+    @FXML
+    void onEditProfile(MouseEvent event) throws IOException {
+        try {
+            // Load the FXML file for the new window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/EditProfilePM.fxml"));
+            Parent root = loader.load();
+
+            // Create a new stage
+            Stage newStage = new Stage();
+
+            // Set the FXML content as the scene for the new stage
+            Scene scene = new Scene(root);
+            newStage.setScene(scene);
+            newStage.setResizable(false);
+            // Show the new stage
+            newStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //Profile picture
+        String sql = "SELECT Pic FROM Users WHERE Username = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                InputStream is = rs.getBinaryStream("Pic");
+
+                // Read the image data and save it to a file
+                OutputStream os = new FileOutputStream(new File("photo.jpg"));
+                byte[] content = new byte[1024];
+                int size = 0;
+
+                while ((size = is.read(content)) != -1) {
+                    os.write(content, 0, size);
+                }
+                os.close();
+                is.close();
+
+                // Create a circular mask for the ImageView
+                Circle clip = new Circle(imageView.getFitWidth() / 2, imageView.getFitHeight() / 2, imageView.getFitWidth() / 2);
+                imageView.setClip(clip);
+
+                // Load the image and set it to the ImageView
+                imageView.setImage(new Image("file:photo.jpg"));
+                imageView.setPreserveRatio(true);
+
+                // Set the dimensions of the ImageView
+                imageView.setFitWidth(50);
+                imageView.setFitHeight(50);
+
+                // Set a border and make the image circular
+                imageView.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: white;");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException f) {
+            throw new RuntimeException(f);
+        } catch (IOException g) {
+            throw new RuntimeException(g);
+        }
         System.out.println(Fname+" PM "+Lname);
         txtName.setText(Fname+" "+Lname);
 
+//pie chart
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Pens", 1200),
