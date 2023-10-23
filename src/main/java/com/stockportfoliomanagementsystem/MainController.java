@@ -124,7 +124,7 @@ public class MainController {
         }
 
         if(position.equals("Portfolio Manager")){
-            root = FXMLLoader.load(getClass().getResource("PortfolioManagerDashboard.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/PortfolioManagerDashboard.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setHeight(700);
             stage.setWidth(1210);
