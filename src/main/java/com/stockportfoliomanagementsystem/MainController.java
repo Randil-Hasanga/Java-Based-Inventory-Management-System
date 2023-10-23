@@ -91,8 +91,13 @@ public class MainController {
                 throw new RuntimeException(e);
             }
         }
+<<<<<<< Updated upstream
         if(position.equals("Manager")){
             root = FXMLLoader.load(getClass().getResource("PortfolioManagerDashboard.fxml"));
+=======
+        if(position.equals("Portfolio Manager")){
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/PortfolioManagerDashboard.fxml"));
+>>>>>>> Stashed changes
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setHeight(700);
             stage.setWidth(1210);
@@ -100,6 +105,36 @@ public class MainController {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
+<<<<<<< Updated upstream
+=======
+        }else if(position.equals("HR Manager")) {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/HRManagerDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        }else if(position.equals("Accounting Manager")) {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/AccountingManager/AccountingManagerDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        }else if(position.equals("Stock keeper")) {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+>>>>>>> Stashed changes
         }
     }
 

@@ -30,8 +30,151 @@ public class PortfolioManagerController implements Initializable{
     @FXML
     private VBox legendContainer;
 
+<<<<<<< Updated upstream
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+=======
+    @FXML
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    @FXML
+    private ImageView imageView;
+
+    @FXML
+    private Image image1;
+    private double total;
+
+    @FXML
+    private Label lblAVG;
+
+
+    @FXML
+    public void manageUsers(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/ManageUsers.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void onEditProfile(MouseEvent event) throws IOException {
+        try {
+            // Load the FXML file for the new window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/EditProfilePM.fxml"));
+            Parent root = loader.load();
+
+            // Create a new stage
+            Stage newStage = new Stage();
+
+            // Set the FXML content as the scene for the new stage
+            Scene scene = new Scene(root);
+            newStage.setScene(scene);
+            newStage.setResizable(false);
+            // Show the new stage
+            newStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void onStockButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewStock.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void onSupplierButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewSuppliers.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        String totalSQL = "SELECT SUM(Total) AS TotalStock FROM stock";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(totalSQL);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                total = rs.getDouble("TotalStock");
+            }
+            System.out.println(total);
+            lblAVG.setText("LKR "+total);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        //Profile picture
+        String sql = "SELECT Pic FROM Users WHERE Username = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                InputStream is = rs.getBinaryStream("Pic");
+
+                // Read the image data and save it to a file
+                OutputStream os = new FileOutputStream(new File("photo.jpg"));
+                byte[] content = new byte[1024];
+                int size = 0;
+
+                while ((size = is.read(content)) != -1) {
+                    os.write(content, 0, size);
+                }
+                os.close();
+                is.close();
+
+                // Create a circular mask for the ImageView
+                Circle clip = new Circle(imageView.getFitWidth() / 2, imageView.getFitHeight() / 2, imageView.getFitWidth() / 2);
+                imageView.setClip(clip);
+
+                // Load the image and set it to the ImageView
+                imageView.setImage(new Image("file:photo.jpg"));
+                imageView.setPreserveRatio(true);
+
+                // Set the dimensions of the ImageView
+                imageView.setFitWidth(50);
+                imageView.setFitHeight(50);
+
+                // Set a border and make the image circular
+                imageView.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: white;");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException f) {
+            throw new RuntimeException(f);
+        } catch (IOException g) {
+            throw new RuntimeException(g);
+        }
+        System.out.println(Fname+" PM "+Lname);
+        txtName.setText(Fname+" "+Lname);
+
+//pie chart
+>>>>>>> Stashed changes
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Pens", 1200),
