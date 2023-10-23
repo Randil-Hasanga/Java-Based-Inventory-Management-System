@@ -122,6 +122,7 @@ public class MainController {
                 throw new RuntimeException(e);
             }
         }
+
         if(position.equals("Portfolio Manager")){
             root = FXMLLoader.load(getClass().getResource("PortfolioManagerDashboard.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();

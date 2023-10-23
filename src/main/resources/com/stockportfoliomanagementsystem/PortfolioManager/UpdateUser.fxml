@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="900.0" styleClass="anchorPane_newWindow" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="138.0" layoutY="35.0" prefHeight="3.0" prefWidth="730.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
+      <Label layoutX="29.0" layoutY="19.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Add User" textFill="#94ffeb">
+         <font>
+            <Font name="Calibri" size="24.0" />
+         </font>
+      </Label>
+      <Pane layoutX="146.0" layoutY="68.0" prefHeight="434.0" prefWidth="609.0" styleClass="container_" stylesheets="@../CSS/styles.css">
+         <children>
+            <Label layoutX="15.0" layoutY="10.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="User ID" textAlignment="RIGHT">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Label>
+            <TextField layoutX="188.0" layoutY="10.0" prefHeight="37.0" prefWidth="407.0" />
+            <Label layoutX="15.0" layoutY="63.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="Username" textAlignment="RIGHT">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Label>
+            <TextField layoutX="188.0" layoutY="63.0" prefHeight="37.0" prefWidth="407.0" />
+            <Label layoutX="15.0" layoutY="117.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="Password" textAlignment="RIGHT">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="171.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="First Name" textAlignment="RIGHT">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Label>
+            <TextField layoutX="188.0" layoutY="171.0" prefHeight="37.0" prefWidth="407.0" />
+            <Label layoutX="15.0" layoutY="227.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="Last Name" textAlignment="RIGHT">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Label>
+            <TextField layoutX="188.0" layoutY="227.0" prefHeight="37.0" prefWidth="407.0" />
+            <Label layoutX="15.0" layoutY="280.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="NIC" textAlignment="RIGHT">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Label>
+            <TextField layoutX="188.0" layoutY="280.0" prefHeight="37.0" prefWidth="407.0" />
+            <Label layoutX="15.0" layoutY="334.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="Position" textAlignment="RIGHT">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="388.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="Contact number" textAlignment="RIGHT">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Label>
+            <TextField layoutX="188.0" layoutY="388.0" prefHeight="37.0" prefWidth="407.0" />
+            <PasswordField layoutX="188.0" layoutY="117.0" prefHeight="37.0" prefWidth="407.0" />
+            <ComboBox fx:id="dropPosition" layoutX="188.0" layoutY="334.0" onAction="#onPositionSelection" prefHeight="37.0" prefWidth="160.0" promptText="Choose Position" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

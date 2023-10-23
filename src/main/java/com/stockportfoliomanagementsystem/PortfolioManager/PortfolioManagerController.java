@@ -68,11 +68,15 @@ public class PortfolioManagerController implements Initializable{
 
     @FXML
     private Image image1;
+    private double total;
+
+    @FXML
+    private Label lblAVG;
 
 
     @FXML
     public void manageUsers(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/ManageUsers.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/ManageUsers.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);
@@ -86,7 +90,7 @@ public class PortfolioManagerController implements Initializable{
     void onEditProfile(MouseEvent event) throws IOException {
         try {
             // Load the FXML file for the new window
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/EditProfilePM.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/EditProfilePM.fxml"));
             Parent root = loader.load();
 
             // Create a new stage
@@ -104,8 +108,47 @@ public class PortfolioManagerController implements Initializable{
         }
     }
 
+    @FXML
+    void onStockButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewStock.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void onSupplierButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewSuppliers.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        String totalSQL = "SELECT SUM(Total) AS TotalStock FROM stock";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(totalSQL);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                total = rs.getDouble("TotalStock");
+            }
+            System.out.println(total);
+            lblAVG.setText("LKR "+total);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         //Profile picture
         String sql = "SELECT Pic FROM Users WHERE Username = ?";
@@ -228,8 +271,6 @@ public class PortfolioManagerController implements Initializable{
         lineChart.getData().addAll(new LineChart.Series("Inventory at\nBeginning of the month", lineChartData));
         lineChart.getData().addAll(new LineChart.Series("Sales at \nEnd of the month", lineChartData1));
         lineChart.getData().addAll(new LineChart.Series("Profit or Loss", lineChartData2));
-
-
 
     }
 

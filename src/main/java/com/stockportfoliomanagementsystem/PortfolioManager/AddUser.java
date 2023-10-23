@@ -129,7 +129,7 @@ public class AddUser implements Initializable {
     }
     @FXML
     void onBackButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/ManageUsers.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/ManageUsers.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);

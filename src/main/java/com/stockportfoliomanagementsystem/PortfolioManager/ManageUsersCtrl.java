@@ -114,7 +114,8 @@ public class ManageUsersCtrl implements Initializable {
     @FXML
     void onRefresh(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/ManageUsers.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/ManageUsers.fxml"));
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -129,7 +130,7 @@ public class ManageUsersCtrl implements Initializable {
 
     @FXML
     void onBackButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManagerDashboard.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/PortfolioManagerDashboard.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);
@@ -164,7 +165,8 @@ public class ManageUsersCtrl implements Initializable {
 
         try {
             // Load the FXML file for the new window
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/AddUser.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/AddUser.fxml"));
             Parent root = loader.load();
 
             // Create a new stage
@@ -186,5 +188,15 @@ public class ManageUsersCtrl implements Initializable {
             e.printStackTrace();
         }
     }
-
+    @FXML
+    void onStockButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewStock.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
 }

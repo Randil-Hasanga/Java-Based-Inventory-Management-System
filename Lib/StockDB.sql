@@ -18,6 +18,7 @@ CREATE TABLE if not exists users
 INSERT INTO users
 (User_id, Username, Password, FName, Lname, NIC, Position, Contact, Pic)
 VALUES
+
 ("U001","randil@gmail.com","randil@123", "John", "Dorie", "1234356V","Portfolio Manager", "0711234567", null),
 ("U002","vinod@gmail.com","vinod@123", "Vinod", "Kavinda", "1234356V","HR Manager", "0711254347",null),
 ("U003","dinuka@gmail.com","dinuka@123", "Dinuka", "Dulanjana", "1234356V","Accounting Manager", "0711234647",null),
@@ -62,6 +63,7 @@ CREATE TABLE if not exists stock (
   Qty INT DEFAULT NULL,
   P_Description varchar(15) DEFAULT NULL,
   S_ID varchar(5) DEFAULT NULL,
+  Total DECIMAL(10,2),
   FOREIGN KEY (S_ID) REFERENCES supplier (S_ID)
 );
 
