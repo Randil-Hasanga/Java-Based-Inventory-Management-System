@@ -186,7 +186,19 @@
     -fx-text-fill: #000000;
 }
 
+.red-button:hover {
+    /*-fx-background-color: #03c62a;*/
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #f14e6c, #a80418);
+    -fx-text-fill: white;
+}
+
 .yellow-button {
     -fx-background-color: #e5e565;
     -fx-text-fill: #000000;
+}
+
+.yellow-button:hover {
+    /*-fx-background-color: #03c62a;*/
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #d3c441, #b49104);
+    -fx-text-fill: white;
 }
