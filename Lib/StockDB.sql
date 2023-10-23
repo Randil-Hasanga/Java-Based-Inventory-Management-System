@@ -27,12 +27,12 @@ CREATE TABLE if not exists customer (
   C_ID varchar(5) NOT NULL PRIMARY KEY,
   C_Name varchar(15) DEFAULT NULL,
   C_Location varchar(10) DEFAULT NULL,
-  C_Contact int DEFAULT NULL
+  C_Contact VARCHAR(15) DEFAULT NULL
 );
 
 INSERT INTO customer
 VALUES
-('C001','Samanthi','Matara',715214560);
+('C001','Samanthi','Matara','715214560');
 
 CREATE TABLE if not exists supplier (
   S_ID varchar(5) NOT NULL PRIMARY KEY,
@@ -55,30 +55,31 @@ CREATE TABLE if not exists report (
   R_Description varchar(15) DEFAULT NULL
 );
 
-CREATE TABLE if not exists product (
+CREATE TABLE if not exists stock (
   P_ID varchar(5) NOT NULL PRIMARY KEY,
   P_Name varchar(20) DEFAULT NULL,
-  Price double(10,2) DEFAULT NULL,
+  Price DECIMAL(5,2) DEFAULT NULL,
   Qty INT DEFAULT NULL,
   P_Description varchar(15) DEFAULT NULL,
   S_ID varchar(5) DEFAULT NULL,
   FOREIGN KEY (S_ID) REFERENCES supplier (S_ID)
 );
 
-INSERT INTO product
+INSERT INTO stock
 VALUES
 ('P001','CR pg120 SR',150.00,100,NULL,'S001'),
 ('P002','CR pg80 SR',100.00,200,NULL,'S002'),
 ('P003','CR pg80 SQR',100.00,200,NULL,'S003'),
 ('P004','Blue pens',40.00,200,NULL,'S004'),
-('P005','Pencils',20.00,400,NULL,'S005');
+('P005','Pencils',20.00,400,NULL,'S003');
 
 CREATE TABLE if not exists product_customer (
   C_ID varchar(5) DEFAULT NULL,
   P_ID varchar(5) DEFAULT NULL,
   FOREIGN KEY (C_ID) REFERENCES customer (C_ID),
-  FOREIGN KEY (P_ID) REFERENCES product (P_ID)
+  FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
 );
+
 
 CREATE TABLE if not exists invoice (
   Invoice_ID varchar(5) NOT NULL PRIMARY KEY,
@@ -87,11 +88,11 @@ CREATE TABLE if not exists invoice (
   L_Name varchar(10) DEFAULT NULL,
   Description varchar(10) DEFAULT NULL,
   Qty INT,
-  Price double(10,2) DEFAULT NULL,
+  Price DECIMAL(10,2) DEFAULT NULL,
   S_ID varchar(5) DEFAULT NULL,
   P_ID varchar(5),
   FOREIGN KEY (S_ID) REFERENCES supplier (S_ID),
-  FOREIGN KEY (P_ID) REFERENCES product (P_ID)
+  FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
 );
 
 INSERT INTO invoice
@@ -100,10 +101,9 @@ VALUES
 
 CREATE TABLE if not exists customer_invoice (
   C_ID varchar(5) NOT NULL,
-  L_ID varchar(5) NOT NULL,
-  PRIMARY KEY (C_ID,L_ID),
-  KEY L_ID (L_ID),
+  invoice_ID varchar(5) NOT NULL,
+  PRIMARY KEY (C_ID,invoice_ID),
   FOREIGN KEY (C_ID) REFERENCES customer (C_ID),
-  FOREIGN KEY (L_ID) REFERENCES invoice (L_ID)
+  FOREIGN KEY (invoice_ID) REFERENCES invoice (Invoice_ID)
 );
 
