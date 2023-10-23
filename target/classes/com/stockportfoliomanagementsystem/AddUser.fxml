@@ -188,7 +188,7 @@
             <Button layoutX="210.0" layoutY="443.0" mnemonicParsing="false" onAction="#onChooseBtn" prefHeight="28.0" prefWidth="160.0" styleClass="shadow" stylesheets="@CSS/styles.css" text="Choose Image" />
             <Label fx:id="lblWarning" layoutX="89.0" layoutY="488.0" prefHeight="27.0" prefWidth="292.0">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
                <textFill>
                   <RadialGradient centerX="0.5" centerY="0.5" radius="0.8563218390804598">
