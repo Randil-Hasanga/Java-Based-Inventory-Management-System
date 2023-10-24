@@ -40,7 +40,7 @@ public class Main extends Application {
     }
 
     public void sqlUpdates() {
-        String sql = "Update stock SET Total = Price*Qty";
+        String sql = "Update stock SET Total = Selling_price*Qty";
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
