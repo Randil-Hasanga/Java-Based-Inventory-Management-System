@@ -23,11 +23,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class viewSuppliers implements Initializable {
-
-
+public class viewCustomers implements Initializable {
     @FXML
-    private TableView<ObservableList<String>> tblSuppliers;
+    private TableView<ObservableList<String>> tblCustomers;
     Connection conn = MySqlCon.MysqlMethod();
     @FXML
     private Stage stage;
@@ -70,10 +68,9 @@ public class viewSuppliers implements Initializable {
         stage.show();
     }
 
-
     @FXML
-    void onCustomerButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewCustomers.fxml"));
+    void onSupplierButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewSuppliers.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);
@@ -84,13 +81,13 @@ public class viewSuppliers implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblSuppliers.getColumns();
+        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblCustomers.getColumns();
         columns.clear();
 
         // Define fixed column names
-        String[] columnNames = {"Supplier Id","Supplier Name","Contact Number","Description","Supplier Address"};
+        String[] columnNames = {"Customer Id","Customer Name","Customer Address","Contact Number"};
 
-        double columnWidth = (tblSuppliers.getPrefWidth()) / (columnNames.length)-2;
+        double columnWidth = (tblCustomers.getPrefWidth()) / (columnNames.length)-2;
 
         // Add the columns to the TableView with fixed names
         for (int i = 0; i < columnNames.length; i++) {
@@ -101,7 +98,7 @@ public class viewSuppliers implements Initializable {
             columns.add(column);
         }
 
-        String sql = "SELECT * FROM supplier";
+        String sql = "SELECT * FROM customer";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
@@ -115,7 +112,7 @@ public class viewSuppliers implements Initializable {
                 data.add(row);
             }
 
-            tblSuppliers.setItems(data);
+            tblCustomers.setItems(data);
         } catch (SQLException e) {
             e.printStackTrace();
         }
