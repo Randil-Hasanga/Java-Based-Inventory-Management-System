@@ -18,4 +18,6 @@ module com.example.stockportfoliomanagementsystem {
     opens com.stockportfoliomanagementsystem.AccountingManager to javafx.fxml;
     exports com.stockportfoliomanagementsystem.StockKeeper;
     opens com.stockportfoliomanagementsystem.StockKeeper to javafx.fxml;
+    exports com.stockportfoliomanagementsystem.Common;
+    opens com.stockportfoliomanagementsystem.Common to javafx.fxml;
 }

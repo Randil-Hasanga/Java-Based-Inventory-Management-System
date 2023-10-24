@@ -151,7 +151,7 @@ public class MainController {
             stage.setResizable(false);
             stage.show();
         }else if(position.equals("Stock keeper")) {
-            root = FXMLLoader.load(getClass().getResource("StockKeeperDashboard.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setHeight(700);
             stage.setWidth(1210);
