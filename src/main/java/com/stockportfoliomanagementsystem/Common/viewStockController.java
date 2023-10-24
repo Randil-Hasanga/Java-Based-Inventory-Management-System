@@ -58,7 +58,7 @@ public class viewStockController implements Initializable {
 
     @FXML
     void onSupplierButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewSuppliers.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/Common/viewSuppliers.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);
@@ -89,7 +89,7 @@ public class viewStockController implements Initializable {
             columns.add(column);
         }
 
-        String sql = "SELECT P_ID, P_Name, Price, Qty, P_Description, S_ID FROM stock"; // Replace with your table name
+        String sql = "SELECT P_ID, P_Name, Selling_price, Qty, P_Description, S_ID FROM stock"; // Replace with your table name
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
