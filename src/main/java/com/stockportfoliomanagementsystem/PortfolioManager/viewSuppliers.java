@@ -1,4 +1,4 @@
-package com.stockportfoliomanagementsystem.Common;
+package com.stockportfoliomanagementsystem.PortfolioManager;
 
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,9 +23,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class viewCustomers implements Initializable {
+public class viewSuppliers implements Initializable {
+
+
     @FXML
-    private TableView<ObservableList<String>> tblCustomers;
+    private TableView<ObservableList<String>> tblSuppliers;
     Connection conn = MySqlCon.MysqlMethod();
     @FXML
     private Stage stage;
@@ -58,7 +60,7 @@ public class viewCustomers implements Initializable {
 
     @FXML
     void onStockButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/Common/viewStock.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewStock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);
@@ -68,9 +70,10 @@ public class viewCustomers implements Initializable {
         stage.show();
     }
 
+
     @FXML
-    void onSupplierButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/Common/viewSuppliers.fxml"));
+    void onCustomerButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewCustomers.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);
@@ -81,13 +84,13 @@ public class viewCustomers implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblCustomers.getColumns();
+        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblSuppliers.getColumns();
         columns.clear();
 
         // Define fixed column names
-        String[] columnNames = {"Customer Id","Customer Name","Customer Address","Contact Number"};
+        String[] columnNames = {"Supplier Id","Supplier Name","Contact Number","Description","Supplier Address"};
 
-        double columnWidth = (tblCustomers.getPrefWidth()) / (columnNames.length)-2;
+        double columnWidth = (tblSuppliers.getPrefWidth()) / (columnNames.length)-2;
 
         // Add the columns to the TableView with fixed names
         for (int i = 0; i < columnNames.length; i++) {
@@ -98,7 +101,7 @@ public class viewCustomers implements Initializable {
             columns.add(column);
         }
 
-        String sql = "SELECT * FROM customer";
+        String sql = "SELECT * FROM supplier";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
@@ -112,7 +115,7 @@ public class viewCustomers implements Initializable {
                 data.add(row);
             }
 
-            tblCustomers.setItems(data);
+            tblSuppliers.setItems(data);
         } catch (SQLException e) {
             e.printStackTrace();
         }

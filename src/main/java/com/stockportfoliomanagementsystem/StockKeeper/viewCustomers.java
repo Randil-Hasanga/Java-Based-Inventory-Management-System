@@ -1,4 +1,4 @@
-package com.stockportfoliomanagementsystem.Common;
+package com.stockportfoliomanagementsystem.StockKeeper;
 
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,32 +23,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class viewSuppliers implements Initializable {
-
-
+public class viewCustomers implements Initializable {
     @FXML
-    private TableView<ObservableList<String>> tblSuppliers;
+    private TableView<ObservableList<String>> tblCustomers;
     Connection conn = MySqlCon.MysqlMethod();
     @FXML
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    @FXML
-    void manageUsers(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/ManageUsers.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
 
     @FXML
     void onBackButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/PortfolioManagerDashboard.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);
@@ -59,8 +46,8 @@ public class viewSuppliers implements Initializable {
     }
 
     @FXML
-    void onStockButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/Common/viewStock.fxml"));
+    void onSupplierButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/viewSuppliers.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);
@@ -72,25 +59,24 @@ public class viewSuppliers implements Initializable {
 
 
     @FXML
-    void onCustomerButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/Common/viewCustomers.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+    void onManageStock(MouseEvent event) {
+
     }
+
+    @FXML
+    void onReportsButton(MouseEvent event) {
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblSuppliers.getColumns();
+        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblCustomers.getColumns();
         columns.clear();
 
         // Define fixed column names
-        String[] columnNames = {"Supplier Id","Supplier Name","Contact Number","Description","Supplier Address"};
+        String[] columnNames = {"Customer Id","Customer Name","Customer Address","Contact Number"};
 
-        double columnWidth = (tblSuppliers.getPrefWidth()) / (columnNames.length)-2;
+        double columnWidth = (tblCustomers.getPrefWidth()) / (columnNames.length)-2;
 
         // Add the columns to the TableView with fixed names
         for (int i = 0; i < columnNames.length; i++) {
@@ -101,7 +87,7 @@ public class viewSuppliers implements Initializable {
             columns.add(column);
         }
 
-        String sql = "SELECT * FROM supplier";
+        String sql = "SELECT * FROM customer";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
@@ -115,7 +101,7 @@ public class viewSuppliers implements Initializable {
                 data.add(row);
             }
 
-            tblSuppliers.setItems(data);
+            tblCustomers.setItems(data);
         } catch (SQLException e) {
             e.printStackTrace();
         }
