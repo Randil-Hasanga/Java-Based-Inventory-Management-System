@@ -7,6 +7,7 @@
 .container_{
     -fx-background-color: rgba(255,255,255,0.2);
     -fx-background-radius: 15;
+    -fx-border-radius: 15;
 }
 
 .gradientButton{
@@ -201,4 +202,16 @@
     /*-fx-background-color: #03c62a;*/
     -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #d3c441, #b49104);
     -fx-text-fill: white;
+}
+
+.black_border {
+    -fx-border-color: black;
+}
+
+.selected-button_notTransparent{
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+.selected-button_notTransparent:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
 }

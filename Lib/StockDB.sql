@@ -51,15 +51,18 @@ VALUES
 ('S004','Promate','078-8521456','bags','Matara');
 
 CREATE TABLE if not exists report (
-  R_ID varchar(5) NOT NULL,
+  R_ID varchar(5) NOT NULL PRIMARY KEY,
+  Date_ date,
   R_Name varchar(15) DEFAULT NULL,
   R_Description varchar(15) DEFAULT NULL
 );
 
+
 CREATE TABLE if not exists stock (
   P_ID varchar(5) NOT NULL PRIMARY KEY,
   P_Name varchar(20) DEFAULT NULL,
-  Price DECIMAL(5,2) DEFAULT NULL,
+  Price_taken DECIMAL(5,2),
+  Selling_price DECIMAL(5,2) DEFAULT NULL,
   Qty INT DEFAULT NULL,
   P_Description varchar(15) DEFAULT NULL,
   S_ID varchar(5) DEFAULT NULL,
@@ -69,11 +72,11 @@ CREATE TABLE if not exists stock (
 
 INSERT INTO stock
 VALUES
-('P001','CR pg120 SR',150.00,100,NULL,'S001'),
-('P002','CR pg80 SR',100.00,200,NULL,'S002'),
-('P003','CR pg80 SQR',100.00,200,NULL,'S003'),
-('P004','Blue pens',40.00,200,NULL,'S004'),
-('P005','Pencils',20.00,400,NULL,'S003');
+('P001','CR pg120 SR',140.00,150.00,100,NULL,'S001',15000.00),
+('P002','CR pg80 SR',90.00,100.00,200,NULL,'S002',20000.00),
+('P003','CR pg80 SQR',92.00,100.00,200,NULL,'S003',20000),
+('P004','Blue pens',35.00,40.00,200,NULL,'S004',8000.00),
+('P005','Pencils',16.00,20.00,400,NULL,'S003',8000);
 
 CREATE TABLE if not exists product_customer (
   C_ID varchar(5) DEFAULT NULL,
@@ -84,22 +87,39 @@ CREATE TABLE if not exists product_customer (
 
 
 CREATE TABLE if not exists invoice (
-  Invoice_ID varchar(5) NOT NULL PRIMARY KEY,
+  Invoice_id CHAR(6),
   Invoice_Type ENUM('Customer','Supplier'),
-  Date_ date DEFAULT NULL,
-  L_Name varchar(10) DEFAULT NULL,
-  Description varchar(10) DEFAULT NULL,
+  Date_ DATE DEFAULT NULL,
+  L_Name VARCHAR(10) DEFAULT NULL,
+  Description VARCHAR(10) DEFAULT NULL,
   Qty INT,
   Price DECIMAL(10,2) DEFAULT NULL,
-  S_ID varchar(5) DEFAULT NULL,
-  P_ID varchar(5),
+  S_ID VARCHAR(5) DEFAULT NULL,
+  P_ID VARCHAR(5),
+  PRIMARY KEY (Invoice_id),
   FOREIGN KEY (S_ID) REFERENCES supplier (S_ID),
   FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
 );
 
-INSERT INTO invoice
+-- Set the initial Invoice_id value to 'I_001'
+ALTER TABLE invoice AUTO_INCREMENT = 1;
+
+DELIMITER $$
+
+CREATE TRIGGER set_invoice_id
+BEFORE INSERT ON invoice FOR EACH ROW
+BEGIN
+  SET NEW.Invoice_id = CONCAT('I_', LPAD(NEW.Invoice_id, 3, '0'));
+END;
+$$
+
+DELIMITER ;
+
+
+
+INSERT INTO invoice (Invoice_id,Invoice_Type, Date_, L_Name, Description, Qty, Price, S_ID, P_ID)
 VALUES
-('I001','Supplier','2023-10-23',NULL,'CR pg80',100,15000.00,'S001','P001');
+('1','Supplier','2023-10-23',NULL,'CR pg80',100,15000.00,'S001','P001');
 
 CREATE TABLE if not exists customer_invoice (
   C_ID varchar(5) NOT NULL,
