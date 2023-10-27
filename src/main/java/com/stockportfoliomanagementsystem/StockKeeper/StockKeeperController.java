@@ -69,8 +69,25 @@ public class StockKeeperController implements Initializable {
     }
 
     @FXML
-    void onManageStock(MouseEvent event) throws IOException {
+    void onSellProducts(MouseEvent event) {
 
+    }
+
+    @FXML
+    void onDeleteProducts(MouseEvent event) {
+
+    }
+
+    @FXML
+    void onBuyProducts(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/BuyProducts.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
