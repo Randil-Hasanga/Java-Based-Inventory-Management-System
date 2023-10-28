@@ -1,4 +1,4 @@
-module com.example.stockportfoliomanagementsystem {
+module com.stockportfoliomanagementsystem {
     requires javafx.controls;
     requires javafx.fxml;
 
