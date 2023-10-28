@@ -22,18 +22,24 @@ public class BuyProducts implements Initializable {
     @FXML
     private Label txtName;
 
+    private static int isExisting;
+
     @FXML
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    @FXML
-    void onCustomersButton(MouseEvent event) {
 
+    private void setProductExisting(int existing) {
+        System.out.println("setter"+isExisting);
+        this.isExisting = existing;
     }
 
+    public static int getProductExisting() {
+        return isExisting;
+    }
     @FXML
-    void onManageStock(MouseEvent event) {
+    void onCustomersButton(MouseEvent event) {
 
     }
 
@@ -48,8 +54,19 @@ public class BuyProducts implements Initializable {
     }
 
     @FXML
+    void onNewProduct(MouseEvent event) {
+
+    }
+
+    @FXML
     void onExistingProducts(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/BuyExisting.fxml"));
+
+        int existing = 1;
+        System.out.println("declare"+existing);
+
+        setProductExisting(existing);
+
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectCustomerType.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);
@@ -58,6 +75,8 @@ public class BuyProducts implements Initializable {
         stage.setResizable(false);
         stage.show();
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

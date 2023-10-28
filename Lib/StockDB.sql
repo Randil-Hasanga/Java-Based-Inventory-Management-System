@@ -78,22 +78,23 @@ VALUES
 ('P004','Blue pens',35.00,40.00,200,NULL,'S004',8000.00),
 ('P005','Pencils',16.00,20.00,400,NULL,'S003',8000);
 
-CREATE TABLE if not exists product_customer (
-  C_ID varchar(5) DEFAULT NULL,
-  P_ID varchar(5) DEFAULT NULL,
-  FOREIGN KEY (C_ID) REFERENCES customer (C_ID),
-  FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
-);
+-- CREATE TABLE if not exists product_customer (
+--   C_ID varchar(5) DEFAULT NULL,
+--   P_ID varchar(5) DEFAULT NULL,
+--   FOREIGN KEY (C_ID) REFERENCES customer (C_ID),
+--   FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
+-- );
 
 
-CREATE TABLE if not exists invoice (
+
+CREATE TABLE if not exists invoice_sup (
   Invoice_id CHAR(6),
-  Invoice_Type ENUM('Customer','Supplier'),
   Date_ DATE DEFAULT NULL,
   L_Name VARCHAR(10) DEFAULT NULL,
   Description VARCHAR(10) DEFAULT NULL,
   Qty INT,
   Price DECIMAL(10,2) DEFAULT NULL,
+  Total DECIMAL(10,2),
   S_ID VARCHAR(5) DEFAULT NULL,
   P_ID VARCHAR(5),
   PRIMARY KEY (Invoice_id),
@@ -102,12 +103,12 @@ CREATE TABLE if not exists invoice (
 );
 
 -- Set the initial Invoice_id value to 'I_001'
-ALTER TABLE invoice AUTO_INCREMENT = 1;
+ALTER TABLE invoice_sup AUTO_INCREMENT = 1;
 
 DELIMITER $$
 
-CREATE TRIGGER set_invoice_id
-BEFORE INSERT ON invoice FOR EACH ROW
+CREATE TRIGGER set_invoice_id_sup
+BEFORE INSERT ON invoice_sup FOR EACH ROW
 BEGIN
   SET NEW.Invoice_id = CONCAT('I_', LPAD(NEW.Invoice_id, 3, '0'));
 END;
@@ -115,17 +116,30 @@ $$
 
 DELIMITER ;
 
-
-
-INSERT INTO invoice (Invoice_id,Invoice_Type, Date_, L_Name, Description, Qty, Price, S_ID, P_ID)
-VALUES
-('1','Supplier','2023-10-23',NULL,'CR pg80',100,15000.00,'S001','P001');
-
-CREATE TABLE if not exists customer_invoice (
-  C_ID varchar(5) NOT NULL,
-  invoice_ID varchar(5) NOT NULL,
-  PRIMARY KEY (C_ID,invoice_ID),
+CREATE TABLE if not exists invoice_cus (
+  Invoice_id CHAR(6),
+  Date_ DATE DEFAULT NULL,
+  Description VARCHAR(10) DEFAULT NULL,
+  Qty INT,
+  Price DECIMAL(10,2) DEFAULT NULL,
+  Total DECIMAL(10,2),
+  C_ID VARCHAR(5) DEFAULT NULL,
+  P_ID VARCHAR(5),
+  PRIMARY KEY (Invoice_id),
   FOREIGN KEY (C_ID) REFERENCES customer (C_ID),
-  FOREIGN KEY (invoice_ID) REFERENCES invoice (Invoice_ID)
+  FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
 );
 
+-- Set the initial Invoice_id value to 'I_001'
+ALTER TABLE invoice_cus AUTO_INCREMENT = 1;
+
+DELIMITER $$
+
+CREATE TRIGGER set_invoice_id_cus
+BEFORE INSERT ON invoice_cus FOR EACH ROW
+BEGIN
+  SET NEW.Invoice_id = CONCAT('I_', LPAD(NEW.Invoice_id, 3, '0'));
+END;
+$$
+
+DELIMITER ;

@@ -115,23 +115,27 @@ package com.stockportfoliomanagementsystem.StockKeeper;
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class BuyExisting implements Initializable {
 
-
     Connection conn = MySqlCon.MysqlMethod();
+    private String index = SelectExistingCustomer.getCustomerIndex();
 
     @FXML
     private TableView<ObservableList<String>> tblCart;
@@ -147,6 +151,14 @@ public class BuyExisting implements Initializable {
 
     @FXML
     private Button addToCartButton; // Add the "Add to Cart" button
+    @FXML
+    private Button onSellBtn;
+    @FXML
+    private Button btnRemove;
+    @FXML
+    private Button btnReduce;
+
+    private int invoiceRowCount;
 
     @FXML
     void onAddBtnClick(MouseEvent event) {
@@ -176,8 +188,11 @@ public class BuyExisting implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println(LocalDate.now());
+        System.out.println(index);
         loadFromDB();
         tblProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tblCart.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
         quantitySpinner.setValueFactory(valueFactory);
 
@@ -197,11 +212,89 @@ public class BuyExisting implements Initializable {
             column.setPrefWidth(cartColumnWidth);
             cartColumns.add(column);
         }
-
         addToCartButton.setOnAction(addToCartEvent -> {
             onAddToCart();
         });
+        onSellBtn.setOnAction(sellEvent -> {
+            sellProducts();
+        });
+        btnRemove.setOnAction(removeEvent -> {
+            removeProduct();
+        });
+
+        btnReduce.setOnAction(reduceEvent -> {
+            reduceQuantity();
+            tblCart.getSelectionModel().select(tblCart.getItems().size() - 1);
+        });
+
+        tblCart.getSelectionModel().getSelectedItems().addListener((ListChangeListener<? super ObservableList<String>>) change -> {
+            while (change.next()) {
+                if (change.wasRemoved()) {
+                    for (ObservableList<String> item : change.getRemoved()) {
+                        tblCart.getSelectionModel().select(item);
+                    }
+                }
+            }
+        });
+
+
+//        tblCart.setOnMouseClicked(event -> {
+//            if (event.getClickCount() == 1) {
+//                int selectedIndex = tblCart.getSelectionModel().getSelectedIndex();
+//                if (selectedIndex >= 0) {
+//                    if (tblCart.getSelectionModel().isSelected(selectedIndex)) {
+//                        tblCart.getSelectionModel().clearSelection(selectedIndex);
+//                    } else {
+//                        tblCart.getSelectionModel().select(selectedIndex);
+//                    }
+//                }
+//            }
+//        });
+
+
+
+
+
+
+
     }
+
+    private void reduceQuantity() {
+        ObservableList<String> selected = tblCart.getSelectionModel().getSelectedItem();
+        int qt = Integer.parseInt(selected.get(5));
+        String pid = selected.get(0);
+        String name = selected.get(1);
+        String price = selected.get(2);
+        String desc = selected.get(3);
+        String sup = selected.get(4);
+
+        if(selected != null){
+            if(qt>1){
+                qt = qt-1;
+                ObservableList<ObservableList<String>> data = tblCart.getItems();
+                data.remove(selected);
+                ObservableList<String> cartItem = FXCollections.observableArrayList();
+                cartItem.add(pid);
+                cartItem.add(name);
+                cartItem.add(price);
+                cartItem.add(desc);
+                cartItem.add(sup);
+                cartItem.add(String.valueOf(qt));
+                tblCart.getItems().add(cartItem);
+            }
+            String sql = "Update stock SET Qty = Qty+? WHERE P_ID = ?";
+            try {
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setInt(1, qt);
+                preparedStatement.setString(2, pid);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            loadFromDB();
+        }
+    }
+
 
     public void loadFromDB() {
         ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblProducts.getColumns();
@@ -243,25 +336,6 @@ public class BuyExisting implements Initializable {
     }
 
     private void onAddToCart() {
-//        ObservableList<String> selectedProduct = tblProducts.getSelectionModel().getSelectedItem();
-//
-//
-//        if (selectedProduct != null) {
-//            int selectedQuantity = quantitySpinner.getValue(); // Get the selected quantity
-//
-//
-//            ObservableList<String> cartItem = FXCollections.observableArrayList();
-//            cartItem.add(selectedProduct.get(0)); // Product ID
-//            cartItem.add(selectedProduct.get(1)); // Name
-//            cartItem.add(selectedProduct.get(2)); // Price
-//            cartItem.add(selectedProduct.get(4)); // Description
-//            cartItem.add(selectedProduct.get(5)); // Supplier
-//            cartItem.add(String.valueOf(selectedQuantity)); // Quantity
-//            tblCart.getItems().add(cartItem);
-//
-//            // Optionally, you can save the cart data to the database here
-//        }
-
         ObservableList<String> selectedProduct = tblProducts.getSelectionModel().getSelectedItem();
 
         if (selectedProduct != null) {
@@ -322,21 +396,93 @@ public class BuyExisting implements Initializable {
 
             }
 
-//            String sql = "Update stock SET Qty = Qty-? WHERE P_ID = ?";
-//            try {
-//                PreparedStatement preparedStatement = conn.prepareStatement(sql);
-//                preparedStatement.setInt(1, selectedQuantity);
-//                preparedStatement.setString(2, selectedProduct.get(0));
-//                preparedStatement.executeUpdate();
-//            } catch (SQLException e) {
-//                throw new RuntimeException(e);
-//            }
-//            loadFromDB();
-//            tblProducts.refresh();
-            //tblCart.refresh();
-
             // Optionally, you can save the cart data to the database here
+        }else{
+            showCustomDialog();
         }
+
     }
+
+    private void sellProducts() {
+
+        for (ObservableList<String> cartItem2 : tblCart.getItems()) {
+            String count = "SELECT COUNT(*) FROM invoice_cus";
+            try {
+                PreparedStatement statement = conn.prepareStatement(count);
+                ResultSet rs = statement.executeQuery();
+
+                while(rs.next()){
+                    invoiceRowCount = rs.getInt(1);
+                    System.out.println(count);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            String sql = "INSERT INTO invoice_cus (Invoice_id,Date_, Qty, Price, Total, C_ID, P_ID)\n" +
+                    "VALUES\n" +
+                    "(?,?,?,?,?,?,?)";
+            try {
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, String.valueOf(invoiceRowCount+1));
+                pstmt.setDate(2, Date.valueOf(LocalDate.now()));
+                pstmt.setInt(3, Integer.parseInt(cartItem2.get(5)));
+                pstmt.setDouble(4, Double.parseDouble(cartItem2.get(2)));
+                pstmt.setDouble(5, Double.parseDouble(cartItem2.get(2)) * Integer.parseInt(cartItem2.get(5)));
+                pstmt.setString(6, index);
+                pstmt.setString(7, cartItem2.get(0));
+
+                pstmt.executeUpdate();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("DB updated");
+        }
+        ObservableList<ObservableList<String>> data = tblCart.getItems();
+        data.clear();
+    }
+
+    private void removeProduct() {
+        ObservableList<String> selected = tblCart.getSelectionModel().getSelectedItem();
+        int qt = Integer.parseInt(selected.get(5));
+        String pid = selected.get(0);
+        if(selected != null){
+            ObservableList<ObservableList<String>> data = tblCart.getItems();
+            data.remove(selected);
+
+            String sql = "Update stock SET Qty = Qty+? WHERE P_ID = ?";
+            try {
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setInt(1, qt);
+                preparedStatement.setString(2, pid);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            loadFromDB();
+        }
+
+    }
+    public void showCustomDialog() {
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Warning !");
+
+        Label messageLabel = new Label("Please select a row from the table.");
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(event -> dialog.close());
+
+        VBox dialogVBox = new VBox(10);
+        dialogVBox.getChildren().addAll(messageLabel, closeButton);
+        dialogVBox.setStyle("-fx-alignment: center; -fx-padding: 20;");
+
+        Scene dialogScene = new Scene(dialogVBox, 300, 100);
+        dialog.setScene(dialogScene);
+        dialog.showAndWait();
+    }
+
+
 }
 
