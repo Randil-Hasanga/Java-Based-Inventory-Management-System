@@ -8,7 +8,8 @@ module com.stockportfoliomanagementsystem {
     requires com.jfoenix;
     requires de.jensd.fx.glyphs.fontawesome;
     requires java.desktop;
-    requires javafx.swing;
+    requires org.apache.pdfbox;
+
 
     opens com.stockportfoliomanagementsystem to javafx.fxml;
     exports com.stockportfoliomanagementsystem;

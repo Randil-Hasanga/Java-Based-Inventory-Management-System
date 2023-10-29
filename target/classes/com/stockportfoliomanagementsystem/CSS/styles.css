@@ -221,3 +221,9 @@
     -fx-background-radius: 15;
     -fx-border-radius: 15;
 }
+
+.anchorPane_newWindow2{
+    -fx-background-color: #158675;
+    -fx-pref-height: 620;
+    -fx-pref-width: 850;
+}
