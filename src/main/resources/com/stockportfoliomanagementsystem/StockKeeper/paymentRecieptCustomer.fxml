@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchorPane_newWindow" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.StockKeeper.PaymentRecieptCustomer">
+   <children>
+      <Pane layoutX="16.0" layoutY="14.0" prefHeight="592.0" prefWidth="818.0" styleClass="container_" stylesheets="@../CSS/styles.css">
+         <children>
+            <Label layoutX="39.0" layoutY="69.0" text="Customer ID">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCusID" layoutX="152.0" layoutY="69.0" prefHeight="20.0" prefWidth="225.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="39.0" layoutY="95.0" text="Mr/Ms">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblName" layoutX="152.0" layoutY="95.0" prefHeight="20.0" prefWidth="225.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="88.0" layoutY="11.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Book Nook" textAlignment="CENTER" textFill="#c0e8fb">
+               <font>
+                  <Font name="Bookshelf Symbol 7" size="34.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="54.0" fitWidth="66.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+               <image>
+                  <Image url="@../Images/logoIcon2.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="39.0" layoutY="123.0" text="Address">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAddress" layoutX="152.0" layoutY="123.0" prefHeight="20.0" prefWidth="225.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="425.0" layoutY="69.0" text="Invoice ID">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblInvoiceID" layoutX="540.0" layoutY="69.0" prefHeight="20.0" prefWidth="225.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="427.0" layoutY="95.0" text="Date">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDate" layoutX="540.0" layoutY="95.0" prefHeight="20.0" prefWidth="225.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Pane layoutX="272.0" layoutY="28.0" prefHeight="3.0" prefWidth="520.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
+            <Pane layoutX="27.0" layoutY="178.0" prefHeight="3.0" prefWidth="765.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
+            <Label layoutX="39.0" layoutY="152.0" text="Contact No">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblContact" layoutX="152.0" layoutY="152.0" prefHeight="20.0" prefWidth="225.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Pane layoutX="18.0" layoutY="187.0" prefHeight="355.0" prefWidth="784.0" styleClass="table_pane" stylesheets="@../CSS/styles.css">
+               <children>
+                  <Label layoutX="573.0" layoutY="326.0" prefHeight="20.0" prefWidth="45.0" text="Total" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtTotal" layoutX="651.0" layoutY="326.0" prefHeight="20.0" prefWidth="105.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="tblInvoice" layoutY="7.0" prefHeight="317.0" prefWidth="784.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+               </children>
+            </Pane>
+            <Button layoutX="736.0" layoutY="553.0" mnemonicParsing="false" onMouseClicked="#onBtnPDF" styleClass="login-button" stylesheets="@../CSS/styles.css" text="Get PDF" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
