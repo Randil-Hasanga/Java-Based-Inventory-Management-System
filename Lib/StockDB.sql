@@ -87,8 +87,8 @@ VALUES
 
 
 
-CREATE TABLE if not exists invoice_sup (
-  Invoice_id CHAR(6),
+CREATE TABLE if not exists transactions_sup (
+  transaction_id CHAR(6),
   Date_ DATE DEFAULT NULL,
   L_Name VARCHAR(10) DEFAULT NULL,
   Description VARCHAR(10) DEFAULT NULL,
@@ -97,27 +97,27 @@ CREATE TABLE if not exists invoice_sup (
   Total DECIMAL(10,2),
   S_ID VARCHAR(5) DEFAULT NULL,
   P_ID VARCHAR(5),
-  PRIMARY KEY (Invoice_id),
+  PRIMARY KEY (transaction_id),
   FOREIGN KEY (S_ID) REFERENCES supplier (S_ID),
   FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
 );
 
 -- Set the initial Invoice_id value to 'I_001'
-ALTER TABLE invoice_sup AUTO_INCREMENT = 1;
+ALTER TABLE transactions_sup AUTO_INCREMENT = 1;
 
 DELIMITER $$
 
-CREATE TRIGGER set_invoice_id_sup
-BEFORE INSERT ON invoice_sup FOR EACH ROW
+CREATE TRIGGER set_transaction_id_sup
+BEFORE INSERT ON transactions_sup FOR EACH ROW
 BEGIN
-  SET NEW.Invoice_id = CONCAT('I_', LPAD(NEW.Invoice_id, 3, '0'));
+  SET NEW.transaction_id = CONCAT('I_', LPAD(NEW.transaction_id, 3, '0'));
 END;
 $$
 
 DELIMITER ;
 
-CREATE TABLE if not exists invoice_cus (
-  Invoice_id CHAR(6),
+CREATE TABLE if not exists transactions_cus (
+  transaction_id CHAR(6),
   Date_ DATE DEFAULT NULL,
   Description VARCHAR(10) DEFAULT NULL,
   Qty INT,
@@ -125,20 +125,47 @@ CREATE TABLE if not exists invoice_cus (
   Total DECIMAL(10,2),
   C_ID VARCHAR(5) DEFAULT NULL,
   P_ID VARCHAR(5),
-  PRIMARY KEY (Invoice_id),
+  PRIMARY KEY (transaction_id),
   FOREIGN KEY (C_ID) REFERENCES customer (C_ID),
   FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
 );
 
 -- Set the initial Invoice_id value to 'I_001'
-ALTER TABLE invoice_cus AUTO_INCREMENT = 1;
+ALTER TABLE transactions_cus AUTO_INCREMENT = 1;
 
 DELIMITER $$
 
-CREATE TRIGGER set_invoice_id_cus
-BEFORE INSERT ON invoice_cus FOR EACH ROW
+CREATE TRIGGER set_transaction_id_cus
+BEFORE INSERT ON transactions_cus FOR EACH ROW
 BEGIN
-  SET NEW.Invoice_id = CONCAT('I_', LPAD(NEW.Invoice_id, 3, '0'));
+  SET NEW.transaction_id = CONCAT('I_', LPAD(NEW.transaction_id, 3, '0'));
+END;
+$$
+
+DELIMITER ;
+
+CREATE TABLE if not exists temp_invoice (
+  transaction_id CHAR(6),
+  Date_ DATE DEFAULT NULL,
+  Description VARCHAR(10) DEFAULT NULL,
+  Qty INT,
+  Price DECIMAL(10,2) DEFAULT NULL,
+  Total DECIMAL(10,2),
+  C_ID VARCHAR(5) DEFAULT NULL,
+  P_ID VARCHAR(5),
+  PRIMARY KEY (transaction_id),
+  FOREIGN KEY (C_ID) REFERENCES customer (C_ID),
+  FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
+);
+
+ALTER TABLE temp_invoice AUTO_INCREMENT = 1;
+
+DELIMITER $$
+
+CREATE TRIGGER set_transaction_id_temp
+BEFORE INSERT ON temp_invoice FOR EACH ROW
+BEGIN
+  SET NEW.transaction_id = CONCAT('I_', LPAD(NEW.transaction_id, 3, '0'));
 END;
 $$
 

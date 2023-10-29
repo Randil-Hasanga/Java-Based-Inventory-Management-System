@@ -118,7 +118,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -127,6 +129,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -158,6 +161,8 @@ public class BuyExisting implements Initializable {
     @FXML
     private Button btnReduce;
 
+    static Scene scene;
+
     private int invoiceRowCount;
 
     @FXML
@@ -183,6 +188,14 @@ public class BuyExisting implements Initializable {
     @FXML
     void onSupplierButton(MouseEvent event) {
 
+    }
+
+    private void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public static Scene getScene(){
+        return scene;
     }
 
 
@@ -261,14 +274,15 @@ public class BuyExisting implements Initializable {
 
     private void reduceQuantity() {
         ObservableList<String> selected = tblCart.getSelectionModel().getSelectedItem();
-        int qt = Integer.parseInt(selected.get(5));
-        String pid = selected.get(0);
-        String name = selected.get(1);
-        String price = selected.get(2);
-        String desc = selected.get(3);
-        String sup = selected.get(4);
 
         if(selected != null){
+            int qt = Integer.parseInt(selected.get(5));
+            String pid = selected.get(0);
+            String name = selected.get(1);
+            String price = selected.get(2);
+            String desc = selected.get(3);
+            String sup = selected.get(4);
+
             if(qt>1){
                 qt = qt-1;
                 ObservableList<ObservableList<String>> data = tblCart.getItems();
@@ -281,17 +295,35 @@ public class BuyExisting implements Initializable {
                 cartItem.add(sup);
                 cartItem.add(String.valueOf(qt));
                 tblCart.getItems().add(cartItem);
-            }
-            String sql = "Update stock SET Qty = Qty+? WHERE P_ID = ?";
-            try {
-                PreparedStatement preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setInt(1, qt);
-                preparedStatement.setString(2, pid);
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+
+                String sql = "Update stock SET Qty = Qty+1 WHERE P_ID = ?";
+                try {
+                    PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setString(1, pid);
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }else if(qt==1){
+                String sql = "Update stock SET Qty = Qty+1 WHERE P_ID = ?";
+                try {
+                    PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setString(1, pid);
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                ObservableList<ObservableList<String>> data = tblCart.getItems();
+                data.remove(selected);
+                try {
+                    tblCart.getSelectionModel().clearSelection();
+                }catch (Exception e){
+                    System.out.println("Selection Cleared");
+                }
             }
             loadFromDB();
+        }else{
+            showCustomDialog();
         }
     }
 
@@ -395,8 +427,6 @@ public class BuyExisting implements Initializable {
                 tblCart.refresh();
 
             }
-
-            // Optionally, you can save the cart data to the database here
         }else{
             showCustomDialog();
         }
@@ -405,49 +435,98 @@ public class BuyExisting implements Initializable {
 
     private void sellProducts() {
 
-        for (ObservableList<String> cartItem2 : tblCart.getItems()) {
-            String count = "SELECT COUNT(*) FROM invoice_cus";
-            try {
-                PreparedStatement statement = conn.prepareStatement(count);
-                ResultSet rs = statement.executeQuery();
+        ObservableList<ObservableList<String>> table = tblCart.getItems();
 
-                while(rs.next()){
-                    invoiceRowCount = rs.getInt(1);
-                    System.out.println(count);
+        if(table != null) {
+            for (ObservableList<String> cartItem2 : tblCart.getItems()) {
+                String count = "SELECT COUNT(*) FROM transactions_cus";
+                try {
+                    PreparedStatement statement = conn.prepareStatement(count);
+                    ResultSet rs = statement.executeQuery();
+
+                    while (rs.next()) {
+                        invoiceRowCount = rs.getInt(1);
+                        System.out.println(count);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
 
-            String sql = "INSERT INTO invoice_cus (Invoice_id,Date_, Qty, Price, Total, C_ID, P_ID)\n" +
-                    "VALUES\n" +
-                    "(?,?,?,?,?,?,?)";
+                String sql = "INSERT INTO transactions_cus (transaction_id,Date_, Qty, Price, Total, C_ID, P_ID)\n" +
+                        "VALUES\n" +
+                        "(?,?,?,?,?,?,?)";
+                try {
+                    PreparedStatement pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, String.valueOf(invoiceRowCount + 1));
+                    pstmt.setDate(2, Date.valueOf(LocalDate.now()));
+                    pstmt.setInt(3, Integer.parseInt(cartItem2.get(5)));
+                    pstmt.setDouble(4, Double.parseDouble(cartItem2.get(2)));
+                    pstmt.setDouble(5, Double.parseDouble(cartItem2.get(2)) * Integer.parseInt(cartItem2.get(5)));
+                    pstmt.setString(6, index);
+                    pstmt.setString(7, cartItem2.get(0));
+
+                    pstmt.executeUpdate();
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                String sql2 = "INSERT INTO temp_invoice (transaction_id,Date_, Qty, Price, Total, C_ID, P_ID)\n" +
+                        "VALUES\n" +
+                        "(?,?,?,?,?,?,?)";
+                try {
+                    PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+                    pstmt2.setString(1, String.valueOf(invoiceRowCount + 1));
+                    pstmt2.setDate(2, Date.valueOf(LocalDate.now()));
+                    pstmt2.setInt(3, Integer.parseInt(cartItem2.get(5)));
+                    pstmt2.setDouble(4, Double.parseDouble(cartItem2.get(2)));
+                    pstmt2.setDouble(5, Double.parseDouble(cartItem2.get(2)) * Integer.parseInt(cartItem2.get(5)));
+                    pstmt2.setString(6, index);
+                    pstmt2.setString(7, cartItem2.get(0));
+
+                    pstmt2.executeUpdate();
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+                System.out.println("DB updated");
+            }
+            ObservableList<ObservableList<String>> data = tblCart.getItems();
+            data.clear();
+
             try {
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, String.valueOf(invoiceRowCount+1));
-                pstmt.setDate(2, Date.valueOf(LocalDate.now()));
-                pstmt.setInt(3, Integer.parseInt(cartItem2.get(5)));
-                pstmt.setDouble(4, Double.parseDouble(cartItem2.get(2)));
-                pstmt.setDouble(5, Double.parseDouble(cartItem2.get(2)) * Integer.parseInt(cartItem2.get(5)));
-                pstmt.setString(6, index);
-                pstmt.setString(7, cartItem2.get(0));
+                // Load the FXML file for the new window
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/paymentRecieptCustomer.fxml"));
+                Parent root = loader.load();
 
-                pstmt.executeUpdate();
+                // Create a new stage
+                Stage newStage = new Stage();
 
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                // Set the FXML content as the scene for the new stage
+                Scene scene = new Scene(root);
+                setScene(scene);
+                newStage.setScene(scene);
+                newStage.setResizable(false);
+                // Show the new stage
+                newStage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            System.out.println("DB updated");
+        }else{
+            showCustomDialog();
         }
-        ObservableList<ObservableList<String>> data = tblCart.getItems();
-        data.clear();
     }
+
+
 
     private void removeProduct() {
         ObservableList<String> selected = tblCart.getSelectionModel().getSelectedItem();
-        int qt = Integer.parseInt(selected.get(5));
-        String pid = selected.get(0);
         if(selected != null){
+            int qt = Integer.parseInt(selected.get(5));
+            String pid = selected.get(0);
             ObservableList<ObservableList<String>> data = tblCart.getItems();
             data.remove(selected);
 
@@ -460,7 +539,10 @@ public class BuyExisting implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            tblCart.getSelectionModel().clearSelection();
             loadFromDB();
+        } else{
+            showCustomDialog();
         }
 
     }
