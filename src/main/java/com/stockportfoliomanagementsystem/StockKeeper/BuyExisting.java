@@ -1,117 +1,6 @@
-//package com.stockportfoliomanagementsystem.StockKeeper;
-//
-//import com.stockportfoliomanagementsystem.MySqlCon;
-//import javafx.beans.property.SimpleStringProperty;
-//import javafx.collections.FXCollections;
-//import javafx.collections.ObservableList;
-//import javafx.fxml.FXML;
-//import javafx.fxml.Initializable;
-//import javafx.scene.control.Label;
-//import javafx.scene.control.TableColumn;
-//import javafx.scene.control.TableView;
-//import javafx.scene.image.ImageView;
-//import javafx.scene.input.MouseEvent;
-//
-//import java.net.URL;
-//import java.sql.Connection;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.util.ResourceBundle;
-//
-//public class BuyExisting implements Initializable {
-//
-//    Connection conn = MySqlCon.MysqlMethod();
-//    @FXML
-//    private ImageView imageView;
-//
-//    @FXML
-//    private TableView<?> tblCart;
-//
-//    @FXML
-//    private TableView<ObservableList<String>> tblProducts;
-//
-//    @FXML
-//    private Label txtName;
-//
-//    @FXML
-//    void onAddBtnClick(MouseEvent event) {
-//
-//    }
-//
-//    @FXML
-//    void onCustomersButton(MouseEvent event) {
-//
-//    }
-//
-//    @FXML
-//    void onManageStock(MouseEvent event) {
-//
-//    }
-//
-//    @FXML
-//    void onReportsButton(MouseEvent event) {
-//
-//    }
-//
-//    @FXML
-//    void onSupplierButton(MouseEvent event) {
-//
-//    }
-//
-//    @FXML
-//    void onAddToCart(MouseEvent event) {
-//
-//    }
-//
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        loadFromDB();
-//    }
-//
-//    public void loadFromDB() {
-//        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblProducts.getColumns();
-//        columns.clear();
-//
-//        // Define fixed column names
-//        String[] columnNames = {"Product ID","Name","Price","Remaining QTY","Description","Supplier"};
-//
-//        double columnWidth = (tblProducts.getPrefWidth()) / (columnNames.length)-1;
-//
-//        // Add the columns to the TableView with fixed names
-//        for (int i = 0; i < columnNames.length; i++) {
-//            final int columnIndex = i;
-//            TableColumn<ObservableList<String>, String> column = new TableColumn<>(columnNames[i]);
-//            column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(columnIndex)));
-//            column.setPrefWidth(columnWidth);
-//            columns.add(column);
-//        }
-//
-//        String sql = "SELECT stock.P_ID, stock.P_Name, stock.Selling_price, stock.Qty, stock.P_Description, supplier.S_Name FROM stock,supplier WHERE stock.S_ID = supplier.S_ID";
-//        try {
-//            PreparedStatement pstmt = conn.prepareStatement(sql);
-//            ResultSet rs = pstmt.executeQuery();
-//
-//            ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
-//            while (rs.next()) {
-//                ObservableList<String> row = FXCollections.observableArrayList();
-//                for (int i = 1; i <= columnNames.length; i++) {
-//                    row.add(rs.getString(i));
-//                }
-//                data.add(row);
-//            }
-//
-//            tblProducts.setItems(data);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//}
-//
-
 package com.stockportfoliomanagementsystem.StockKeeper;
 
+import com.stockportfoliomanagementsystem.Main;
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -123,13 +12,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -508,7 +400,31 @@ public class BuyExisting implements Initializable {
                 Scene scene = new Scene(root);
                 setScene(scene);
                 newStage.setScene(scene);
+
+                Screen primaryScreen = Screen.getPrimary();
+
+                double screenWidth = primaryScreen.getBounds().getWidth();
+                double screenHeight = primaryScreen.getBounds().getHeight();
+
+                System.out.println(screenWidth);
+                System.out.println(screenHeight);
+                // Calculate the center position
+                double centerX = screenWidth / 2;
+                double centerY = screenHeight / 2;
+
+                double boundX = centerX - (850 / 2);
+                double boundY = centerY - (640 / 2);
+
+                newStage.setX(boundX);
+                newStage.setY(boundY);
+
                 newStage.setResizable(false);
+                newStage.setTitle("Invoice");
+
+                String relativePath = "/com/stockportfoliomanagementsystem/Images/logoIcon.png";
+                InputStream iconStream = Main.class.getResourceAsStream(relativePath);
+                Image iconImage = new Image(iconStream);
+                newStage.getIcons().add(iconImage);
                 // Show the new stage
                 newStage.show();
 
