@@ -22,7 +22,7 @@ public class BuyProducts implements Initializable {
     @FXML
     private Label txtName;
 
-    private static int isExisting;
+    private static String productType;
 
     @FXML
     private Stage stage;
@@ -30,14 +30,6 @@ public class BuyProducts implements Initializable {
     private Parent root;
 
 
-    private void setProductExisting(int existing) {
-        System.out.println("setter"+isExisting);
-        this.isExisting = existing;
-    }
-
-    public static int getProductExisting() {
-        return isExisting;
-    }
     @FXML
     void onCustomersButton(MouseEvent event) {
 
@@ -61,10 +53,9 @@ public class BuyProducts implements Initializable {
     @FXML
     void onExistingProducts(MouseEvent event) throws IOException {
 
-        int existing = 1;
+        String existing = "Existing";
         System.out.println("declare"+existing);
 
-        setProductExisting(existing);
 
         root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectCustomerType.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -1,6 +1,7 @@
 package com.stockportfoliomanagementsystem.StockKeeper;
 
 import com.stockportfoliomanagementsystem.MySqlCon;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,7 +44,10 @@ import java.util.ResourceBundle;
 public class PaymentRecieptCustomer implements Initializable {
 
     Connection conn = MySqlCon.MysqlMethod();
-    String cid = SelectExistingCustomer.getCustomerIndex();
+    String cid;
+
+    private String CustomerTypeNew = AddNewCustomer.getCustomerType();
+    private String CustomerTypeExisting = SelectExistingCustomer.getCustomerType();
 
     int pdfButtonCount = 0;
     private FileInputStream fis;
@@ -90,6 +94,17 @@ public class PaymentRecieptCustomer implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Customer Type: "+CustomerTypeNew);
+        System.out.println("Customer Type: "+CustomerTypeExisting);
+
+        if(CustomerTypeNew != null) {
+            cid = AddNewCustomer.getCusIDNew();
+            System.out.println("Customer ID: " + cid);
+        }else if(CustomerTypeExisting != null){
+            cid = SelectExistingCustomer.getCustomerIndex();
+            System.out.println("Customer ID: " + cid);
+        }
+
         loadInvoiceFromDB();
         tblInvoice.setSelectionModel(null);
 
@@ -199,6 +214,11 @@ public class PaymentRecieptCustomer implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        Platform.runLater(() -> {
+            captureScne();
+        });
+
     }
 
     private void captureScne() {
@@ -269,8 +289,6 @@ public class PaymentRecieptCustomer implements Initializable {
 
             pstmt.executeUpdate();
 
-            showPDF();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
@@ -300,12 +318,7 @@ public class PaymentRecieptCustomer implements Initializable {
 
     @FXML
     void onBtnPDF(MouseEvent event) {
-        if(pdfButtonCount == 0) {
-            captureScne();
-            pdfButtonCount++;
-        }else{
-            showClickErrorDialog();
-        }
+        showPDF();
     }
 
     public void showClickErrorDialog() {

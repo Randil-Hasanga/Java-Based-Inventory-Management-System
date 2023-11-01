@@ -31,9 +31,22 @@ CREATE TABLE if not exists customer (
   C_Contact VARCHAR(15) DEFAULT NULL
 );
 
+ALTER TABLE customer AUTO_INCREMENT = 1;
+
+DELIMITER $$
+
+CREATE TRIGGER set_Cus_id
+BEFORE INSERT ON customer FOR EACH ROW
+BEGIN
+  SET NEW.C_ID = CONCAT('C_', LPAD(NEW.C_ID, 3, '0'));
+END;
+$$
+
+DELIMITER ;
+
 INSERT INTO customer
 VALUES
-('C001','Samanthi','Matara','715214560');
+('1','Samanthi','Matara','715214560');
 
 CREATE TABLE if not exists supplier (
   S_ID varchar(5) NOT NULL PRIMARY KEY,
@@ -110,7 +123,7 @@ DELIMITER $$
 CREATE TRIGGER set_transaction_id_sup
 BEFORE INSERT ON transactions_sup FOR EACH ROW
 BEGIN
-  SET NEW.transaction_id = CONCAT('I_', LPAD(NEW.transaction_id, 3, '0'));
+  SET NEW.transaction_id = CONCAT('T_', LPAD(NEW.transaction_id, 3, '0'));
 END;
 $$
 
@@ -138,7 +151,7 @@ DELIMITER $$
 CREATE TRIGGER set_transaction_id_cus
 BEFORE INSERT ON transactions_cus FOR EACH ROW
 BEGIN
-  SET NEW.transaction_id = CONCAT('I_', LPAD(NEW.transaction_id, 3, '0'));
+  SET NEW.transaction_id = CONCAT('T_', LPAD(NEW.transaction_id, 3, '0'));
 END;
 $$
 
@@ -165,8 +178,16 @@ DELIMITER $$
 CREATE TRIGGER set_transaction_id_temp
 BEFORE INSERT ON temp_invoice FOR EACH ROW
 BEGIN
-  SET NEW.transaction_id = CONCAT('I_', LPAD(NEW.transaction_id, 3, '0'));
+  SET NEW.transaction_id = CONCAT('T_', LPAD(NEW.transaction_id, 3, '0'));
 END;
 $$
 
 DELIMITER ;
+
+CREATE TABLE PDF_invoices (
+    invoice_id INT AUTO_INCREMENT PRIMARY KEY,
+    date_ DATE,
+    C_ID VARCHAR(5),
+    pdf LONGBLOB
+);
+

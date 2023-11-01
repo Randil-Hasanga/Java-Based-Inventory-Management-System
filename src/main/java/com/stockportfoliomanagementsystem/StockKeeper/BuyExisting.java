@@ -30,7 +30,9 @@ import java.util.ResourceBundle;
 public class BuyExisting implements Initializable {
 
     Connection conn = MySqlCon.MysqlMethod();
-    private String index = SelectExistingCustomer.getCustomerIndex();
+    private String index;
+    private String customerTypeNew;
+    private String customerTypeExisting;
 
     @FXML
     private TableView<ObservableList<String>> tblCart;
@@ -56,6 +58,8 @@ public class BuyExisting implements Initializable {
     static Scene scene;
 
     private int invoiceRowCount;
+    private String CustomerTypeNew = AddNewCustomer.getCustomerType();
+    private String CustomerTypeExisting = SelectExistingCustomer.getCustomerType();
 
     @FXML
     void onAddBtnClick(MouseEvent event) {
@@ -93,6 +97,15 @@ public class BuyExisting implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if(CustomerTypeNew != null) {
+            index = AddNewCustomer.getCusIDNew();
+            System.out.println("Customer ID: " + index);
+        }else if(CustomerTypeExisting != null){
+            index = SelectExistingCustomer.getCustomerIndex();
+            System.out.println("Customer ID: " + index);
+        }
+
         System.out.println(LocalDate.now());
         System.out.println(index);
         loadFromDB();
@@ -101,8 +114,10 @@ public class BuyExisting implements Initializable {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
         quantitySpinner.setValueFactory(valueFactory);
 
+        // Create the columns for the cart table
         ObservableList<TableColumn<ObservableList<String>, ?>> cartColumns = tblCart.getColumns();
         cartColumns.clear();
+
 
         // Define column names for the cart table
         String[] cartColumnNames = {"Product ID", "Name", "Price", "Description", "Supplier", "Quantity"};
@@ -329,7 +344,13 @@ public class BuyExisting implements Initializable {
 
         ObservableList<ObservableList<String>> table = tblCart.getItems();
 
-        if(table != null) {
+        int rowCount = table.size();
+        System.out.println("Row count: " + rowCount);
+
+
+        System.out.println(table.size());
+
+        if(rowCount > 0){
             for (ObservableList<String> cartItem2 : tblCart.getItems()) {
                 String count = "SELECT COUNT(*) FROM transactions_cus";
                 try {
@@ -432,11 +453,28 @@ public class BuyExisting implements Initializable {
                 e.printStackTrace();
             }
         }else{
-            showCustomDialog();
+            showTableEmptyDialog();
         }
     }
 
+    private void showTableEmptyDialog() {
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Warning !");
 
+        Label messageLabel = new Label("Table Empty.");
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(event -> dialog.close());
+
+        VBox dialogVBox = new VBox(10);
+        dialogVBox.getChildren().addAll(messageLabel, closeButton);
+        dialogVBox.setStyle("-fx-alignment: center; -fx-padding: 20;");
+
+        Scene dialogScene = new Scene(dialogVBox, 300, 100);
+        dialog.setScene(dialogScene);
+        dialog.showAndWait();
+    }
 
     private void removeProduct() {
         ObservableList<String> selected = tblCart.getSelectionModel().getSelectedItem();

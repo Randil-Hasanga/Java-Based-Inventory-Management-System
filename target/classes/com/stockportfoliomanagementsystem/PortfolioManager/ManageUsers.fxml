@@ -152,6 +152,24 @@
                   <TableColumn prefWidth="158.0" text="Contact Number" />
               </columns>
             </TableView>
+            <Button layoutX="504.0" layoutY="380.0" mnemonicParsing="false" onMouseClicked="#onUpdateButton" prefHeight="31.0" prefWidth="121.0" style="-fx-background-color: #5E7AC7FF;" stylesheets="@../CSS/styles.css" text="Update">
+               <styleClass>
+                  <String fx:value="login-button" />
+                  <String fx:value="shadow" />
+               </styleClass>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="377.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#onRefresh" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Refresh">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="shadow" />
+                  <String fx:value="yellow-button" />
+               </styleClass>
+            </Button>
          </children>
       </Pane>
       <Button fx:id="btnDelete" layoutX="1051.0" layoutY="510.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Delete">
@@ -170,15 +188,6 @@
          <font>
             <Font size="14.0" />
          </font>
-      </Button>
-      <Button layoutX="797.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#onRefresh" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Refresh">
-         <font>
-            <Font size="14.0" />
-         </font>
-         <styleClass>
-            <String fx:value="shadow" />
-            <String fx:value="yellow-button" />
-         </styleClass>
       </Button>
     </children>
 </AnchorPane>

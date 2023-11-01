@@ -130,7 +130,7 @@
                   </TableView>
                </content>
             </ScrollPane>
-            <Button fx:id="onSellBtn" layoutX="678.0" layoutY="221.0" mnemonicParsing="false" onMouseClicked="#onAddBtnClick" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Sell">
+            <Button fx:id="onSellBtn" layoutX="678.0" layoutY="221.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Sell">
                <font>
                   <Font size="14.0" />
                </font>

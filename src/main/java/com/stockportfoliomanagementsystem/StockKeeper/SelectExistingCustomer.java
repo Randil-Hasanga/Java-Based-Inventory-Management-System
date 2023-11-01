@@ -43,6 +43,7 @@ public class SelectExistingCustomer implements Initializable {
     private Scene scene;
     private Parent root;
     private static String selectedIndex;
+    protected static String customerType;
 
     @FXML
     void onCustomersButton(MouseEvent event) {
@@ -57,6 +58,13 @@ public class SelectExistingCustomer implements Initializable {
     @FXML
     void onSupplierButton(MouseEvent event) {
 
+    }
+
+    private void setCustomerType(String existing) {
+        this.customerType = existing;
+    }
+    public static String getCustomerType() {
+        return customerType;
     }
 
     private void setCustomerIndex(String index) {
@@ -117,6 +125,8 @@ public class SelectExistingCustomer implements Initializable {
 
         if(index != null) {
             setCustomerIndex(index.get(0));
+            setCustomerType("Existing");
+            AddNewCustomer.customerType = null;
 
             root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/BuyExisting.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -130,7 +140,10 @@ public class SelectExistingCustomer implements Initializable {
             BuyExisting buyExisting = new BuyExisting();
             buyExisting.showCustomDialog();
         }
+
+
     }
+
 
 
 

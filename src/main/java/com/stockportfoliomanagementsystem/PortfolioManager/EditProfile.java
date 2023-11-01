@@ -56,22 +56,22 @@ public class EditProfile implements Initializable{
     @FXML
     private TextField txtUserName;
 
-    File selectedFile;
-    FileChooser fc;
-    FileInputStream fis;
+    private File selectedFile;
+    private FileChooser fc;
+    private FileInputStream fis;
 
     @FXML
     private Window window;
 
-    String position;
-    String userId;
-    String userName = mc.getUsername();
-    String pwd = mc.getPwd();
-    String NIC;
-    String Lname;
-    String Fname;
-    String contact;
-    InputStream is;
+    private String position;
+    private String userId;
+    private String userName = mc.getUsername();
+    private String pwd = mc.getPwd();
+    private String NIC;
+    private String Lname;
+    private String Fname;
+    private String contact;
+    private InputStream is;
 
     @FXML
     private Stage stage;
@@ -84,7 +84,7 @@ public class EditProfile implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dropPosition.setItems(FXCollections.observableArrayList("Portfolio Manager", "Accounting Manager", "HR Manager", "Stock keeper"));
+        //dropPosition.setItems(FXCollections.observableArrayList("Portfolio Manager", "Accounting Manager", "HR Manager", "Stock keeper"));
 
         String sql = "SELECT * FROM users WHERE Username = ? AND Password = ?";
 
@@ -101,7 +101,7 @@ public class EditProfile implements Initializable{
                 Fname = rs.getString("Fname");
                 Lname = rs.getString("Lname");
                 NIC = rs.getString("NIC");
-                position = rs.getString("Position");
+                //position = rs.getString("Position");
                 contact = rs.getString("Contact");
                 is = rs.getBinaryStream("Pic");
             }
@@ -114,12 +114,8 @@ public class EditProfile implements Initializable{
         txtFname.setText(Fname);
         txtLname.setText(Lname);
         txtNIC.setText(NIC);
-        dropPosition.setValue(position);
+        //dropPosition.setValue(position);
         txtContact.setText(contact);
-    }
-    @FXML
-    void onPositionSelection(ActionEvent event) {
-        position = dropPosition.getValue();
     }
     @FXML
     void onChooseBtn(ActionEvent event) {
@@ -148,10 +144,10 @@ public class EditProfile implements Initializable{
         NIC = txtNIC.getText();
         contact = txtContact.getText();
 
-        if((userId.isEmpty())||(userName.isEmpty())||(pwd.isEmpty())||(Fname.isEmpty())||(Lname.isEmpty())||(NIC.isEmpty())||(contact.isEmpty())||(position.isEmpty())){
+        if((userId.isEmpty())||(userName.isEmpty())||(pwd.isEmpty())||(Fname.isEmpty())||(Lname.isEmpty())||(NIC.isEmpty())||(contact.isEmpty())){
             lblWarning.setText("Please Fill All The Fields");
         }else{
-            String sql = "UPDATE users SET User_id = ?, Username = ?, Password = ?, FName = ?, Lname = ?, NIC = ?, Position = ?, Contact = ?, Pic = ? WHERE Username = ? AND Password = ?";
+            String sql = "UPDATE users SET User_id = ?, Username = ?, Password = ?, FName = ?, Lname = ?, NIC = ?, Contact = ?, Pic = ? WHERE Username = ? AND Password = ?";
 
             try {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -161,11 +157,10 @@ public class EditProfile implements Initializable{
                 pstmt.setString(4, Fname);
                 pstmt.setString(5, Lname);
                 pstmt.setString(6, NIC);
-                pstmt.setString(7, position);
-                pstmt.setString(8, contact);
-                pstmt.setBinaryStream(9, fis);
-                pstmt.setString(10, mc.getUsername());
-                pstmt.setString(11, mc.getPwd());
+                pstmt.setString(7, contact);
+                pstmt.setBinaryStream(8, fis);
+                pstmt.setString(9, mc.getUsername());
+                pstmt.setString(10, mc.getPwd());
                 pstmt.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);

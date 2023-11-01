@@ -40,11 +40,58 @@ public class ManageUsersCtrl implements Initializable {
     private Scene scene;
     private Parent root;
 
+    private static String userId;
+
+    private void setSelectedUser(String userId) {
+        this.userId = userId;
+    }
+    public static String getSelectedUser(){
+        return userId;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadFromDB();
         tblUsers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
+
+    @FXML
+    void onUpdateButton(MouseEvent event) {
+        int selectedIndex = tblUsers.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            ObservableList<String> selectedRow = tblUsers.getItems().get(selectedIndex);
+            String userId = selectedRow.get(0); // Assuming User_Id is in the first column
+            setSelectedUser(userId);
+
+            try {
+                // Load the FXML file for the new window
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/UpdateOtherUsers.fxml"));
+                Parent root = loader.load();
+
+                // Create a new stage
+                Stage newStage = new Stage();
+
+                // Set the FXML content as the scene for the new stage
+                Scene scene = new Scene(root);
+                newStage.setScene(scene);
+                newStage.setResizable(false);
+
+                // Show the new stage
+                newStage.show();
+
+                // close current stage
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Inform the user that no row is selected
+            // You can display a dialog or a message to indicate this.
+        }
+
+    }
+
+
 
     public void loadFromDB() {
         ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblUsers.getColumns();
