@@ -3,10 +3,17 @@ package com.stockportfoliomanagementsystem.HRManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -17,6 +24,37 @@ public class HRManagerController implements Initializable {
 
     @FXML
     private PieChart pieChart;
+    @FXML
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    @FXML
+    void onManageCustomers(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageCustomers.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void onManageSuppliers(MouseEvent event) {
+
+    }
+
+    @FXML
+    void onReportsButton(MouseEvent event) {
+
+    }
+
+    @FXML
+    void onStockButton(MouseEvent event) {
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -93,9 +131,5 @@ public class HRManagerController implements Initializable {
         lineChart.getData().addAll(new LineChart.Series("Inventory at\nBeginning of the month", lineChartData));
         lineChart.getData().addAll(new LineChart.Series("Sales at \nEnd of the month", lineChartData1));
         lineChart.getData().addAll(new LineChart.Series("Profit or Loss", lineChartData2));
-
-
-
     }
-
 }

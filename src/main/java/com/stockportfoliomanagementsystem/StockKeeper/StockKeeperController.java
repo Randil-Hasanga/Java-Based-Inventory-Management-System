@@ -68,16 +68,11 @@ public class StockKeeperController implements Initializable {
             stage.show();
     }
 
-
     @FXML
     void onDeleteProducts(MouseEvent event) {
 
     }
 
-    @FXML
-    void onAddProduct(MouseEvent event) {
-
-    }
 
     @FXML
     void onSellProducts(MouseEvent event) throws IOException {

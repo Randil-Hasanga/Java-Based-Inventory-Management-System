@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -15,47 +16,79 @@
                 <Font name="Calibri" size="24.0" />
             </font>
         </Label>
-        <Pane layoutX="107.0" layoutY="100.0" prefHeight="359.0" prefWidth="636.0" styleClass="container_" stylesheets="@../CSS/styles.css">
+        <Pane layoutX="108.0" layoutY="131.0" prefHeight="359.0" prefWidth="636.0" stylesheets="@../CSS/styles.css">
             <children>
-                <Label layoutX="29.0" layoutY="21.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="User ID" textAlignment="RIGHT">
+                <Label layoutX="29.0" layoutY="21.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="User ID" textAlignment="RIGHT">
                     <font>
-                        <Font name="Calibri" size="18.0" />
+                        <Font name="Calibri Bold" size="18.0" />
                     </font>
+               <styleClass>
+                  <String fx:value="right_align" />
+                  <String fx:value="shadow" />
+               </styleClass>
                 </Label>
-                <TextField fx:id="txtUserID" editable="false" layoutX="202.0" layoutY="21.0" prefHeight="37.0" prefWidth="407.0" />
-                <Label layoutX="29.0" layoutY="74.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="Username" textAlignment="RIGHT">
+                <TextField fx:id="txtUserID" editable="false" layoutX="202.0" layoutY="21.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <Label layoutX="29.0" layoutY="74.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="Username" textAlignment="RIGHT">
                     <font>
-                        <Font name="Calibri" size="18.0" />
+                        <Font name="Calibri Bold" size="18.0" />
                     </font>
+               <styleClass>
+                  <String fx:value="right_align" />
+                  <String fx:value="shadow" />
+               </styleClass>
                 </Label>
-                <TextField fx:id="txtUserName" layoutX="202.0" layoutY="74.0" prefHeight="37.0" prefWidth="407.0" />
-                <Label layoutX="28.0" layoutY="127.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="First Name" textAlignment="RIGHT">
+                <TextField fx:id="txtUserName" layoutX="202.0" layoutY="74.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <Label layoutX="28.0" layoutY="127.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="First Name" textAlignment="RIGHT">
                     <font>
-                        <Font name="Calibri" size="18.0" />
+                        <Font name="Calibri Bold" size="18.0" />
                     </font>
+               <styleClass>
+                  <String fx:value="right_align" />
+                  <String fx:value="shadow" />
+               </styleClass>
                 </Label>
-                <TextField fx:id="txtFname" layoutX="201.0" layoutY="127.0" prefHeight="37.0" prefWidth="407.0" />
-                <Label layoutX="28.0" layoutY="183.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="Last Name" textAlignment="RIGHT">
+                <TextField fx:id="txtFname" layoutX="201.0" layoutY="127.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <Label layoutX="28.0" layoutY="183.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="Last Name" textAlignment="RIGHT">
                     <font>
-                        <Font name="Calibri" size="18.0" />
+                        <Font name="Calibri Bold" size="18.0" />
                     </font>
+               <styleClass>
+                  <String fx:value="right_align" />
+                  <String fx:value="shadow" />
+               </styleClass>
                 </Label>
-                <TextField fx:id="txtLname" layoutX="201.0" layoutY="183.0" prefHeight="37.0" prefWidth="407.0" />
-                <Label layoutX="28.0" layoutY="236.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="NIC" textAlignment="RIGHT">
+                <TextField fx:id="txtLname" layoutX="201.0" layoutY="183.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <Label layoutX="28.0" layoutY="236.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="NIC" textAlignment="RIGHT">
                     <font>
-                        <Font name="Calibri" size="18.0" />
+                        <Font name="Calibri Bold" size="18.0" />
                     </font>
+               <styleClass>
+                  <String fx:value="right_align" />
+                  <String fx:value="shadow" />
+               </styleClass>
                 </Label>
-                <TextField fx:id="txtNIC" layoutX="201.0" layoutY="236.0" prefHeight="37.0" prefWidth="407.0" />
-                <Label layoutX="28.0" layoutY="292.0" prefHeight="37.0" prefWidth="160.0" styleClass="right_align" stylesheets="@../CSS/styles.css" text="Contact number" textAlignment="RIGHT">
+                <TextField fx:id="txtNIC" layoutX="201.0" layoutY="236.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <Label layoutX="28.0" layoutY="292.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="Contact number" textAlignment="RIGHT">
                     <font>
-                        <Font name="Calibri" size="18.0" />
+                        <Font name="Calibri Bold" size="18.0" />
                     </font>
+               <styleClass>
+                  <String fx:value="right_align" />
+                  <String fx:value="shadow" />
+               </styleClass>
                 </Label>
-                <TextField fx:id="txtContact" layoutX="201.0" layoutY="292.0" prefHeight="37.0" prefWidth="407.0" />
+                <TextField fx:id="txtContact" layoutX="201.0" layoutY="292.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
             </children>
+         <styleClass>
+            <String fx:value="container_" />
+            <String fx:value="shadow" />
+         </styleClass>
         </Pane>
-        <Button layoutX="654.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#onUpdateButton" prefHeight="28.0" prefWidth="89.0" styleClass="login-button" stylesheets="@../CSS/styles.css" text="Update" />
+        <Button layoutX="655.0" layoutY="509.0" mnemonicParsing="false" onMouseClicked="#onUpdateButton" prefHeight="28.0" prefWidth="89.0" stylesheets="@../CSS/styles.css" text="Update">
+         <styleClass>
+            <String fx:value="login-button" />
+            <String fx:value="shadow" />
+         </styleClass></Button>
       <Label fx:id="lblSuccess" layoutX="181.0" layoutY="481.0" prefHeight="28.0" prefWidth="489.0" textAlignment="CENTER">
          <font>
             <Font size="18.0" />

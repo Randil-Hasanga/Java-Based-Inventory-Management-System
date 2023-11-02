@@ -193,7 +193,7 @@
                 </Label>
             </children>
         </Pane>
-      <Label fx:id="lblSuccess" layoutX="491.0" layoutY="623.0" prefHeight="17.0" prefWidth="487.0" textAlignment="CENTER">
+      <Label fx:id="lblSuccess" layoutX="491.0" layoutY="623.0" prefHeight="17.0" prefWidth="487.0" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

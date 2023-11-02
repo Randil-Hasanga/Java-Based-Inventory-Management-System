@@ -11,12 +11,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -85,8 +85,7 @@ public class ManageUsersCtrl implements Initializable {
                 e.printStackTrace();
             }
         } else {
-            // Inform the user that no row is selected
-            // You can display a dialog or a message to indicate this.
+            showCustomDialog();
         }
 
     }
@@ -153,9 +152,27 @@ public class ManageUsersCtrl implements Initializable {
                 e.printStackTrace();
             }
         } else {
-            // Inform the user that no row is selected
-            // You can display a dialog or a message to indicate this.
+            showCustomDialog();
         }
+    }
+
+    public void showCustomDialog() {
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Warning !");
+
+        Label messageLabel = new Label("Please select a row from the table.");
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(event -> dialog.close());
+
+        VBox dialogVBox = new VBox(10);
+        dialogVBox.getChildren().addAll(messageLabel, closeButton);
+        dialogVBox.setStyle("-fx-alignment: center; -fx-padding: 20;");
+
+        Scene dialogScene = new Scene(dialogVBox, 300, 100);
+        dialog.setScene(dialogScene);
+        dialog.showAndWait();
     }
 
     @FXML

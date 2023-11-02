@@ -24,6 +24,8 @@
 .login-button {
     -fx-background-color: #2db09e;
     -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
 }
 
 /* Define the hover (mouse entered) button style */
@@ -149,6 +151,8 @@
 
 .selected-button {
     -fx-background-color: transparent;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
 }
 
 .selected-button:hover {
