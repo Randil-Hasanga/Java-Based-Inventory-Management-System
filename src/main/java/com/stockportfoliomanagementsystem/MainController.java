@@ -133,7 +133,7 @@ public class MainController {
             stage.setResizable(false);
             stage.show();
         }else if(position.equals("HR Manager")) {
-            root = FXMLLoader.load(getClass().getResource("HRManagerDashboard.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/HRManagerDashboard.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setHeight(700);
             stage.setWidth(1210);

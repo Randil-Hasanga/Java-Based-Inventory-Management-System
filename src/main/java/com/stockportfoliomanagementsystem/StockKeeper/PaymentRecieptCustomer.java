@@ -37,7 +37,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class PaymentRecieptCustomer implements Initializable {
+public class PaymentRecieptCustomer implements Initializable{
 
     Connection conn = MySqlCon.MysqlMethod();
     String cid;
@@ -103,7 +103,6 @@ public class PaymentRecieptCustomer implements Initializable {
 
         loadInvoiceFromDB();
         tblInvoice.setSelectionModel(null);
-
     }
 
     private void loadInvoiceFromDB() {
