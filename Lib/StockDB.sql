@@ -55,6 +55,19 @@ CREATE TABLE if not exists supplier (
   Description varchar(25) DEFAULT NULL,
   S_Location varchar(15) DEFAULT NULL
 );
+
+ALTER TABLE supplier AUTO_INCREMENT = 1;
+
+DELIMITER $$
+
+CREATE TRIGGER set_Sup_id
+BEFORE INSERT ON supplier FOR EACH ROW
+BEGIN
+  SET NEW.S_ID = CONCAT('S', LPAD(NEW.S_ID, 3, '0'));
+END;
+$$
+
+DELIMITER ;
   
 INSERT INTO supplier
 VALUES
@@ -98,7 +111,18 @@ VALUES
 --   FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
 -- );
 
+ALTER TABLE stock AUTO_INCREMENT = 1;
 
+DELIMITER $$
+
+CREATE TRIGGER product_id
+BEFORE INSERT ON stock FOR EACH ROW
+BEGIN
+  SET NEW.P_ID = CONCAT('P', LPAD(NEW.P_ID, 3, '0'));
+END;
+$$
+
+DELIMITER ;
 
 CREATE TABLE if not exists transactions_sup (
   transaction_id CHAR(6),
@@ -190,4 +214,31 @@ CREATE TABLE PDF_invoices (
     C_ID VARCHAR(5),
     pdf LONGBLOB
 );
+
+CREATE TABLE if not exists temp_invoice_sup (
+  transaction_id CHAR(6),
+  Date_ DATE DEFAULT NULL,
+  Description VARCHAR(10) DEFAULT NULL,
+  Qty INT,
+  Price DECIMAL(10,2) DEFAULT NULL,
+  Total DECIMAL(10,2),
+  S_ID VARCHAR(5) DEFAULT NULL,
+  P_ID VARCHAR(5),
+  PRIMARY KEY (transaction_id),
+  FOREIGN KEY (S_ID) REFERENCES supplier (S_ID),
+  FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
+);
+
+ALTER TABLE temp_invoice_sup AUTO_INCREMENT = 1;
+
+DELIMITER $$
+
+CREATE TRIGGER set_transaction_id_temp_sup
+BEFORE INSERT ON temp_invoice_sup FOR EACH ROW
+BEGIN
+  SET NEW.transaction_id = CONCAT('T_', LPAD(NEW.transaction_id, 3, '0'));
+END;
+$$
+
+DELIMITER ;
 

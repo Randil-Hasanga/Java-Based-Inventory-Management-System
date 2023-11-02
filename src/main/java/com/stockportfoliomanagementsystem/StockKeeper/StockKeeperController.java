@@ -28,7 +28,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class StockKeeperController implements Initializable {
-    Connection conn = MySqlCon.MysqlMethod();
+    static Connection conn = MySqlCon.MysqlMethod();
 
     @FXML
     private LineChart<?, ?> lineChart;
@@ -68,10 +68,6 @@ public class StockKeeperController implements Initializable {
             stage.show();
     }
 
-    @FXML
-    void onSellProducts(MouseEvent event) {
-
-    }
 
     @FXML
     void onDeleteProducts(MouseEvent event) {
@@ -84,8 +80,21 @@ public class StockKeeperController implements Initializable {
     }
 
     @FXML
-    void onBuyProducts(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/BuyProducts.fxml"));
+    void onSellProducts(MouseEvent event) throws IOException {
+
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectCustomerType.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void onBuyProduct(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectSupplierType.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setHeight(700);
         stage.setWidth(1210);
@@ -250,5 +259,17 @@ public class StockKeeperController implements Initializable {
         lineChart.getData().addAll(new LineChart.Series("Inventory at\nBeginning of the month", lineChartData));
         lineChart.getData().addAll(new LineChart.Series("Sales at \nEnd of the month", lineChartData1));
         lineChart.getData().addAll(new LineChart.Series("Profit or Loss", lineChartData2));
+    }
+
+    public static void dbUpdate(){
+        String stockTotal = "UPDATE stock SET Total = Selling_price*Qty";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(stockTotal);
+            pstmt.executeUpdate();
+            System.out.println("stock update");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

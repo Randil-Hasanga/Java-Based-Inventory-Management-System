@@ -27,7 +27,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class BuyExisting implements Initializable {
+public class SellExisting implements Initializable {
 
     Connection conn = MySqlCon.MysqlMethod();
     private String index;
@@ -57,7 +57,7 @@ public class BuyExisting implements Initializable {
 
     static Scene scene;
 
-    private int invoiceRowCount;
+    private int transaction_cus_rowCount;
     private String CustomerTypeNew = AddNewCustomer.getCustomerType();
     private String CustomerTypeExisting = SelectExistingCustomer.getCustomerType();
 
@@ -228,6 +228,7 @@ public class BuyExisting implements Initializable {
                     System.out.println("Selection Cleared");
                 }
             }
+            StockKeeperController.dbUpdate();
             loadFromDB();
         }else{
             showCustomDialog();
@@ -303,6 +304,7 @@ public class BuyExisting implements Initializable {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
+                    StockKeeperController.dbUpdate();
                     loadFromDB();
                     break;
                 }
@@ -329,6 +331,7 @@ public class BuyExisting implements Initializable {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                StockKeeperController.dbUpdate();
                 loadFromDB();
             }else{
                 tblCart.refresh();
@@ -358,7 +361,7 @@ public class BuyExisting implements Initializable {
                     ResultSet rs = statement.executeQuery();
 
                     while (rs.next()) {
-                        invoiceRowCount = rs.getInt(1);
+                        transaction_cus_rowCount = rs.getInt(1);
                         System.out.println(count);
                     }
                 } catch (SQLException e) {
@@ -370,7 +373,7 @@ public class BuyExisting implements Initializable {
                         "(?,?,?,?,?,?,?)";
                 try {
                     PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, String.valueOf(invoiceRowCount + 1));
+                    pstmt.setString(1, String.valueOf(transaction_cus_rowCount + 1));
                     pstmt.setDate(2, Date.valueOf(LocalDate.now()));
                     pstmt.setInt(3, Integer.parseInt(cartItem2.get(5)));
                     pstmt.setDouble(4, Double.parseDouble(cartItem2.get(2)));
@@ -389,7 +392,7 @@ public class BuyExisting implements Initializable {
                         "(?,?,?,?,?,?,?)";
                 try {
                     PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-                    pstmt2.setString(1, String.valueOf(invoiceRowCount + 1));
+                    pstmt2.setString(1, String.valueOf(transaction_cus_rowCount + 1));
                     pstmt2.setDate(2, Date.valueOf(LocalDate.now()));
                     pstmt2.setInt(3, Integer.parseInt(cartItem2.get(5)));
                     pstmt2.setDouble(4, Double.parseDouble(cartItem2.get(2)));
@@ -411,7 +414,7 @@ public class BuyExisting implements Initializable {
 
             try {
                 // Load the FXML file for the new window
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/paymentRecieptCustomer.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/paymentRecieptSupplier.fxml"));
                 Parent root = loader.load();
 
                 // Create a new stage
@@ -457,7 +460,7 @@ public class BuyExisting implements Initializable {
         }
     }
 
-    private void showTableEmptyDialog() {
+    public void showTableEmptyDialog() {
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initStyle(StageStyle.UTILITY);
@@ -494,6 +497,7 @@ public class BuyExisting implements Initializable {
                 throw new RuntimeException(e);
             }
             tblCart.getSelectionModel().clearSelection();
+            StockKeeperController.dbUpdate();
             loadFromDB();
         } else{
             showCustomDialog();
