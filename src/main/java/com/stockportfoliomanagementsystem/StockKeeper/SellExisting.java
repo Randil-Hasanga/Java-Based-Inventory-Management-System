@@ -26,6 +26,8 @@ import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SellExisting implements Initializable {
 
@@ -33,6 +35,8 @@ public class SellExisting implements Initializable {
     private String index;
     private String customerTypeNew;
     private String customerTypeExisting;
+    private String max;
+    private int numericId;
 
     @FXML
     private TableView<ObservableList<String>> tblCart;
@@ -57,7 +61,6 @@ public class SellExisting implements Initializable {
 
     static Scene scene;
 
-    private int transaction_cus_rowCount;
     private String CustomerTypeNew = AddNewCustomer.getCustomerType();
     private String CustomerTypeExisting = SelectExistingCustomer.getCustomerType();
 
@@ -355,15 +358,33 @@ public class SellExisting implements Initializable {
 
         if(rowCount > 0){
             for (ObservableList<String> cartItem2 : tblCart.getItems()) {
-                String count = "SELECT COUNT(*) FROM transactions_cus";
+                String count = "SELECT MAX(transaction_id) FROM transactions_cus";
                 try {
-                    PreparedStatement statement = conn.prepareStatement(count);
-                    ResultSet rs = statement.executeQuery();
+                    PreparedStatement pstmt = conn.prepareStatement(count);
+                    ResultSet rs = pstmt.executeQuery();
 
                     while (rs.next()) {
-                        transaction_cus_rowCount = rs.getInt(1);
-                        System.out.println(count);
+                        max = rs.getString(1);
+                        System.out.println("Last : "+max);
                     }
+                    Pattern pattern = Pattern.compile("\\d+");
+
+                    // Use a Matcher to find the numeric part
+                    Matcher matcher = pattern.matcher(max);
+
+                    if (matcher.find()) {
+                        // Extract the numeric part as a string
+                        String numericPart = matcher.group();
+
+                        // Convert the numeric part to an integer if needed
+                        numericId = Integer.parseInt(numericPart);
+
+                        // Now you have the numeric ID as an integer
+                        System.out.println("Numeric ID: " + numericId);
+                    } else {
+                        System.out.println("No numeric part found in the C_ID value.");
+                    }
+
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -373,7 +394,7 @@ public class SellExisting implements Initializable {
                         "(?,?,?,?,?,?,?)";
                 try {
                     PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, String.valueOf(transaction_cus_rowCount + 1));
+                    pstmt.setString(1, String.valueOf(numericId + 1));
                     pstmt.setDate(2, Date.valueOf(LocalDate.now()));
                     pstmt.setInt(3, Integer.parseInt(cartItem2.get(5)));
                     pstmt.setDouble(4, Double.parseDouble(cartItem2.get(2)));
@@ -392,7 +413,7 @@ public class SellExisting implements Initializable {
                         "(?,?,?,?,?,?,?)";
                 try {
                     PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-                    pstmt2.setString(1, String.valueOf(transaction_cus_rowCount + 1));
+                    pstmt2.setString(1, String.valueOf(numericId + 1));
                     pstmt2.setDate(2, Date.valueOf(LocalDate.now()));
                     pstmt2.setInt(3, Integer.parseInt(cartItem2.get(5)));
                     pstmt2.setDouble(4, Double.parseDouble(cartItem2.get(2)));
@@ -416,11 +437,7 @@ public class SellExisting implements Initializable {
                 // Load the FXML file for the new window
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/paymentRecieptCustomer.fxml"));
                 Parent root = loader.load();
-
-                // Create a new stage
                 Stage newStage = new Stage();
-
-                // Set the FXML content as the scene for the new stage
                 Scene scene = new Scene(root);
                 setScene(scene);
                 newStage.setScene(scene);

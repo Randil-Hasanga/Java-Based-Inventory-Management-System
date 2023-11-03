@@ -6,10 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -18,7 +15,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,39 +22,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ManageCustomers implements Initializable {
-
+public class ManageSuppliers implements Initializable {
+    
     private Connection conn = MySqlCon.MysqlMethod();
     @FXML
     private Button btnDelete;
     @FXML
-    private TableView<ObservableList<String>> tblCustomers;
-    @FXML
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-    private static String cusID;
+    private TableView<ObservableList<String>> tblSuppliers;
 
-    private void setSelectedUser(String userId) {
-        this.cusID = userId;
-    }
-    public static String getSelectedCustomer(){
-        return cusID;
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadFromDB();
-        tblCustomers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tblSuppliers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     public void loadFromDB() {
-        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblCustomers.getColumns();
+        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblSuppliers.getColumns();
         columns.clear();
 
         // Define fixed column names
-        String[] columnNames = {"Customer Id","Customer Name","Address","Contact Number"};
+        String[] columnNames = {"Supplier Id","Supplier Name","Address","Contact Number"};
 
-        double columnWidth = (tblCustomers.getPrefWidth()) / (columnNames.length)-1;
+        double columnWidth = (tblSuppliers.getPrefWidth()) / (columnNames.length)-1;
 
         // Add the columns to the TableView with fixed names
         for (int i = 0; i < columnNames.length; i++) {
@@ -69,7 +54,7 @@ public class ManageCustomers implements Initializable {
             columns.add(column);
         }
 
-        String sql = "SELECT C_ID, C_Name, C_Location, C_Contact FROM customer"; // Replace with your table name
+        String sql = "SELECT S_ID, S_Name, S_Location, S_Contact FROM supplier"; // Replace with your table name
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
@@ -83,7 +68,7 @@ public class ManageCustomers implements Initializable {
                 data.add(row);
             }
 
-            tblCustomers.setItems(data);
+            tblSuppliers.setItems(data);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -92,29 +77,38 @@ public class ManageCustomers implements Initializable {
     }
 
     private void deleteSelectedRow(ActionEvent event) {
-        int selectedIndex = tblCustomers.getSelectionModel().getSelectedIndex();
+        int selectedIndex = tblSuppliers.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            ObservableList<String> selectedRow = tblCustomers.getItems().get(selectedIndex);
-            String c_id = selectedRow.get(0); // Assuming User_Id is in the first column
+            ObservableList<String> selectedRow = tblSuppliers.getItems().get(selectedIndex);
+            String s_id = selectedRow.get(0); // Assuming User_Id is in the first column
 
             // Remove the selected row from the TableView
-            tblCustomers.getItems().remove(selectedIndex);
+            tblSuppliers.getItems().remove(selectedIndex);
 
-            String deleteForeign = "DELETE FROM transactions_cus WHERE C_ID = ?";
+            String deleteForeign = "DELETE FROM stock WHERE S_ID = ?";
             try {
                 PreparedStatement pstmt = conn.prepareStatement(deleteForeign);
-                pstmt.setString(1, c_id);
+                pstmt.setString(1, s_id);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            String deleteForeign2 = "DELETE FROM transactions_sup WHERE S_ID = ?";
+            try {
+                PreparedStatement pstmt = conn.prepareStatement(deleteForeign2);
+                pstmt.setString(1, s_id);
                 pstmt.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
             // Delete the row from the database
-            String deleteSQL = "DELETE FROM customer WHERE C_ID = ?";
+            String deleteSQL = "DELETE FROM supplier WHERE S_ID = ?";
             try {
                 PreparedStatement pstmt = conn.prepareStatement(deleteSQL);
-                pstmt.setString(1, c_id);
+                pstmt.setString(1, s_id);
                 pstmt.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -124,7 +118,6 @@ public class ManageCustomers implements Initializable {
             showCustomDialog();
         }
     }
-
     public void showCustomDialog() {
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -145,36 +138,8 @@ public class ManageCustomers implements Initializable {
     }
 
     @FXML
-    void onRefresh(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageCustomers.fxml"));
+    void onAddBtnClick(MouseEvent event) {
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-    @FXML
-    void onManageSuppliers(MouseEvent event) {
-
-    }
-
-    @FXML
-    void onAddBtnClick(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/AddCustomer.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
     }
 
     @FXML
@@ -182,34 +147,25 @@ public class ManageCustomers implements Initializable {
 
     }
 
-
     @FXML
-    void onUpdateButton(MouseEvent event) throws IOException {
-        int selectedIndex = tblCustomers.getSelectionModel().getSelectedIndex();
+    void onManageSuppliers(MouseEvent event) {
 
-        if (selectedIndex >= 0) {
-            ObservableList<String> selectedRow = tblCustomers.getItems().get(selectedIndex);
-            String userId = selectedRow.get(0); // Assuming User_Id is in the first column
-            setSelectedUser(userId);
-
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/UpdateCustomer.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            stage.setHeight(700);
-            stage.setWidth(1210);
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        } else {
-            showCustomDialog();
-        }
     }
 
+    @FXML
+    void onRefresh(MouseEvent event) {
 
+    }
 
     @FXML
     void onStockButton(MouseEvent event) {
 
     }
+
+    @FXML
+    void onUpdateButton(MouseEvent event) {
+
+    }
+
 
 }

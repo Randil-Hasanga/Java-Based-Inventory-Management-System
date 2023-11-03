@@ -25,8 +25,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AddUser implements Initializable {
     Connection conn = MySqlCon.MysqlMethod();
@@ -65,10 +68,54 @@ public class AddUser implements Initializable {
     private Parent root;
     @FXML
     private Label lblWarning;
+    private String max;
+    private int numericId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dropPosition.setItems(FXCollections.observableArrayList("Portfolio Manager", "Accounting Manager", "HR Manager", "Stock keeper"));
+
+        String sql2 = "SELECT MAX(User_Id) FROM users";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql2);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                max = rs.getString(1);
+                System.out.println("Last : "+max);
+            }
+            Pattern pattern = Pattern.compile("\\d+");
+
+            // Use a Matcher to find the numeric part
+            Matcher matcher = pattern.matcher(max);
+
+            if (matcher.find()) {
+                // Extract the numeric part as a string
+                String numericPart = matcher.group();
+
+                // Convert the numeric part to an integer if needed
+                numericId = Integer.parseInt(numericPart);
+
+                // Now you have the numeric ID as an integer
+                System.out.println("Numeric ID: " + numericId);
+            } else {
+                System.out.println("No numeric part found in the C_ID value.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(numericId == 0){
+            txtUserID.setText("U001");
+        }else if(numericId < 9) {
+            txtUserID.setText("U00" + (numericId + 1));
+        }else if(numericId < 99){
+            txtUserID.setText("U0" + (numericId + 1));
+        }else{
+            txtUserID.setText("U_" + (numericId + 1));
+        }
+        txtUserID.setEditable(false);
     }
     @FXML
     void onPositionSelection(ActionEvent event) {
@@ -92,7 +139,7 @@ public class AddUser implements Initializable {
     }
     @FXML
     void onInsertButton(MouseEvent event) {
-        userId = txtUserID.getText();
+
         userName = txtUserName.getText();
         pwd = txtPwd.getText();
         Fname = txtFname.getText();
@@ -100,7 +147,7 @@ public class AddUser implements Initializable {
         NIC = txtNIC.getText();
         contact = txtContact.getText();
 
-        if((userId.isEmpty())||(userName.isEmpty())||(pwd.isEmpty())||(Fname.isEmpty())||(Lname.isEmpty())||(NIC.isEmpty())||(contact.isEmpty())||(position.isEmpty())){
+        if((userName.isEmpty())||(pwd.isEmpty())||(Fname.isEmpty())||(Lname.isEmpty())||(NIC.isEmpty())||(contact.isEmpty())||(position.isEmpty())){
             lblWarning.setText("Please Fill All The Fields");
         }else{
             String sql = "INSERT INTO users (User_id, Username, Password, FName, Lname, NIC, Position, Contact, Pic)\n" +
@@ -108,7 +155,7 @@ public class AddUser implements Initializable {
 
             try {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, userId);
+                pstmt.setString(1, String.valueOf(numericId+1));
                 pstmt.setString(2, userName);
                 pstmt.setString(3, pwd);
                 pstmt.setString(4, Fname);

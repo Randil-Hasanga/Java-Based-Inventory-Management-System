@@ -27,6 +27,8 @@ import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.stockportfoliomanagementsystem.StockKeeper.SellExisting.scene;
 
@@ -59,11 +61,14 @@ public class BuyyExisting implements Initializable {
     @FXML
     private Label lblSuccess;
 
+    private String max;
+    private int numericId;
+
 
     @FXML
     private Label txtName;
     private static Scene scene;
-    private int invoiceRowCount;
+
 
     private String SupplierTypeExisting = SelectExistingSupplier.getSupplierType();
     private String SupplierTypeNew = AddNewSupplier.getSupplierType();
@@ -256,15 +261,33 @@ public class BuyyExisting implements Initializable {
 
         if(rowCount > 0){
             for (ObservableList<String> cartItem2 : tblCart.getItems()) {
-                String count = "SELECT COUNT(*) FROM transactions_sup";
+                String count = "SELECT MAX(transaction_id) FROM transactions_sup";
                 try {
-                    PreparedStatement statement = conn.prepareStatement(count);
-                    ResultSet rs = statement.executeQuery();
+                    PreparedStatement pstmt = conn.prepareStatement(count);
+                    ResultSet rs = pstmt.executeQuery();
 
                     while (rs.next()) {
-                        invoiceRowCount = rs.getInt(1);
-                        System.out.println(count);
+                        max = rs.getString(1);
+                        System.out.println("Last : "+max);
                     }
+                    Pattern pattern = Pattern.compile("\\d+");
+
+                    // Use a Matcher to find the numeric part
+                    Matcher matcher = pattern.matcher(max);
+
+                    if (matcher.find()) {
+                        // Extract the numeric part as a string
+                        String numericPart = matcher.group();
+
+                        // Convert the numeric part to an integer if needed
+                        numericId = Integer.parseInt(numericPart);
+
+                        // Now you have the numeric ID as an integer
+                        System.out.println("Numeric ID: " + numericId);
+                    } else {
+                        System.out.println("No numeric part found in the C_ID value.");
+                    }
+
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -274,7 +297,7 @@ public class BuyyExisting implements Initializable {
                         "(?,?,?,?,?,?,?)";
                 try {
                     PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, String.valueOf(invoiceRowCount + 1));
+                    pstmt.setString(1, String.valueOf(numericId + 1));
                     pstmt.setDate(2, Date.valueOf(LocalDate.now()));
                     pstmt.setInt(3, Integer.parseInt(cartItem2.get(5)));
                     pstmt.setDouble(4, Double.parseDouble(cartItem2.get(2)));

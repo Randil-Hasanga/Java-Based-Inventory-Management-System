@@ -22,6 +22,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AddNewCustomer implements Initializable {
 
@@ -50,11 +52,12 @@ public class AddNewCustomer implements Initializable {
     private Scene scene;
     private Parent root;
 
-    private int count;
     private static String cusID;
     private String cusName;
     private String cusAddress;
     private String cusContact;
+    private String max;
+    private int numericId;
 
     protected static String customerType;
 
@@ -80,7 +83,7 @@ public class AddNewCustomer implements Initializable {
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, String.valueOf(count+1));
+            pstmt.setString(1, String.valueOf(numericId+1));
             pstmt.setString(2, cusName);
             pstmt.setString(3, cusAddress);
             pstmt.setString(4, cusContact);
@@ -141,25 +144,46 @@ public class AddNewCustomer implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String sql = "SELECT COUNT(*) FROM customer";
+        String sql2 = "SELECT MAX(C_ID) FROM customer";
         try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql2);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                count = rs.getInt(1);
+                max = rs.getString(1);
+                System.out.println("Last : "+max);
             }
+            Pattern pattern = Pattern.compile("\\d+");
+
+            // Use a Matcher to find the numeric part
+            Matcher matcher = pattern.matcher(max);
+
+            if (matcher.find()) {
+                // Extract the numeric part as a string
+                String numericPart = matcher.group();
+
+                // Convert the numeric part to an integer if needed
+                numericId = Integer.parseInt(numericPart);
+
+                // Now you have the numeric ID as an integer
+                System.out.println("Numeric ID: " + numericId);
+            } else {
+                System.out.println("No numeric part found in the C_ID value.");
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if(count == 0){
+
+        if(numericId == 0){
             txtCusID.setText("C_001");
-        }else if(count < 9) {
-            txtCusID.setText("C_00" + (count + 1));
-        }else if(count < 99){
-            txtCusID.setText("C_0" + (count + 1));
+        }else if(numericId < 9) {
+            txtCusID.setText("C_00" + (numericId + 1));
+        }else if(numericId < 99){
+            txtCusID.setText("C_0" + (numericId + 1));
         }else{
-            txtCusID.setText("C_" + (count + 1));
+            txtCusID.setText("C_" + (numericId + 1));
         }
+        txtCusID.setEditable(false);
     }
 }

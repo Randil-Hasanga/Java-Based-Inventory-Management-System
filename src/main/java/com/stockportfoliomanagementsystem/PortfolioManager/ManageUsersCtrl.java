@@ -154,6 +154,7 @@ public class ManageUsersCtrl implements Initializable {
         } else {
             showCustomDialog();
         }
+        System.out.println("User Deleted");
     }
 
     public void showCustomDialog() {

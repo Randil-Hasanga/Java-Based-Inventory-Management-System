@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="705.0" prefWidth="1210.0" styleClass="anchorPane" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.HRManager.ManageCustomers">
+<AnchorPane prefHeight="705.0" prefWidth="1210.0" styleClass="anchorPane" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.HRManager.ManageSuppliers">
     <children>
         <Pane layoutX="-2.0" layoutY="-7.0" prefHeight="667.0" prefWidth="280.0" style="-fx-background-color: #075E54;">
             <children>
@@ -123,7 +123,7 @@
             <font>
                 <Font size="17.0" />
             </font></Label>
-        <Pane layoutX="456.0" layoutY="31.0" prefHeight="3.0" prefWidth="500.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
+        <Pane layoutX="489.0" layoutY="31.0" prefHeight="3.0" prefWidth="500.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
         <ImageView fitHeight="48.0" fitWidth="64.0" layoutX="995.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
             <image>
                 <Image url="@../Images/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png" />
