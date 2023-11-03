@@ -36,6 +36,8 @@ import java.nio.file.Path;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PaymentRecieptCustomer implements Initializable{
 
@@ -48,7 +50,7 @@ public class PaymentRecieptCustomer implements Initializable{
     int pdfButtonCount = 0;
     private FileInputStream fis;
     private String pdfFilePath;
-    private int invoiceRowCount;
+
     private String pdfFilename;
     private byte[] pdf;
 
@@ -62,6 +64,8 @@ public class PaymentRecieptCustomer implements Initializable{
     @FXML
     private Stage stage;
     private Parent root;
+    private String max;
+    private int numericId;
 
 
     @FXML
@@ -84,6 +88,8 @@ public class PaymentRecieptCustomer implements Initializable{
 
     @FXML
     private Label txtTotal;
+    private String max1;
+    private int numericId2;
 
     @FXML
     private TableView<ObservableList<String>> tblInvoice;
@@ -142,27 +148,46 @@ public class PaymentRecieptCustomer implements Initializable{
         }
         lblDate.setText(": "+ LocalDate.now());
 
-        String count = "SELECT COUNT(*) FROM PDF_invoices";
+        String sql1 = "SELECT MAX(invoice_id) FROM PDF_invoices";
+
         try {
-            PreparedStatement statement = conn.prepareStatement(count);
-            ResultSet rs = statement.executeQuery();
+            PreparedStatement pstmt = conn.prepareStatement(sql1);
+            ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                invoiceRowCount = rs.getInt(1);
-                System.out.println(count);
+                max = rs.getString(1);
+                System.out.println("Last : "+max);
             }
+            Pattern pattern = Pattern.compile("\\d+");
+
+            // Use a Matcher to find the numeric part
+            Matcher matcher = pattern.matcher(max);
+
+            if (matcher.find()) {
+                // Extract the numeric part as a string
+                String numericPart = matcher.group();
+
+                // Convert the numeric part to an integer if needed
+                numericId = Integer.parseInt(numericPart);
+
+                // Now you have the numeric ID as an integer
+                System.out.println("Numeric ID: " + numericId);
+            } else {
+                System.out.println("No numeric part found in the C_ID value.");
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        if(invoiceRowCount == 0){
-            lblInvoiceID.setText(": I_001");
-        }else if(invoiceRowCount < 9) {
-            lblInvoiceID.setText(": I_00" + (invoiceRowCount + 1));
-        }else if(invoiceRowCount < 99){
-            lblInvoiceID.setText(": I_0" + (invoiceRowCount + 1));
+        if(numericId == 0){
+            lblInvoiceID.setText("I_001");
+        }else if(numericId < 9) {
+            lblInvoiceID.setText("I_00" + (numericId + 1));
+        }else if(numericId < 99){
+            lblInvoiceID.setText("I_0" + (numericId + 1));
         }else{
-            lblInvoiceID.setText(": I_" + (invoiceRowCount + 1));
+            lblInvoiceID.setText("I_" + (numericId + 1));
         }
 
         String sql3= "SELECT C_ID, C_Name, C_Location, C_Contact FROM customer WHERE C_ID = ?";// Aluthen pdf invoice table ekak hadala e table eke count ek aran invoice id ek hdnn ona
@@ -213,12 +238,11 @@ public class PaymentRecieptCustomer implements Initializable{
         Platform.runLater(() -> {
             captureScne();
         });
-
     }
 
     private void captureScne() {
         String imgFilename = "img_"+ LocalDate.now()+".png";
-        pdfFilename = "pdf_"+ LocalDate.now()+".pdf";
+        pdfFilename = "I_"+(numericId+1)+"_"+ LocalDate.now()+".pdf";
 
         Screen primaryScreen = Screen.getPrimary();
 
@@ -277,7 +301,7 @@ public class PaymentRecieptCustomer implements Initializable{
             String sql = "INSERT INTO PDF_invoices (invoice_id, date_, C_ID, pdf) VALUES (?,?,?,?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, invoiceRowCount+1);
+            pstmt.setInt(1, numericId+1);
             pstmt.setDate(2, Date.valueOf(LocalDate.now()));
             pstmt.setString(3, cid);
             pstmt.setBytes(4, pdf);

@@ -15,6 +15,19 @@ CREATE TABLE if not exists users
     Pic longblob
 );
 
+ALTER TABLE users AUTO_INCREMENT = 1;
+
+DELIMITER $$
+
+CREATE TRIGGER set_user_id
+BEFORE INSERT ON users FOR EACH ROW
+BEGIN
+  SET NEW.User_Id = CONCAT('U', LPAD(NEW.User_Id, 3, '0'));
+END;
+$$
+
+DELIMITER ;
+
 INSERT INTO users
 (User_id, Username, Password, FName, Lname, NIC, Position, Contact, Pic)
 VALUES

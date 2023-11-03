@@ -1,5 +1,7 @@
 package com.stockportfoliomanagementsystem.HRManager;
 
+import com.stockportfoliomanagementsystem.MainController;
+import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,14 +12,25 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class HRManagerController implements Initializable {
+
+    private Connection conn = MySqlCon.MysqlMethod();
+    MainController mc = new MainController();
+    private String username = mc.getUsername();
 
     @FXML
     private LineChart<?, ?> lineChart;
@@ -28,6 +41,9 @@ public class HRManagerController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    @FXML
+    private ImageView imageView;
 
     @FXML
     void onManageCustomers(MouseEvent event) throws IOException {
@@ -42,7 +58,15 @@ public class HRManagerController implements Initializable {
     }
 
     @FXML
-    void onManageSuppliers(MouseEvent event) {
+    void onManageSuppliers(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageSuppliers.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
 
     }
 
@@ -55,9 +79,58 @@ public class HRManagerController implements Initializable {
     void onStockButton(MouseEvent event) {
 
     }
+    private void showPicture(){
+        String sql = "SELECT Pic FROM Users WHERE Username = ?";
 
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                InputStream is = rs.getBinaryStream("Pic");
+
+                if(is!=null) {
+                    // Read the image data and save it to a file
+                    OutputStream os = new FileOutputStream(new File("photo.jpg"));
+                    byte[] content = new byte[1024];
+                    int size = 0;
+
+                    while ((size = is.read(content)) != -1) {
+                        os.write(content, 0, size);
+                    }
+                    os.close();
+                    is.close();
+
+                    // Create a circular mask for the ImageView
+                    Circle clip = new Circle(imageView.getFitWidth() / 2, imageView.getFitHeight() / 2, imageView.getFitWidth() / 2);
+                    imageView.setClip(clip);
+
+                    // Load the image and set it to the ImageView
+                    imageView.setImage(new Image("file:photo.jpg"));
+                    imageView.setPreserveRatio(true);
+
+                    // Set the dimensions of the ImageView
+                    imageView.setFitWidth(50);
+                    imageView.setFitHeight(50);
+
+                    // Set a border and make the image circular
+                    imageView.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: white;");
+                }else{
+                    System.out.println("No image");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException f) {
+            throw new RuntimeException(f);
+        } catch (IOException g) {
+            throw new RuntimeException(g);
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        showPicture();
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Pens", 1200),

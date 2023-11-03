@@ -20,11 +20,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BuyNewProduct implements Initializable {
 
     Connection conn = MySqlCon.MysqlMethod();
-    private int stockRowCount;
+
     private String productName;
     private String productID;
     private double priseTaken;
@@ -64,6 +66,8 @@ public class BuyNewProduct implements Initializable {
 
     @FXML
     private TextField txtSupplierID;
+    private String max;
+    private int numericId;
     @FXML
     private Stage stage;
     private Scene scene;
@@ -81,7 +85,7 @@ public class BuyNewProduct implements Initializable {
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, String.valueOf(stockRowCount+1));
+            pstmt.setString(1, String.valueOf(numericId+1));
             pstmt.setString(2,productName);
             pstmt.setDouble(3,priseTaken);
             pstmt.setDouble(4,sellingPrice);
@@ -137,28 +141,50 @@ public class BuyNewProduct implements Initializable {
         txtSupplierID.setEditable(false);
         txtPid.setEditable(false);
 
-        String sql = "SELECT COUNT(*) FROM stock";
+        String sql2 = "SELECT MAX(P_ID) FROM stock";
         try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql2);
             ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()){
-                stockRowCount = rs.getInt(1);
-                System.out.println("Stock row count : "+stockRowCount);
+            while (rs.next()) {
+                max = rs.getString(1);
+                System.out.println("Last : "+max);
             }
+            Pattern pattern = Pattern.compile("\\d+");
+
+            // Use a Matcher to find the numeric part
+            Matcher matcher = pattern.matcher(max);
+
+            if (matcher.find()) {
+                // Extract the numeric part as a string
+                String numericPart = matcher.group();
+
+                // Convert the numeric part to an integer if needed
+                numericId = Integer.parseInt(numericPart);
+
+                // Now you have the numeric ID as an integer
+                System.out.println("Numeric ID: " + numericId);
+            } else {
+                System.out.println("No numeric part found in the C_ID value.");
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        if(stockRowCount == 0){
+        if(numericId == 0){
             txtPid.setText("P001");
-        }else if(stockRowCount < 9) {
-            txtPid.setText("P00" + (stockRowCount + 1));
-        }else if(stockRowCount < 99){
-            txtPid.setText("P0" + (stockRowCount + 1));
+        }else if(numericId < 9) {
+            txtPid.setText("P00" + (numericId + 1));
+        }else if(numericId < 99){
+            txtPid.setText("P0" + (numericId + 1));
         }else{
-            txtPid.setText("P" + (stockRowCount + 1));
+            txtPid.setText("P" + (numericId + 1));
         }
+        txtPid.setEditable(false);
+
+        txtSupplierID.setText(supID);
+        txtSupplierID.setEditable(false);
 
         txtSupplierID.setText(supID);
 

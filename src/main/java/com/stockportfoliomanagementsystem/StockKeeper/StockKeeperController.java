@@ -73,6 +73,55 @@ public class StockKeeperController implements Initializable {
 
     }
 
+    private void showPicture(){
+        String sql = "SELECT Pic FROM Users WHERE Username = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                InputStream is = rs.getBinaryStream("Pic");
+
+                if(is!=null) {
+                    // Read the image data and save it to a file
+                    OutputStream os = new FileOutputStream(new File("photo.jpg"));
+                    byte[] content = new byte[1024];
+                    int size = 0;
+
+                    while ((size = is.read(content)) != -1) {
+                        os.write(content, 0, size);
+                    }
+                    os.close();
+                    is.close();
+
+                    // Create a circular mask for the ImageView
+                    Circle clip = new Circle(imageView.getFitWidth() / 2, imageView.getFitHeight() / 2, imageView.getFitWidth() / 2);
+                    imageView.setClip(clip);
+
+                    // Load the image and set it to the ImageView
+                    imageView.setImage(new Image("file:photo.jpg"));
+                    imageView.setPreserveRatio(true);
+
+                    // Set the dimensions of the ImageView
+                    imageView.setFitWidth(50);
+                    imageView.setFitHeight(50);
+
+                    // Set a border and make the image circular
+                    imageView.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: white;");
+                }else{
+                    System.out.println("No image");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException f) {
+            throw new RuntimeException(f);
+        } catch (IOException g) {
+            throw new RuntimeException(g);
+        }
+    }
 
     @FXML
     void onSellProducts(MouseEvent event) throws IOException {
@@ -118,6 +167,7 @@ public class StockKeeperController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        showPicture();
         String totalSQL = "SELECT SUM(Total) AS TotalStock FROM stock";
 
         try {
