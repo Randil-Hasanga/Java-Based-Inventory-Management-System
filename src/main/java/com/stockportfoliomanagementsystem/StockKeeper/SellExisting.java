@@ -414,7 +414,7 @@ public class SellExisting implements Initializable {
 
             try {
                 // Load the FXML file for the new window
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/paymentRecieptSupplier.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/paymentRecieptCustomer.fxml"));
                 Parent root = loader.load();
 
                 // Create a new stage
