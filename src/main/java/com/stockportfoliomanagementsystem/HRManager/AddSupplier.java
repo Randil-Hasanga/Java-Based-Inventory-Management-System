@@ -23,40 +23,43 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AddCustomer implements Initializable{
+public class AddSupplier implements Initializable {
 
-    private Connection conn = MySqlCon.MysqlMethod();
-    private  String cusID;
-    private String cusName;
-    private String cusAddress;
-    private String cusContact;
-
+    Connection conn = MySqlCon.MysqlMethod();
     @FXML
     private ImageView imageView;
     @FXML
     private Label lblSuccess;
     @FXML
-    private TextField txtCusAddress;
-    @FXML
-    private TextField txtCusContact;
-    @FXML
-    private TextField txtCusID;
-    @FXML
-    private TextField txtCusName;
-    @FXML
     private Label txtName;
+    @FXML
+    private TextField txtSupAddress;
+    @FXML
+    private TextField txtSupContact;
+    @FXML
+    private TextField txtSupID;
+    @FXML
+    private TextField txtSupName;
+
+    private String max;
+    private int numericId;
+    private  String supID;
+    private String supName;
+    private String supAddress;
+    private String supContact;
+
     @FXML
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    private String max;
-    private int numericId;
-
+    @FXML
+    void onReports(MouseEvent event) {
+        //To complete -----------------------------------------------------------------
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        String sql2 = "SELECT MAX(C_ID) FROM customer";
+        String sql2 = "SELECT MAX(S_ID) FROM supplier";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql2);
             ResultSet rs = pstmt.executeQuery();
@@ -88,31 +91,31 @@ public class AddCustomer implements Initializable{
         }
 
         if(numericId == 0){
-            txtCusID.setText("C_001");
+            txtSupID.setText("C_001");
         }else if(numericId < 9) {
-            txtCusID.setText("C_00" + (numericId + 1));
+            txtSupID.setText("C_00" + (numericId + 1));
         }else if(numericId < 99){
-            txtCusID.setText("C_0" + (numericId + 1));
+            txtSupID.setText("C_0" + (numericId + 1));
         }else{
-            txtCusID.setText("C_" + (numericId + 1));
+            txtSupID.setText("C_" + (numericId + 1));
         }
-        txtCusID.setEditable(false);
+        txtSupID.setEditable(false);
     }
     @FXML
     void onAddButton(MouseEvent event) {
-        cusName = txtCusName.getText();
-        cusAddress = txtCusAddress.getText();
-        cusContact = txtCusContact.getText();
-        cusID = txtCusID.getText();
+        supName = txtSupName.getText();
+        supAddress = txtSupAddress.getText();
+        supContact = txtSupContact.getText();
+        supID = txtSupID.getText();
 
-        String sql = "INSERT INTO customer (C_ID, C_Name, C_Location, C_Contact) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO supplier (S_ID, S_Name, S_Location, S_Contact) VALUES (?, ?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, String.valueOf(numericId+1));
-            pstmt.setString(2, cusName);
-            pstmt.setString(3, cusAddress);
-            pstmt.setString(4, cusContact);
+            pstmt.setString(2, supName);
+            pstmt.setString(3, supAddress);
+            pstmt.setString(4, supContact);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -124,7 +127,7 @@ public class AddCustomer implements Initializable{
     @FXML
     void onBackButton(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageCustomers.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageSuppliers.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setHeight(700);
             stage.setWidth(1210);
@@ -136,22 +139,6 @@ public class AddCustomer implements Initializable{
         } catch (IOException e) {
         }
     }
-
-    @FXML
-    void onManageSuppliers(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageSuppliers.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setHeight(700);
-            stage.setWidth(1210);
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        } catch (IOException e) {
-        }
-    }
-
     @FXML
     void onStockButton(MouseEvent event) {
         try {
@@ -167,5 +154,20 @@ public class AddCustomer implements Initializable{
         }
     }
 
+    @FXML
+    void onManageCustomers(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageCustomers.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+
+        }
+    }
 
 }

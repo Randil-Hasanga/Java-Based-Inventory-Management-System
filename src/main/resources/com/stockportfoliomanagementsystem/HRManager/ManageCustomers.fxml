@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="705.0" prefWidth="1210.0" styleClass="anchorPane" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.HRManager.ManageSuppliers">
+<AnchorPane prefHeight="705.0" prefWidth="1210.0" styleClass="anchorPane" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.HRManager.ManageCustomers">
     <children>
         <Pane layoutX="-2.0" layoutY="-7.0" prefHeight="667.0" prefWidth="280.0" style="-fx-background-color: #075E54;">
             <children>

@@ -6,7 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +33,19 @@ public class ManageSuppliers implements Initializable {
     private Button btnDelete;
     @FXML
     private TableView<ObservableList<String>> tblSuppliers;
+    @FXML
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
+    private static String supID;
+
+    private void setSelectedUser(String userId) {
+        this.supID = userId;
+    }
+    public static String getSelectedSupplier() {
+        return supID;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadFromDB();
@@ -138,34 +154,101 @@ public class ManageSuppliers implements Initializable {
     }
 
     @FXML
-    void onAddBtnClick(MouseEvent event) {
-
+    void onAddBtnClick(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/AddSupplier.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
     void onBackButton(MouseEvent event) {
-
-    }
-
-    @FXML
-    void onManageSuppliers(MouseEvent event) {
-
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/HRManagerDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
     }
 
     @FXML
     void onRefresh(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageSuppliers.fxml"));
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+    }
+
+    @FXML
+    void onManageCustomers(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageCustomers.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        }
     }
 
     @FXML
     void onStockButton(MouseEvent event) {
-
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/viewStock.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Stock button er");
+        }
     }
 
     @FXML
-    void onUpdateButton(MouseEvent event) {
+    void onUpdateButton(MouseEvent event) throws IOException {
+        int selectedIndex = tblSuppliers.getSelectionModel().getSelectedIndex();
 
+        if (selectedIndex >= 0) {
+            ObservableList<String> selectedRow = tblSuppliers.getItems().get(selectedIndex);
+            String userId = selectedRow.get(0); // Assuming User_Id is in the first column
+            setSelectedUser(userId);
+
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/UpdateSupplier.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } else {
+            showCustomDialog();
+        }
     }
-
-
 }

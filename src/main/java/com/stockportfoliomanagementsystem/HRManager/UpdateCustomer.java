@@ -2,12 +2,18 @@ package com.stockportfoliomanagementsystem.HRManager;
 
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,6 +41,10 @@ public class UpdateCustomer implements Initializable {
     private TextField txtCusName;
     @FXML
     private Label txtName;
+    @FXML
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     private String cusID = ManageCustomers.getSelectedCustomer();
 
@@ -66,13 +76,31 @@ public class UpdateCustomer implements Initializable {
 
 
     @FXML
-    void onManageSuppliers(MouseEvent event) {
-
+    void onManageSuppliers(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageSuppliers.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
-    void onStockButton(MouseEvent event) {
-
+    void onStockButton(MouseEvent event) throws IOException {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/viewStock.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
     }
 
     @FXML
@@ -98,8 +126,20 @@ public class UpdateCustomer implements Initializable {
     }
 
     @FXML
-    void onBackButton(MouseEvent event) {
+    void onBackButton(MouseEvent event){
 
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageCustomers.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
     }
 
 
