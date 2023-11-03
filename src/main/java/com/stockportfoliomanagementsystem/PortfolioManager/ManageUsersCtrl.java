@@ -49,6 +49,22 @@ public class ManageUsersCtrl implements Initializable {
         return userId;
     }
 
+    @FXML
+    void onCustomerButton(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/viewCustomers.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadFromDB();
@@ -207,14 +223,18 @@ public class ManageUsersCtrl implements Initializable {
 
     @FXML
     void onBackButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/PortfolioManagerDashboard.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/PortfolioManagerDashboard.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
     }
 
     @FXML
