@@ -161,8 +161,15 @@ public class ManageCustomers implements Initializable {
         stage.show();
     }
     @FXML
-    void onManageSuppliers(MouseEvent event) {
-
+    void onManageSuppliers(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageSuppliers.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
@@ -178,8 +185,19 @@ public class ManageCustomers implements Initializable {
     }
 
     @FXML
-    void onBackButton(MouseEvent event) {
-
+    void onBackButton(MouseEvent event){
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/HRManagerDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
     }
 
 
@@ -204,12 +222,15 @@ public class ManageCustomers implements Initializable {
             showCustomDialog();
         }
     }
-
-
-
     @FXML
-    void onStockButton(MouseEvent event) {
-
+    void onStockButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/viewStock.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
-
 }

@@ -46,15 +46,23 @@ public class HRManagerController implements Initializable {
     private ImageView imageView;
 
     @FXML
+    void onReportsButton(MouseEvent event) {
+        //Complete this
+    }
+    @FXML
     void onManageCustomers(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageCustomers.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/ManageCustomers.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+
+        }
     }
 
     @FXML
@@ -71,13 +79,18 @@ public class HRManagerController implements Initializable {
     }
 
     @FXML
-    void onReportsButton(MouseEvent event) {
-
-    }
-
-    @FXML
-    void onStockButton(MouseEvent event) {
-
+    void onStockButton(MouseEvent event) throws IOException {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/viewStock.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        }
     }
     private void showPicture(){
         String sql = "SELECT Pic FROM Users WHERE Username = ?";
