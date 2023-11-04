@@ -165,6 +165,7 @@ public class EditProfile implements Initializable{
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        lblWarning.setText("Profile Updated");
         }
     }
 

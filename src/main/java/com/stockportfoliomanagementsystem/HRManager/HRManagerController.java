@@ -7,30 +7,28 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class HRManagerController implements Initializable {
 
     private Connection conn = MySqlCon.MysqlMethod();
-    MainController mc = new MainController();
-    private String username = mc.getUsername();
 
     @FXML
     private LineChart<?, ?> lineChart;
@@ -43,11 +41,52 @@ public class HRManagerController implements Initializable {
     private Parent root;
 
     @FXML
-    private ImageView imageView;
+    private Circle circle;
+    @FXML
+    private Label lblAVG;
+    @FXML
+    private Label lblBought;
+    @FXML
+    private Label lblSold;
+    @FXML
+    private Label txtName;
+    private double sold;
+    private double bought;
+
+    MainController mainController = new MainController();
+    String Fname = mainController.getFname();
+    String Lname = mainController.getLname();
+    String username = mainController.getUsername();
+    String password = mainController.getPwd();
+
+
+    private double total;
 
     @FXML
     void onReportsButton(MouseEvent event) {
         //Complete this
+    }
+
+    @FXML
+    void onEditProfile(MouseEvent event) {
+        try {
+            // Load the FXML file for the new window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/EditProfilePM.fxml"));
+            Parent root = loader.load();
+
+            // Create a new stage
+            Stage newStage = new Stage();
+
+            // Set the FXML content as the scene for the new stage
+            Scene scene = new Scene(root);
+            newStage.setScene(scene);
+            newStage.setResizable(false);
+            // Show the new stage
+            newStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     void onManageCustomers(MouseEvent event) throws IOException {
@@ -92,7 +131,9 @@ public class HRManagerController implements Initializable {
         } catch (IOException e) {
         }
     }
-    private void showPicture(){
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         String sql = "SELECT Pic FROM Users WHERE Username = ?";
 
         try {
@@ -100,8 +141,10 @@ public class HRManagerController implements Initializable {
             preparedStatement.setString(1, username);
             ResultSet rs = preparedStatement.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 InputStream is = rs.getBinaryStream("Pic");
+
+                // Read the image data and save it to a file
 
                 if(is!=null) {
                     // Read the image data and save it to a file
@@ -115,20 +158,8 @@ public class HRManagerController implements Initializable {
                     os.close();
                     is.close();
 
-                    // Create a circular mask for the ImageView
-                    Circle clip = new Circle(imageView.getFitWidth() / 2, imageView.getFitHeight() / 2, imageView.getFitWidth() / 2);
-                    imageView.setClip(clip);
-
-                    // Load the image and set it to the ImageView
-                    imageView.setImage(new Image("file:photo.jpg"));
-                    imageView.setPreserveRatio(true);
-
-                    // Set the dimensions of the ImageView
-                    imageView.setFitWidth(50);
-                    imageView.setFitHeight(50);
-
-                    // Set a border and make the image circular
-                    imageView.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: white;");
+                    Image image = new Image(new FileInputStream("photo.jpg"));
+                    circle.setFill(new ImagePattern(image));
                 }else{
                     System.out.println("No image");
                 }
@@ -140,82 +171,94 @@ public class HRManagerController implements Initializable {
         } catch (IOException g) {
             throw new RuntimeException(g);
         }
-    }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        showPicture();
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Pens", 1200),
-                        new PieChart.Data("Pencils", 1500),
-                        new PieChart.Data("CR pg80 Single", 600),
-                        new PieChart.Data("CR pg 80 Square", 400),
-                        new PieChart.Data("CR pg 120 Single", 1000),
-                        new PieChart.Data("CR pg 120 Square", 350),
-                        new PieChart.Data("Pastel Large", 400)
-                );
+
+        String totalSQL = "SELECT SUM(Total) AS TotalStock FROM stock";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(totalSQL);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                total = rs.getDouble("TotalStock");
+            }
+            System.out.println(total);
+            lblAVG.setText("LKR "+total);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(Fname+" PM "+Lname);
+        txtName.setAlignment(Pos.CENTER);
+        txtName.setText(Fname+" "+Lname);
+
+        String goodsSold = "SELECT SUM(Total) AS Sold\n" +
+                "FROM transactions_cus\n" +
+                "WHERE YEAR(Date_) = YEAR(CURDATE()) \n" +
+                "AND MONTH(Date_) = MONTH(CURDATE())";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(goodsSold);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                sold = rs.getDouble("Sold");
+            }
+            System.out.println(sold);
+            lblSold.setText("LKR "+sold);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String goodsBought = "SELECT SUM(Total) AS Bought\n" +
+                "FROM transactions_sup\n" +
+                "WHERE YEAR(Date_) = YEAR(CURDATE()) \n" +
+                "AND MONTH(Date_) = MONTH(CURDATE())";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(goodsBought);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                bought= rs.getDouble("Bought");
+            }
+            System.out.println(bought);
+            lblBought.setText("LKR "+bought);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        ObservableList<PieChart.Data> pieChartData = fetchDataFromDatabase();
+
+        pieChart.setData(pieChartData);
 
         pieChartData.forEach(data ->
-                data.nameProperty().setValue(data.getName() + "\namount: " + data.getPieValue())
+                data.nameProperty().setValue(data.getName() + "\nAmount: " + ((int) data.getPieValue()))
         );
+    }
+
+    private ObservableList<PieChart.Data> fetchDataFromDatabase() {
 
 
-        pieChart.getData().addAll(pieChartData);
-        //pieChart.setLegendVisible(true);
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
-        //Inventory
-        ObservableList<LineChart.Data> lineChartData =
-                FXCollections.observableArrayList(
-                        new LineChart.Data("Jan", 35000),
-                        new LineChart.Data("Feb", 22500),
-                        new LineChart.Data("Mar", 40000),
-                        new LineChart.Data("Apr", 44000),
-                        new LineChart.Data("May", 11000),
-                        new LineChart.Data("Jun", 38500),
-                        new LineChart.Data("Jul", 40000),
-                        new LineChart.Data("Aug", 12000),
-                        new LineChart.Data("Sep", 15000),
-                        new LineChart.Data("Oct", 29000),
-                        new LineChart.Data("Nov", 41000),
-                        new LineChart.Data("Dec", 26000)
-                );
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT P_Name, Qty FROM stock");
 
-        //Sales
-        ObservableList<LineChart.Data> lineChartData1 =
-                FXCollections.observableArrayList(
-                        new LineChart.Data("Jan", 45000),
-                        new LineChart.Data("Feb", 30000),
-                        new LineChart.Data("Mar", 35000),
-                        new LineChart.Data("Apr", 45000),
-                        new LineChart.Data("May", 10000),
-                        new LineChart.Data("Jun", 35000),
-                        new LineChart.Data("Jul", 48000),
-                        new LineChart.Data("Aug", 12500),
-                        new LineChart.Data("Sep", 20000),
-                        new LineChart.Data("Oct", 25000),
-                        new LineChart.Data("Nov", 45000),
-                        new LineChart.Data("Dec", 35000)
-                );
+            while (resultSet.next()) {
+                String category = resultSet.getString("P_Name");
+                int value = resultSet.getInt("Qty");
 
-        //Profit of Loss
-        ObservableList<LineChart.Data> lineChartData2 =
-                FXCollections.observableArrayList(
-                        new LineChart.Data("Jan", 10000),
-                        new LineChart.Data("Feb", 7500),
-                        new LineChart.Data("Mar", -5000),
-                        new LineChart.Data("Apr", 1000),
-                        new LineChart.Data("May", -1000),
-                        new LineChart.Data("Jun", -3500),
-                        new LineChart.Data("Jul", 8000),
-                        new LineChart.Data("Aug", 500),
-                        new LineChart.Data("Sep", 5000),
-                        new LineChart.Data("Oct", -4000),
-                        new LineChart.Data("Nov", 4000),
-                        new LineChart.Data("Dec", 9000)
-                );
+                // Create a PieChart.Data object and add it to the list
+                pieChartData.add(new PieChart.Data(category, value));
+            }
 
-        lineChart.getData().addAll(new LineChart.Series("Inventory at\nBeginning of the month", lineChartData));
-        lineChart.getData().addAll(new LineChart.Series("Sales at \nEnd of the month", lineChartData1));
-        lineChart.getData().addAll(new LineChart.Series("Profit or Loss", lineChartData2));
+            resultSet.close();
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return pieChartData;
     }
 }

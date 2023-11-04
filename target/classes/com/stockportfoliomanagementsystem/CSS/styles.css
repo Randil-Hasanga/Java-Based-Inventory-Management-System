@@ -232,3 +232,7 @@
     -fx-pref-width: 850;
 }
 
+.text_center{
+    -fx-text-alignment: center;
+}
+
