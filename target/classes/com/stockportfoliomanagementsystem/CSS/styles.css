@@ -1,7 +1,8 @@
 .anchorPane{
-    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #195e53);
+    /*-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #195e53);*/
     -fx-pref-height: 660;
     -fx-pref-width: 1200;
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #030e4c);
 }
 
 .container_{

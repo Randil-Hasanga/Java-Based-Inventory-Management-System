@@ -452,7 +452,7 @@ public class BuyyExisting implements Initializable {
         columns.clear();
 
         // Define fixed column names
-        String[] columnNames = {"Product ID","Name","Price","Remaining QTY","Description","Supplier"};
+        String[] columnNames = {"Product ID","Name","Price","Quantity","Description","Supplier"};
 
         double columnWidth = tblProducts.getPrefWidth() / columnNames.length;
 
