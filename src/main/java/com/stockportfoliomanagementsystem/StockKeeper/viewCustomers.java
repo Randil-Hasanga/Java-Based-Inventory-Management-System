@@ -24,15 +24,14 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class viewCustomers implements Initializable {
-    @FXML
-    private TableView<ObservableList<String>> tblCustomers;
+
     Connection conn = MySqlCon.MysqlMethod();
     @FXML
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-
+    @FXML
+    private TableView<ObservableList<String>> tblCustomers;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

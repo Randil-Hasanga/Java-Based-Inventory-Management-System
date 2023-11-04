@@ -142,32 +142,32 @@
                     </font>
                 </Label>
                 <Button layoutX="210.0" layoutY="398.0" mnemonicParsing="false" onAction="#onChooseBtn" prefHeight="28.0" prefWidth="160.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Choose Image" />
-            <Label fx:id="lblWarning" layoutX="99.0" layoutY="497.0" prefHeight="27.0" prefWidth="302.0" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <textFill>
-                  <RadialGradient centerX="0.505524861878453" centerY="0.5" radius="0.8563218390804598">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="0.14509804546833038" green="0.1764705926179886" blue="0.5647059082984924" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </RadialGradient>
-               </textFill>
-            </Label>
             </children>
          <styleClass>
             <String fx:value="container_" />
             <String fx:value="shadow" />
          </styleClass>
         </Pane>
+      <Label fx:id="lblWarning" layoutX="98.0" layoutY="572.0" prefHeight="27.0" prefWidth="302.0" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <textFill>
+            <RadialGradient centerX="0.505524861878453" centerY="0.5" radius="0.8563218390804598">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.14509804546833038" green="0.1764705926179886" blue="0.5647059082984924" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </textFill>
+      </Label>
     </children>
 </AnchorPane>

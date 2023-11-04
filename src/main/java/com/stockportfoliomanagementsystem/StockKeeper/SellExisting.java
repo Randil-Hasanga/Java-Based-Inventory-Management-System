@@ -78,6 +78,7 @@ public class SellExisting implements Initializable {
     private BooleanProperty isTableViewNotEmpty = new SimpleBooleanProperty(false);
     @FXML
     private Pane paneCell;
+    private int selectedQuantity;
 
     @FXML
     void onAddBtnClick(MouseEvent event) {
@@ -283,66 +284,129 @@ public class SellExisting implements Initializable {
     private void onAddToCart() {
         ObservableList<String> selectedProduct = tblProducts.getSelectionModel().getSelectedItem();
 
+        int qty = Integer.parseInt(selectedProduct.get(3));
         if (selectedProduct != null) {
-            int selectedQuantity = quantitySpinner.getValue(); // Get the selected quantity
-            String productId = selectedProduct.get(0);
+            if (qty > 0) {
+                selectedQuantity = quantitySpinner.getValue(); // Get the selected quantit
+                if (qty > selectedQuantity) {
+                    String productId = selectedProduct.get(0);
 
-            boolean itemFound = false;
+                    boolean itemFound = false;
 
-            // Check if the product is already in the cart
-            for (ObservableList<String> cartItem : tblCart.getItems()) {
-                if (cartItem.get(0).equals(productId)) { // Check if the product ID matches
-                    int currentQuantity = Integer.parseInt(cartItem.get(5)); // Quantity is at index 5
-                    int newQuantity = currentQuantity + selectedQuantity;
-                    System.out.println(newQuantity);
-                    tblCart.setEditable(true);
-                    cartItem.set(5, String.valueOf(newQuantity)); // Update the quantity
-                    tblCart.setEditable(false);
-                    itemFound = true;
+                    // Check if the product is already in the cart
+                    for (ObservableList<String> cartItem : tblCart.getItems()) {
+                        if (cartItem.get(0).equals(productId)) { // Check if the product ID matches
+                            int currentQuantity = Integer.parseInt(cartItem.get(5)); // Quantity is at index 5
+                            int newQuantity = currentQuantity + selectedQuantity;
+                            System.out.println(newQuantity);
+                            tblCart.setEditable(true);
+                            cartItem.set(5, String.valueOf(newQuantity)); // Update the quantity
+                            tblCart.setEditable(false);
+                            itemFound = true;
 
-                    String sql = "Update stock SET Qty = Qty-? WHERE P_ID = ?";
-                    try {
-                        PreparedStatement preparedStatement = conn.prepareStatement(sql);
-                        preparedStatement.setInt(1, selectedQuantity);
-                        preparedStatement.setString(2, selectedProduct.get(0));
-                        preparedStatement.executeUpdate();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                            String sql = "Update stock SET Qty = Qty-? WHERE P_ID = ?";
+                            try {
+                                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                                preparedStatement.setInt(1, selectedQuantity);
+                                preparedStatement.setString(2, selectedProduct.get(0));
+                                preparedStatement.executeUpdate();
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
+                            StockKeeperController.dbUpdate();
+                            loadFromDB();
+                            break;
+                        }
                     }
-                    StockKeeperController.dbUpdate();
-                    loadFromDB();
-                    break;
+
+                    if (!itemFound) {
+                        // Product not found in the cart, add it as a new item
+                        ObservableList<String> cartItem = FXCollections.observableArrayList();
+                        cartItem.add(selectedProduct.get(0)); // Product ID
+                        cartItem.add(selectedProduct.get(1)); // Name
+                        cartItem.add(selectedProduct.get(2)); // Price
+                        cartItem.add(selectedProduct.get(4)); // Description
+                        cartItem.add(selectedProduct.get(5)); // Supplier
+                        cartItem.add(String.valueOf(selectedQuantity)); // Quantity
+                        tblCart.getItems().add(cartItem);
+
+                        String sql = "Update stock SET Qty = Qty-? WHERE P_ID = ?";
+                        try {
+                            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                            preparedStatement.setInt(1, selectedQuantity);
+                            preparedStatement.setString(2, selectedProduct.get(0));
+                            preparedStatement.executeUpdate();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        StockKeeperController.dbUpdate();
+                        loadFromDB();
+                    } else {
+                        tblCart.refresh();
+                    }
+
+                } else{
+                    selectedQuantity = quantitySpinner.getValue();
+                    String productId = selectedProduct.get(0);
+                    boolean itemFound = false;
+
+                    // Check if the product is already in the cart
+                    for (ObservableList<String> cartItem : tblCart.getItems()) {
+                        if (cartItem.get(0).equals(productId)) { // Check if the product ID matches
+                            int currentQuantity = Integer.parseInt(cartItem.get(5)); // Quantity is at index 5
+                            System.out.println(qty);
+                            tblCart.setEditable(true);
+                            cartItem.set(5, String.valueOf(qty)); // Update the quantity
+                            tblCart.setEditable(false);
+                            itemFound = true;
+
+                            String sql = "Update stock SET Qty = Qty-? WHERE P_ID = ?";
+                            try {
+                                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                                preparedStatement.setInt(1, qty);
+                                preparedStatement.setString(2, selectedProduct.get(0));
+                                preparedStatement.executeUpdate();
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
+                            StockKeeperController.dbUpdate();
+                            loadFromDB();
+                            break;
+                        }
+                    }
+
+                    if (!itemFound) {
+                        // Product not found in the cart, add it as a new item
+                        ObservableList<String> cartItem = FXCollections.observableArrayList();
+                        cartItem.add(selectedProduct.get(0)); // Product ID
+                        cartItem.add(selectedProduct.get(1)); // Name
+                        cartItem.add(selectedProduct.get(2)); // Price
+                        cartItem.add(selectedProduct.get(4)); // Description
+                        cartItem.add(selectedProduct.get(5)); // Supplier
+                        cartItem.add(String.valueOf(qty)); // Quantity
+                        tblCart.getItems().add(cartItem);
+
+                        String sql = "Update stock SET Qty = Qty-? WHERE P_ID = ?";
+                        try {
+                            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                            preparedStatement.setInt(1, qty);
+                            preparedStatement.setString(2, selectedProduct.get(0));
+                            preparedStatement.executeUpdate();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        StockKeeperController.dbUpdate();
+                        loadFromDB();
+                    } else {
+                        tblCart.refresh();
+                    }
+                    tblProducts.refresh();
+                    tblCart.refresh();
                 }
-
-            }
-
-            if (!itemFound) {
-                // Product not found in the cart, add it as a new item
-                ObservableList<String> cartItem = FXCollections.observableArrayList();
-                cartItem.add(selectedProduct.get(0)); // Product ID
-                cartItem.add(selectedProduct.get(1)); // Name
-                cartItem.add(selectedProduct.get(2)); // Price
-                cartItem.add(selectedProduct.get(4)); // Description
-                cartItem.add(selectedProduct.get(5)); // Supplier
-                cartItem.add(String.valueOf(selectedQuantity)); // Quantity
-                tblCart.getItems().add(cartItem);
-
-                String sql = "Update stock SET Qty = Qty-? WHERE P_ID = ?";
-                try {
-                    PreparedStatement preparedStatement = conn.prepareStatement(sql);
-                    preparedStatement.setInt(1, selectedQuantity);
-                    preparedStatement.setString(2, selectedProduct.get(0));
-                    preparedStatement.executeUpdate();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                StockKeeperController.dbUpdate();
-                loadFromDB();
             }else{
-                tblCart.refresh();
-
+                System.out.println("Out of Stock");
             }
-        }else{
+        }else {
             showCustomDialog();
         }
 
