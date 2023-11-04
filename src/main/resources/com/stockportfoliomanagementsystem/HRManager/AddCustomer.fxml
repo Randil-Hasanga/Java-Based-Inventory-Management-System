@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -105,27 +104,12 @@
             </Pane>
             </children>
         </Pane>
-        <Label fx:id="txtName" layoutX="1048.0" layoutY="18.0" prefHeight="26.0" prefWidth="121.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Randil Hasanga" textFill="#a5c7ad">
-            <font>
-                <Font size="17.0" />
-            </font></Label>
-        <Pane layoutX="440.0" layoutY="31.0" prefHeight="3.0" prefWidth="550.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
-        <ImageView fx:id="imageView" fitHeight="50.0" fitWidth="50.0" layoutX="995.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
-            <image>
-                <Image url="@../Images/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png" />
-            </image>
-        </ImageView>
+        <Pane layoutX="440.0" layoutY="31.0" prefHeight="3.0" prefWidth="730.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
         <Label layoutX="296.0" layoutY="15.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Add Customer" textFill="#94ffeb">
             <font>
                 <Font name="Calibri" size="24.0" />
             </font>
         </Label>
-        <Pane layoutX="1028.0" layoutY="27.0" prefHeight="37.0" prefWidth="101.0">
-            <children>
-                <SVGPath content="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z" fill="#94ffeb" layoutX="-228.0" layoutY="-229.0" scaleX="0.025" scaleY="0.025" />
-                <JFXButton layoutX="31.0" layoutY="14.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Edit Profile" textFill="#94ffeb" />
-            </children>
-        </Pane>
         <Pane layoutX="302.0" layoutY="73.0" prefHeight="566.0" prefWidth="866.0" stylesheets="@../CSS/styles.css">
             <styleClass>
                 <String fx:value="container_" />

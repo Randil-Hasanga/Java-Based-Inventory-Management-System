@@ -78,10 +78,10 @@ public class BuyNewProduct implements Initializable {
         productName = txtPname.getText();
         priseTaken = Double.parseDouble(txtPriceTaken.getText());
         sellingPrice = Double.parseDouble(txtSellingPrice.getText());
-        quantity = Integer.parseInt(txtQuantity.getText());
+        quantity = 0;
         description = txtDescription.getText();
 
-        String sql = "INSERT INTO stock (P_ID, P_Name, Price_taken, Selling_price, Qty, P_Description, S_ID, Total) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO stock (P_ID, P_Name, Price_taken, Selling_price,Qty, P_Description, S_ID) VALUES (?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -92,7 +92,6 @@ public class BuyNewProduct implements Initializable {
             pstmt.setInt(5,quantity);
             pstmt.setString(6,description);
             pstmt.setString(7,supID);
-            pstmt.setDouble(8,sellingPrice*quantity);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

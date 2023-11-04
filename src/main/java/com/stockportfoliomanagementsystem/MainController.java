@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -114,51 +116,61 @@ public class MainController {
                     lblWarning.setText("Password correct");
                     mainController.setPwd(DBPwd);
                     mainController.setUsername(username);
+
+                    if(position.equals("Portfolio Manager")){
+                        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/PortfolioManagerDashboard.fxml"));
+                        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                        stage.setHeight(700);
+                        stage.setWidth(1210);
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.setResizable(false);
+                        stage.show();
+                    }else if(position.equals("HR Manager")) {
+                        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/HRManagerDashboard.fxml"));
+                        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setHeight(700);
+                        stage.setWidth(1210);
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.setResizable(false);
+                        stage.show();
+                    }else if(position.equals("Accounting Manager")) {
+                        root = FXMLLoader.load(getClass().getResource("AccountingManagerDashboard.fxml"));
+                        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setHeight(700);
+                        stage.setWidth(1210);
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.setResizable(false);
+                        stage.show();
+                    }else if(position.equals("Stock keeper")) {
+                        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
+                        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setHeight(700);
+                        stage.setWidth(1210);
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.setResizable(false);
+                        stage.show();
+                    }
                 }else{
-                    lblWarning.setText("Incorrect Username or Password");
+                    Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
+                    confirmationDialog.setTitle("Warning !");
+                    confirmationDialog.setHeaderText("Username or Password incorrect");
+
+                    ButtonType okButton = new ButtonType("OK");
+
+                    confirmationDialog.showAndWait().ifPresent(response -> {
+                        if (response == okButton) {
+                            System.out.println("OK button clicked.");
+                        }
+                    });
                 }
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        }
-
-        if(position.equals("Portfolio Manager")){
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/PortfolioManagerDashboard.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            stage.setHeight(700);
-            stage.setWidth(1210);
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        }else if(position.equals("HR Manager")) {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/HRManagerDashboard.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setHeight(700);
-            stage.setWidth(1210);
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        }else if(position.equals("Accounting Manager")) {
-            root = FXMLLoader.load(getClass().getResource("AccountingManagerDashboard.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setHeight(700);
-            stage.setWidth(1210);
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        }else if(position.equals("Stock keeper")) {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setHeight(700);
-            stage.setWidth(1210);
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
         }
     }
 }

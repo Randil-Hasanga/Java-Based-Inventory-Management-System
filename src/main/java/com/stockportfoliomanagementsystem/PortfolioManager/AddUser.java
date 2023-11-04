@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -147,42 +144,62 @@ public class AddUser implements Initializable {
         NIC = txtNIC.getText();
         contact = txtContact.getText();
 
-        if((userName.isEmpty())||(pwd.isEmpty())||(Fname.isEmpty())||(Lname.isEmpty())||(NIC.isEmpty())||(contact.isEmpty())||(position.isEmpty())){
-            lblWarning.setText("Please Fill All The Fields");
-        }else{
-            String sql = "INSERT INTO users (User_id, Username, Password, FName, Lname, NIC, Position, Contact, Pic)\n" +
-                    "VALUES (?,?,?,?,?,?,?,?,?)";
+        if (isPasswordValid(pwd)) {
+            System.out.println("Password is valid.");
+            if((userName.isEmpty())||(pwd.isEmpty())||(Fname.isEmpty())||(Lname.isEmpty())||(NIC.isEmpty())||(contact.isEmpty())||(position.isEmpty())){
+                lblWarning.setText("Please Fill All The Fields");
+            }else{
+                String sql = "INSERT INTO users (User_id, Username, Password, FName, Lname, NIC, Position, Contact, Pic)\n" +
+                        "VALUES (?,?,?,?,?,?,?,?,?)";
 
-            try {
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, String.valueOf(numericId+1));
-                pstmt.setString(2, userName);
-                pstmt.setString(3, pwd);
-                pstmt.setString(4, Fname);
-                pstmt.setString(5, Lname);
-                pstmt.setString(6, NIC);
-                pstmt.setString(7, position);
-                pstmt.setString(8, contact);
-                pstmt.setBinaryStream(9, fis, (int)selectedFile.length());
+                try {
+                    PreparedStatement pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, String.valueOf(numericId+1));
+                    pstmt.setString(2, userName);
+                    pstmt.setString(3, pwd);
+                    pstmt.setString(4, Fname);
+                    pstmt.setString(5, Lname);
+                    pstmt.setString(6, NIC);
+                    pstmt.setString(7, position);
+                    pstmt.setString(8, contact);
+                    pstmt.setBinaryStream(9, fis, (int)selectedFile.length());
 
-                pstmt.executeUpdate();
-                System.out.println("Successfully updated");
+                    pstmt.executeUpdate();
+                    lblWarning.setText("Successfully updated");
 
-                ManageUsersCtrl mg = new ManageUsersCtrl();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                    ManageUsersCtrl mg = new ManageUsersCtrl();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } else {
+            Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
+            confirmationDialog.setTitle("Warning !");
+            confirmationDialog.setHeaderText("Password Not Valid");
+            confirmationDialog.setContentText("Minimum length of 8 characters.\n" +
+                    "At least one uppercase letter.\n" +
+                    "At least one lowercase letter.\n" +
+                    "At least one digit.\n" +
+                    "At least one special character ( @, #, $, etc.)");
+
+            ButtonType okButton = new ButtonType("OK");
+
+            confirmationDialog.showAndWait().ifPresent(response -> {
+                if (response == okButton) {
+                    System.out.println("OK button clicked");
+                    confirmationDialog.close();
+                }
+            });
         }
+
+
     }
-    @FXML
-    void onBackButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/ManageUsers.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+
+    public static boolean isPasswordValid(String password) {
+
+        String regexPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$";
+        Pattern pattern = Pattern.compile(regexPattern);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
     }
 }

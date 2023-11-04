@@ -35,64 +35,40 @@
             </Label>
             <Group layoutX="210.0" layoutY="15.0">
                <children>
-                  <TextField fx:id="txtUserID" prefHeight="37.0" prefWidth="407.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <styleClass>
-                        <String fx:value="font_calibi" />
-                        <String fx:value="shadow" />
-                     </styleClass>
-                  </TextField>
-                  <TextField fx:id="txtUserName" layoutY="53.0" prefHeight="37.0" prefWidth="407.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <styleClass>
-                        <String fx:value="font_calibi" />
-                        <String fx:value="shadow" />
-                     </styleClass>
-                  </TextField>
-                  <TextField fx:id="txtFname" layoutX="1.0" layoutY="157.0" prefHeight="37.0" prefWidth="407.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <styleClass>
-                        <String fx:value="font_calibi" />
-                        <String fx:value="shadow" />
-                     </styleClass>
-                  </TextField>
-                  <TextField fx:id="txtLname" layoutX="1.0" layoutY="213.0" prefHeight="37.0" prefWidth="407.0" styleClass="font_calibi">
+                  <TextField fx:id="txtUserID" prefHeight="37.0" prefWidth="407.0" styleClass="shadow">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtNIC" layoutX="1.0" layoutY="266.0" prefHeight="37.0" prefWidth="407.0">
+                  <TextField fx:id="txtUserName" layoutY="53.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow">
                      <font>
                         <Font size="18.0" />
                      </font>
-                     <styleClass>
-                        <String fx:value="font_calibi" />
-                        <String fx:value="shadow" />
-                     </styleClass>
                   </TextField>
-                  <TextField fx:id="txtContact" layoutX="1.0" layoutY="374.0" prefHeight="37.0" prefWidth="407.0">
+                  <TextField fx:id="txtFname" layoutX="1.0" layoutY="157.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow">
                      <font>
                         <Font size="18.0" />
                      </font>
-                     <styleClass>
-                        <String fx:value="font_calibi" />
-                        <String fx:value="shadow" />
-                     </styleClass>
                   </TextField>
-                  <PasswordField fx:id="txtPwd" layoutY="107.0" prefHeight="37.0" prefWidth="407.0">
+                  <TextField fx:id="txtLname" layoutX="1.0" layoutY="213.0" prefHeight="37.0" prefWidth="407.0">
                      <font>
                         <Font size="18.0" />
                      </font>
-                     <styleClass>
-                        <String fx:value="font_calibi" />
-                        <String fx:value="shadow" />
-                     </styleClass>
+                  </TextField>
+                  <TextField fx:id="txtNIC" layoutX="1.0" layoutY="266.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtContact" layoutX="1.0" layoutY="374.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+                  <PasswordField fx:id="txtPwd" layoutY="107.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
                   </PasswordField>
                   <ComboBox fx:id="dropPosition" layoutX="1.0" layoutY="320.0" onAction="#onPositionSelection" prefHeight="37.0" prefWidth="160.0" promptText="Choose Position" styleClass="shadow" stylesheets="@../CSS/styles.css" />
                </children>
