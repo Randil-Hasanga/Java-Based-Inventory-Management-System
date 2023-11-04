@@ -6,7 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,10 +31,74 @@ public class ManageProducts implements Initializable {
     Connection conn = MySqlCon.MysqlMethod();
     @FXML
     private Button btnDelete;
-
+    private static String productId;
+    @FXML
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
     @FXML
     private TableView<ObservableList<String>> tblProducts;
 
+    private void setSelectedProduct(String p_id) {
+        this.productId = p_id;
+    }
+
+    public static String getSelectedProduct() {
+        return productId;
+    }
+
+    @FXML
+    void onBackButton(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
+    }
+
+    @FXML
+    void onBuyProduct(MouseEvent event) throws IOException {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectSupplierType.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new IOException(e);
+        } catch (NullPointerException e) {
+        }
+    }
+
+    @FXML
+    void onRefresh(MouseEvent event) {
+        loadFromDB();
+    }
+    @FXML
+    void onSellProducts(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectCustomerType.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnDelete.setOnAction(this::deleteSelectedRow);
@@ -60,7 +128,7 @@ public class ManageProducts implements Initializable {
 
                 if (selectedIndex >= 0) {
                     ObservableList<String> selectedRow = tblProducts.getItems().get(selectedIndex);
-                    String p_id = selectedRow.get(0); // Assuming User_Id is in the first column
+                    String p_id = selectedRow.get(0);
 
                     // Remove the selected row from the TableView
                     tblProducts.getItems().remove(selectedIndex);
@@ -162,28 +230,88 @@ public class ManageProducts implements Initializable {
         }
     }
 
-    @FXML
-    void onBackButton(MouseEvent event) {
 
+
+
+
+    @FXML
+    void onUpdateButton(MouseEvent event) throws IOException {
+        int selectedIndex = tblProducts.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            ObservableList<String> selectedRow = tblProducts.getItems().get(selectedIndex);
+            String p_id = selectedRow.get(0); // Assuming User_Id is in the first column
+            setSelectedProduct(p_id);
+
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/UpdateProduct.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } else {
+            showCustomDialog();
+        }
+    }
+
+
+    @FXML
+    void onCustomersButton(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/viewCustomers.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
     }
 
     @FXML
-    void onBuyProduct(MouseEvent event) {
-
+    void onLogOutButton(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/Main.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
     }
+
 
     @FXML
-    void onRefresh(MouseEvent event) {
+    void onReportsButton(MouseEvent event) {
 
     }
+
 
     @FXML
-    void onSellProducts(MouseEvent event) {
-
+    void onSupplierButton(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/viewSuppliers.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
     }
 
-    @FXML
-    void onUpdateButton(MouseEvent event) {
 
-    }
+
 }

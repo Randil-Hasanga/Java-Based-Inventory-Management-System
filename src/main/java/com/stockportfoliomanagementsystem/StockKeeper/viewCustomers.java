@@ -33,40 +33,6 @@ public class viewCustomers implements Initializable {
     private Parent root;
 
 
-    @FXML
-    void onBackButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    @FXML
-    void onSupplierButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/viewSuppliers.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-
-
-    @FXML
-    void onManageStock(MouseEvent event) {
-
-    }
-
-    @FXML
-    void onReportsButton(MouseEvent event) {
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -104,6 +70,101 @@ public class viewCustomers implements Initializable {
             tblCustomers.setItems(data);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void onSupplierButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/viewSuppliers.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+
+    @FXML
+    void onReportsButton(MouseEvent event) {
+        //=======================================================
+    }
+
+    @FXML
+    void onBackButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setHeight(700);
+        stage.setWidth(1210);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+    @FXML
+    void onBuyProduct(MouseEvent event) throws IOException {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectSupplierType.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new IOException(e);
+        } catch (NullPointerException e) {
+        }
+    }
+
+    @FXML
+    void onSellProducts(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectCustomerType.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
+    }
+
+    @FXML
+    void onLogOutButton(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/Main.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
+    }
+
+    @FXML
+    void onUpdateProducts(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/ManageProducts.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
         }
     }
 }

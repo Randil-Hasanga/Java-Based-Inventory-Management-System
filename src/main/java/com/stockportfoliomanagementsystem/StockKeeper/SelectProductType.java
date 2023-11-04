@@ -25,9 +25,13 @@ public class SelectProductType {
     @FXML
     private Label txtName;
     @FXML
-    private Stage stage;
+    private static Stage stage;
     private Scene scene;
     private Parent root;
+
+    public static Stage getStage() {
+        return stage;
+    }
 
 
 
@@ -111,5 +115,21 @@ public class SelectProductType {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    @FXML
+    void onUpdateProducts(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
     }
 }
