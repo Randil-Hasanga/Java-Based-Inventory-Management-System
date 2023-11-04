@@ -128,6 +128,16 @@ public class AddNewCustomer implements Initializable {
 
 
     @FXML
+    void onBackButton(MouseEvent event) {
+
+    }
+
+    @FXML
+    void onBuyProduct(MouseEvent event) {
+
+    }
+
+    @FXML
     void onCustomersButton(MouseEvent event) {
 
     }
@@ -139,6 +149,11 @@ public class AddNewCustomer implements Initializable {
 
     @FXML
     void onSupplierButton(MouseEvent event) {
+
+    }
+
+    @FXML
+    void onUpdateProducts(MouseEvent event) {
 
     }
 

@@ -46,6 +46,43 @@ public class SelectExistingSupplier implements Initializable {
     protected static String supplierType;
 
 
+    @FXML
+    void onReportsButton(MouseEvent event) {
+//===========================================================
+    }
+    @FXML
+    void onSellProducts(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectCustomerType.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
+    }
+
+    @FXML
+    void onUpdateProducts(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/ManageProducts.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
+    }
+
+
     private void setSupplierType(String existing) {
         this.supplierType = existing;
     }
@@ -111,14 +148,18 @@ public class SelectExistingSupplier implements Initializable {
             setSupplierType("Existing");
             AddNewSupplier.supplierType = null;
 
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectPrductType.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setHeight(700);
-            stage.setWidth(1210);
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
+            try {
+                root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectPrductType.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setHeight(700);
+                stage.setWidth(1210);
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
+            } catch (IOException e) {
+            } catch (NullPointerException e) {
+            }
         }else{
             SellExisting sellExisting = new SellExisting();
             sellExisting.showCustomDialog();
@@ -140,22 +181,23 @@ public class SelectExistingSupplier implements Initializable {
 
 
     @FXML
-    void onBackButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectSupplierType.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+    void onBackButton(MouseEvent event){
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectSupplierType.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
 
     }
 
-    @FXML
-    void onReportsButton(MouseEvent event) {
 
-    }
 
     @FXML
     void onSupplierButton(MouseEvent event) throws IOException {

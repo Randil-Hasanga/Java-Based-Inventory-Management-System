@@ -2,6 +2,9 @@ package com.stockportfoliomanagementsystem.StockKeeper;
 
 import com.stockportfoliomanagementsystem.Main;
 import com.stockportfoliomanagementsystem.MySqlCon;
+import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -9,12 +12,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -64,38 +69,63 @@ public class BuyyExisting implements Initializable {
     private String max;
     private int numericId;
 
+    @FXML
+    private Pane paneBuy;
 
     @FXML
     private Label txtName;
     private static Scene scene;
-
-
-    private String SupplierTypeExisting = SelectExistingSupplier.getSupplierType();
-    private String SupplierTypeNew = AddNewSupplier.getSupplierType();
-
     @FXML
-    void onAddBtnClick(MouseEvent event) {
+    private Stage stage;
+    private Scene scene2;
+    private Parent root;
 
-    }
 
-    @FXML
-    void onCustomersButton(MouseEvent event) {
 
-    }
+    private BooleanProperty isTableViewNotEmpty = new SimpleBooleanProperty(false);
 
-    @FXML
-    void onManageStock(MouseEvent event) {
-
-    }
 
     @FXML
     void onReportsButton(MouseEvent event) {
-
+        //==================================================================================================use scene 2
     }
+    private String SupplierTypeExisting = SelectExistingSupplier.getSupplierType();
+    private String SupplierTypeNew = AddNewSupplier.getSupplierType();
+
+
+    @FXML
+    void onCustomersButton(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/viewCustomers.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene2 = new Scene(root);
+            stage.setScene(scene2);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
+    }
+
+
+
 
     @FXML
     void onSupplierButton(MouseEvent event) {
-
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/viewSuppliers.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene2 = new Scene(root);
+            stage.setScene(scene2);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
     }
     private void setScene(Scene scene) {
         this.scene = scene;
@@ -107,6 +137,16 @@ public class BuyyExisting implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        // Bind the boolean property to the TableView's items list.
+        tblCart.getItems().addListener((ListChangeListener.Change<? extends ObservableList<String>> change) -> {
+            isTableViewNotEmpty.set(!tblCart.getItems().isEmpty());
+        });
+
+        // Bind the 'disable' property of your JavaFX pane to the 'isTableViewNotEmpty' property.
+        paneBuy.disableProperty().bind(isTableViewNotEmpty);
+
+
         if(SupplierTypeNew != null) {
             index = AddNewSupplier.getSupIDNew();
             System.out.println("Customer ID: " + index);
@@ -165,8 +205,6 @@ public class BuyyExisting implements Initializable {
                 }
             }
         });
-
-
     }
 
     private void reduceQuantity() {
@@ -465,4 +503,38 @@ public class BuyyExisting implements Initializable {
         dialog.setScene(dialogScene);
         dialog.showAndWait();
     }
+
+
+    @FXML
+    void onHomeButton(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene2 = new Scene(root);
+            stage.setScene(scene2);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
+    }
+    @FXML
+    void onUpdateProducts(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/ManageProducts.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene2 = new Scene(root);
+            stage.setScene(scene2);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
+    }
+
+
 }

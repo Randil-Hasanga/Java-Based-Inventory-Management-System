@@ -2,6 +2,8 @@ package com.stockportfoliomanagementsystem.StockKeeper;
 
 import com.stockportfoliomanagementsystem.Main;
 import com.stockportfoliomanagementsystem.MySqlCon;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -9,11 +11,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -29,6 +33,8 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+
 public class SellExisting implements Initializable {
 
     Connection conn = MySqlCon.MysqlMethod();
@@ -37,12 +43,18 @@ public class SellExisting implements Initializable {
     private String customerTypeExisting;
     private String max;
     private int numericId;
+    @FXML
+    private Stage stage;
+    private Scene scene2;
+    private Parent root;
 
     @FXML
     private TableView<ObservableList<String>> tblCart;
 
     @FXML
     private TableView<ObservableList<String>> tblProducts;
+    @FXML
+    private Pane paneSell;
 
     @FXML
     private Label txtName;
@@ -63,6 +75,9 @@ public class SellExisting implements Initializable {
 
     private String CustomerTypeNew = AddNewCustomer.getCustomerType();
     private String CustomerTypeExisting = SelectExistingCustomer.getCustomerType();
+    private BooleanProperty isTableViewNotEmpty = new SimpleBooleanProperty(false);
+    @FXML
+    private Pane paneCell;
 
     @FXML
     void onAddBtnClick(MouseEvent event) {
@@ -100,6 +115,12 @@ public class SellExisting implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        tblCart.getItems().addListener((ListChangeListener.Change<? extends ObservableList<String>> change) -> {
+            isTableViewNotEmpty.set(!tblCart.getItems().isEmpty());
+        });
+
+        paneCell.disableProperty().bind(isTableViewNotEmpty);
 
         if(CustomerTypeNew != null) {
             index = AddNewCustomer.getCusIDNew();
@@ -159,25 +180,6 @@ public class SellExisting implements Initializable {
                 }
             }
         });
-
-
-//        tblCart.setOnMouseClicked(event -> {
-//            if (event.getClickCount() == 1) {
-//                int selectedIndex = tblCart.getSelectionModel().getSelectedIndex();
-//                if (selectedIndex >= 0) {
-//                    if (tblCart.getSelectionModel().isSelected(selectedIndex)) {
-//                        tblCart.getSelectionModel().clearSelection(selectedIndex);
-//                    } else {
-//                        tblCart.getSelectionModel().select(selectedIndex);
-//                    }
-//                }
-//            }
-//        });
-
-
-
-
-
 
 
     }
@@ -540,6 +542,57 @@ public class SellExisting implements Initializable {
         dialog.showAndWait();
     }
 
+
+
+    @FXML
+    void onBuyProduct(MouseEvent event) throws IOException {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectSupplierType.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene2 = new Scene(root);
+            stage.setScene(scene2);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new IOException(e);
+        } catch (NullPointerException e) {
+        }
+    }
+
+    @FXML
+    void onHomeButton(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene2 = new Scene(root);
+            stage.setScene(scene2);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
+    }
+
+
+    @FXML
+    void onUpdateProducts(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/ManageProducts.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene2 = new Scene(root);
+            stage.setScene(scene2);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
+    }
 
 }
 
