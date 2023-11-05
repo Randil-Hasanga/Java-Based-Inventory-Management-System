@@ -189,22 +189,26 @@ public class BuyyExisting implements Initializable {
             buyProducts();
         });
         btnRemove.setOnAction(removeEvent -> {
-            removeProduct();
+            try {
+                removeProduct();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         });
         btnReduce.setOnAction(reduceEvent -> {
             reduceQuantity();
             tblCart.getSelectionModel().select(tblCart.getItems().size() - 1);
         });
 
-        tblCart.getSelectionModel().getSelectedItems().addListener((ListChangeListener<? super ObservableList<String>>) change -> {
-            while (change.next()) {
-                if (change.wasRemoved()) {
-                    for (ObservableList<String> item : change.getRemoved()) {
-                        tblCart.getSelectionModel().select(item);
-                    }
-                }
-            }
-        });
+//        tblCart.getSelectionModel().getSelectedItems().addListener((ListChangeListener<? super ObservableList<String>>) change -> {
+//            while (change.next()) {
+//                if (change.wasRemoved()) {
+//                    for (ObservableList<String> item : change.getRemoved()) {
+//                        tblCart.getSelectionModel().select(item);
+//                    }
+//                }
+//            }
+//        });
     }
 
     private void reduceQuantity() {
@@ -280,7 +284,7 @@ public class BuyyExisting implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            tblCart.getSelectionModel().clearSelection();
+            //tblCart.getSelectionModel().clearSelection();
             StockKeeperController.dbUpdate();
             loadFromDB();
         } else{
@@ -310,6 +314,9 @@ public class BuyyExisting implements Initializable {
                     }
                     Pattern pattern = Pattern.compile("\\d+");
 
+                    if(max == null){
+                        max = "T_000";
+                    }
                     // Use a Matcher to find the numeric part
                     Matcher matcher = pattern.matcher(max);
 
