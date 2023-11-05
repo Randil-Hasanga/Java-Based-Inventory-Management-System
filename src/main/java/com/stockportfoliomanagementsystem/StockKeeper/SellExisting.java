@@ -442,6 +442,10 @@ public class SellExisting implements Initializable {
                     }
                     Pattern pattern = Pattern.compile("\\d+");
 
+                    if(max == null){
+                        max = "T_000";
+                    }
+
                     // Use a Matcher to find the numeric part
                     Matcher matcher = pattern.matcher(max);
 
