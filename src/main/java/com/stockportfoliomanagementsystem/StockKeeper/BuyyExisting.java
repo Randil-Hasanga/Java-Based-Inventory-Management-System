@@ -543,5 +543,21 @@ public class BuyyExisting implements Initializable {
         }
     }
 
+    @FXML
+    void onSellProducts(MouseEvent event) throws IOException {
+
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectCustomerType.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
+    }
 
 }
