@@ -92,9 +92,20 @@ VALUES
 CREATE TABLE if not exists report (
   R_ID varchar(5) NOT NULL PRIMARY KEY,
   Date_ date,
-  R_Name varchar(15) DEFAULT NULL,
-  R_Description varchar(15) DEFAULT NULL
+  pdf longblob default null
 );
+ALTER TABLE report AUTO_INCREMENT = 1;
+
+DELIMITER $$
+
+CREATE TRIGGER R_ID
+BEFORE INSERT ON report FOR EACH ROW
+BEGIN
+  SET NEW.R_ID = CONCAT('R_', LPAD(NEW.R_ID, 3, '0'));
+END;
+$$
+
+DELIMITER ;
 
 
 CREATE TABLE if not exists stock (
@@ -180,6 +191,7 @@ CREATE TABLE if not exists transactions_cus (
   FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
 );
 
+
 -- Set the initial Invoice_id value to 'I_001'
 ALTER TABLE transactions_cus AUTO_INCREMENT = 1;
 
@@ -254,4 +266,6 @@ END;
 $$
 
 DELIMITER ;
+
+
 

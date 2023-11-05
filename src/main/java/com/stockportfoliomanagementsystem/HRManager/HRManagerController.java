@@ -134,6 +134,10 @@ public class HRManagerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadFromDB();
+    }
+
+    private void loadFromDB(){
         String sql = "SELECT Pic FROM Users WHERE Username = ?";
 
         try {
@@ -275,5 +279,10 @@ public class HRManagerController implements Initializable {
         } catch (IOException e) {
         } catch (NullPointerException e) {
         }
+    }
+
+    @FXML
+    void onRefreshButton(MouseEvent event) {
+        loadFromDB();
     }
 }

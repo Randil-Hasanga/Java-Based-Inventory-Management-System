@@ -159,7 +159,9 @@ public class PaymentRecieptCustomer implements Initializable{
                 System.out.println("Last : "+max);
             }
             Pattern pattern = Pattern.compile("\\d+");
-
+            if(max == null){
+                max = "I_000";
+            }
             // Use a Matcher to find the numeric part
             Matcher matcher = pattern.matcher(max);
 
@@ -256,11 +258,11 @@ public class PaymentRecieptCustomer implements Initializable{
         double centerY = screenHeight / 2;
 
         double boundX = centerX - (850 / 2);
-        double boundY = centerY - (640 / 2);
+        double boundY = centerY - (620 / 2);
 
         try{
             Robot robot = new Robot();
-            Rectangle rectangle = new Rectangle((int) boundX+7, (int) boundY+30,850,640);
+            Rectangle rectangle = new Rectangle((int) boundX+7, (int) boundY+30,850,620);
             BufferedImage bi = robot.createScreenCapture(rectangle);
             ImageIO.write(bi, "png", new File("src/main/java/com/stockportfoliomanagementsystem/Invoices/png/"+ imgFilename));
 
@@ -278,7 +280,7 @@ public class PaymentRecieptCustomer implements Initializable{
             PDDocument document = new PDDocument();
             PDPage page = new PDPage();
 
-            page.setMediaBox(new PDRectangle(850, 640));
+            page.setMediaBox(new PDRectangle(850, 620));
             document.addPage(page);
 
             PDImageXObject pdImage = LosslessFactory.createFromImage(document, bufferedImage);

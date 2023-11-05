@@ -164,7 +164,10 @@ public class SellExisting implements Initializable {
             sellProducts();
         });
         btnRemove.setOnAction(removeEvent -> {
-            removeProduct();
+            try {
+                removeProduct();
+            } catch (Exception e) {
+            }
         });
 
         btnReduce.setOnAction(reduceEvent -> {
@@ -172,15 +175,19 @@ public class SellExisting implements Initializable {
             tblCart.getSelectionModel().select(tblCart.getItems().size() - 1);
         });
 
-        tblCart.getSelectionModel().getSelectedItems().addListener((ListChangeListener<? super ObservableList<String>>) change -> {
-            while (change.next()) {
-                if (change.wasRemoved()) {
-                    for (ObservableList<String> item : change.getRemoved()) {
-                        tblCart.getSelectionModel().select(item);
-                    }
-                }
-            }
-        });
+//        tblCart.getSelectionModel().getSelectedItems().addListener((ListChangeListener<? super ObservableList<String>>) change -> {
+//            while (change.next()) {
+//                if (change.wasRemoved()) {
+//                    for (ObservableList<String> item : change.getRemoved()) {
+//                        try {
+//                            tblCart.getSelectionModel().select(item);
+//                        } catch (Exception e) {
+//
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
 
     }
@@ -579,7 +586,10 @@ public class SellExisting implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            tblCart.getSelectionModel().clearSelection();
+//            try {
+//                tblCart.getSelectionModel().clearSelection();
+//            } catch (Exception e) {
+//            }
             StockKeeperController.dbUpdate();
             loadFromDB();
         } else{

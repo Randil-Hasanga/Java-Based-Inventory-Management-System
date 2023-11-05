@@ -183,6 +183,12 @@
     -fx-pref-width: 850;
 }
 
+.anchorPane_newWindow_high{
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #195e53);
+    -fx-pref-height: 820;
+    -fx-pref-width: 850;
+}
+
 .font_calibi{
     -fx-font-family: Calibri;
 }

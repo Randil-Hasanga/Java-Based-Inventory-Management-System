@@ -174,27 +174,6 @@ public class UpdateProduct implements Initializable {
         }
     }
 
-    @FXML
-    void onLogOutButton(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/Main.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setHeight(700);
-            stage.setWidth(1210);
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        } catch (IOException e) {
-        } catch (NullPointerException e) {
-        }
-    }
-
-
-    @FXML
-    void onReportsButton(MouseEvent event) {
-
-    }
 
 
     @FXML
@@ -214,9 +193,9 @@ public class UpdateProduct implements Initializable {
     }
 
     @FXML
-    void onHomeButton(MouseEvent event) {
+    void onBackButton(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/ManageProducts.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setHeight(700);
             stage.setWidth(1210);

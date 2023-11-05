@@ -2,7 +2,7 @@
     /*-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #195e53);*/
     -fx-pref-height: 660;
     -fx-pref-width: 1200;
-    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #030e4c);
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #133f38);
 }
 
 .container_{
@@ -180,6 +180,12 @@
 .anchorPane_newWindow{
     -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #195e53);
     -fx-pref-height: 620;
+    -fx-pref-width: 850;
+}
+
+.anchorPane_newWindow_high{
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #158675, #195e53);
+    -fx-pref-height: 820;
     -fx-pref-width: 850;
 }
 

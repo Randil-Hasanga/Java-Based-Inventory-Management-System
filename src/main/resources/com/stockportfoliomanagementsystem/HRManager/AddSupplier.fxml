@@ -29,24 +29,7 @@
                     <children>
                         <Pane layoutX="12.0" layoutY="110.0" prefHeight="347.0" prefWidth="218.0">
                             <children>
-                                <Pane layoutY="178.0" prefHeight="54.0" prefWidth="218.0">
-                                    <children>
-                                        <Pane onMouseClicked="#onReports" prefHeight="54.0" prefWidth="218.0" stylesheets="@../CSS/styles.css">
-                                            <children>
-                                                <SVGPath content="M152.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 113C-2.3 103.6-2.3 88.4 7 79s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM224 96c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H192c-17.7 0-32-14.3-32-32zM48 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" fill="#94ffeb" layoutX="-233.0" layoutY="-221.0" scaleX="0.05" scaleY="0.05" />
-                                                <Label layoutX="52.0" layoutY="12.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Reports" textFill="#94ffeb">
-                                                    <font>
-                                                        <Font name="Calibri" size="27.0" />
-                                                    </font>
-                                                </Label>
-                                            </children>
-                                            <styleClass>
-                                                <String fx:value="selected-button" />
-                                                <String fx:value="button_radius" />
-                                            </styleClass>
-                                        </Pane>
-                                    </children>
-                                </Pane>
+                                <Pane layoutY="178.0" prefHeight="54.0" prefWidth="218.0" />
                                 <Pane layoutY="60.0" onMouseClicked="#onStockButton" prefHeight="54.0" prefWidth="218.0" stylesheets="@../CSS/styles.css">
                                     <children>
                                         <SVGPath content="M248 0H208c-26.5 0-48 21.5-48 48V160c0 35.3 28.7 64 64 64H352c35.3 0 64-28.7 64-64V48c0-26.5-21.5-48-48-48H328V80c0 8.8-7.2 16-16 16H264c-8.8 0-16-7.2-16-16V0zM64 256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H224c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H184v80c0 8.8-7.2 16-16 16H120c-8.8 0-16-7.2-16-16V256H64zM352 512H512c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H472v80c0 8.8-7.2 16-16 16H408c-8.8 0-16-7.2-16-16V256H352c-15 0-28.8 5.1-39.7 13.8c4.9 10.4 7.7 22 7.7 34.2V464c0 12.2-2.8 23.8-7.7 34.2C323.2 506.9 337 512 352 512z" fill="#94ffeb" layoutX="-264.0" layoutY="-229.0" scaleX="0.05" scaleY="0.05" />
@@ -86,15 +69,6 @@
                            </children>
                         </Pane>
                             </children>
-                        </Pane>
-                        <Pane layoutX="188.0" layoutY="521.0" prefHeight="37.0" prefWidth="39.0">
-                            <children>
-                                <SVGPath content="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z" fill="#94ffeb" layoutX="-236.0" layoutY="-238.0" scaleX="0.05" scaleY="0.05" styleClass="shadow" />
-                            </children>
-                            <styleClass>
-                                <String fx:value="selected-button" />
-                                <String fx:value="button_radius" />
-                            </styleClass>
                         </Pane>
                     </children>
                     <styleClass>

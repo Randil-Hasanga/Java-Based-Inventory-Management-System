@@ -27,68 +27,40 @@
                         <Font name="Calibri Bold" size="18.0" />
                     </font>
                 </Label>
-                  <TextField fx:id="txtUserID" layoutX="210.0" layoutY="15.0" prefHeight="37.0" prefWidth="407.0" stylesheets="@../CSS/styles.css">
+                  <TextField fx:id="txtUserID" layoutX="210.0" layoutY="15.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
                       <font>
-                          <Font size="18.0" />
+                          <Font size="14.0" />
                       </font>
-               <styleClass>
-                  <String fx:value="font_calibi" />
-                  <String fx:value="shadow" />
-               </styleClass>
                   </TextField>
-                  <TextField fx:id="txtUserName" layoutX="210.0" layoutY="68.0" prefHeight="37.0" prefWidth="407.0" stylesheets="@../CSS/styles.css">
+                  <TextField fx:id="txtUserName" layoutX="210.0" layoutY="68.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
                       <font>
-                          <Font size="18.0" />
+                          <Font size="14.0" />
                       </font>
-               <styleClass>
-                  <String fx:value="font_calibi" />
-                  <String fx:value="shadow" />
-               </styleClass>
                   </TextField>
-                  <TextField fx:id="txtFname" layoutX="210.0" layoutY="172.0" prefHeight="37.0" prefWidth="407.0" stylesheets="@../CSS/styles.css">
+                  <TextField fx:id="txtFname" layoutX="210.0" layoutY="172.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
                       <font>
-                          <Font size="18.0" />
+                          <Font size="14.0" />
                       </font>
-               <styleClass>
-                  <String fx:value="font_calibi" />
-                  <String fx:value="shadow" />
-               </styleClass>
                   </TextField>
-                  <TextField fx:id="txtLname" layoutX="211.0" layoutY="228.0" prefHeight="37.0" prefWidth="407.0" stylesheets="@../CSS/styles.css">
+                  <TextField fx:id="txtLname" layoutX="211.0" layoutY="228.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
                       <font>
-                          <Font size="18.0" />
+                          <Font size="14.0" />
                       </font>
-               <styleClass>
-                  <String fx:value="font_calibi" />
-                  <String fx:value="shadow" />
-               </styleClass>
                   </TextField>
-                  <TextField fx:id="txtNIC" layoutX="211.0" layoutY="281.0" prefHeight="37.0" prefWidth="407.0" stylesheets="@../CSS/styles.css">
+                  <TextField fx:id="txtNIC" layoutX="211.0" layoutY="281.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
                       <font>
-                          <Font size="18.0" />
+                          <Font size="14.0" />
                       </font>
-               <styleClass>
-                  <String fx:value="font_calibi" />
-                  <String fx:value="shadow" />
-               </styleClass>
                   </TextField>
-                  <TextField fx:id="txtContact" layoutX="211.0" layoutY="338.0" prefHeight="37.0" prefWidth="407.0" stylesheets="@../CSS/styles.css">
+                  <TextField fx:id="txtContact" layoutX="211.0" layoutY="338.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
                       <font>
-                          <Font size="18.0" />
+                          <Font size="14.0" />
                       </font>
-               <styleClass>
-                  <String fx:value="font_calibi" />
-                  <String fx:value="shadow" />
-               </styleClass>
                   </TextField>
-                  <PasswordField fx:id="txtPwd" layoutX="210.0" layoutY="122.0" prefHeight="37.0" prefWidth="407.0" stylesheets="@../CSS/styles.css">
+                  <PasswordField fx:id="txtPwd" layoutX="210.0" layoutY="122.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
                       <font>
-                          <Font size="18.0" />
+                          <Font size="14.0" />
                       </font>
-               <styleClass>
-                  <String fx:value="font_calibi" />
-                  <String fx:value="shadow" />
-               </styleClass>
                   </PasswordField>
                 <Label layoutX="37.0" layoutY="68.0" prefHeight="37.0" prefWidth="160.0" styleClass="font_calibi" stylesheets="@../CSS/styles.css" text="Username" textAlignment="RIGHT">
                     <font>
@@ -148,7 +120,7 @@
             <String fx:value="shadow" />
          </styleClass>
         </Pane>
-      <Label fx:id="lblWarning" layoutX="98.0" layoutY="572.0" prefHeight="27.0" prefWidth="302.0" textAlignment="CENTER">
+      <Label fx:id="lblWarning" layoutX="98.0" layoutY="572.0" prefHeight="27.0" prefWidth="302.0" styleClass="shadow" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
