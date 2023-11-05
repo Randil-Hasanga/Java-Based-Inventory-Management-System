@@ -27,7 +27,10 @@
                   <String fx:value="shadow" />
                </styleClass>
                 </Label>
-                <TextField fx:id="txtUserID" editable="false" layoutX="202.0" layoutY="21.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <TextField fx:id="txtUserID" editable="false" layoutX="202.0" layoutY="21.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
                 <Label layoutX="29.0" layoutY="74.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="Username" textAlignment="RIGHT">
                     <font>
                         <Font name="Calibri Bold" size="18.0" />
@@ -37,7 +40,10 @@
                   <String fx:value="shadow" />
                </styleClass>
                 </Label>
-                <TextField fx:id="txtUserName" layoutX="202.0" layoutY="74.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <TextField fx:id="txtUserName" layoutX="202.0" layoutY="74.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
                 <Label layoutX="28.0" layoutY="127.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="First Name" textAlignment="RIGHT">
                     <font>
                         <Font name="Calibri Bold" size="18.0" />
@@ -47,7 +53,10 @@
                   <String fx:value="shadow" />
                </styleClass>
                 </Label>
-                <TextField fx:id="txtFname" layoutX="201.0" layoutY="127.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <TextField fx:id="txtFname" layoutX="201.0" layoutY="127.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
                 <Label layoutX="28.0" layoutY="183.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="Last Name" textAlignment="RIGHT">
                     <font>
                         <Font name="Calibri Bold" size="18.0" />
@@ -57,7 +66,10 @@
                   <String fx:value="shadow" />
                </styleClass>
                 </Label>
-                <TextField fx:id="txtLname" layoutX="201.0" layoutY="183.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <TextField fx:id="txtLname" layoutX="201.0" layoutY="183.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
                 <Label layoutX="28.0" layoutY="236.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="NIC" textAlignment="RIGHT">
                     <font>
                         <Font name="Calibri Bold" size="18.0" />
@@ -67,7 +79,10 @@
                   <String fx:value="shadow" />
                </styleClass>
                 </Label>
-                <TextField fx:id="txtNIC" layoutX="201.0" layoutY="236.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <TextField fx:id="txtNIC" layoutX="201.0" layoutY="236.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
                 <Label layoutX="28.0" layoutY="292.0" prefHeight="37.0" prefWidth="160.0" stylesheets="@../CSS/styles.css" text="Contact number" textAlignment="RIGHT">
                     <font>
                         <Font name="Calibri Bold" size="18.0" />
@@ -77,7 +92,10 @@
                   <String fx:value="shadow" />
                </styleClass>
                 </Label>
-                <TextField fx:id="txtContact" layoutX="201.0" layoutY="292.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+                <TextField fx:id="txtContact" layoutX="201.0" layoutY="292.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
             </children>
          <styleClass>
             <String fx:value="container_" />
@@ -89,9 +107,9 @@
             <String fx:value="login-button" />
             <String fx:value="shadow" />
          </styleClass></Button>
-      <Label fx:id="lblSuccess" layoutX="181.0" layoutY="481.0" prefHeight="28.0" prefWidth="489.0" textAlignment="CENTER">
+      <Label fx:id="lblSuccess" layoutX="108.0" layoutY="510.0" prefHeight="28.0" prefWidth="489.0" styleClass="shadow" textAlignment="CENTER">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
     </children>

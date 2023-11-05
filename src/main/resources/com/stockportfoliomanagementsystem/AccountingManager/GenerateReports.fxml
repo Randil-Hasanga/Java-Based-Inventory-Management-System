@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchorPane_newWindow_high" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.AccountingManager.GenerateReports">
+    <children>
+        <Pane layoutX="16.0" layoutY="14.0" prefHeight="794.0" prefWidth="818.0" styleClass="container_" stylesheets="@../CSS/styles.css">
+            <children>
+                <Label layoutX="486.0" layoutY="71.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Report ID">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="txtReportID" layoutX="567.0" layoutY="70.0" prefHeight="20.0" prefWidth="225.0">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="88.0" layoutY="11.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Book Nook" textAlignment="CENTER" textFill="#c0e8fb">
+                    <font>
+                        <Font name="Bookshelf Symbol 7" size="34.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="54.0" fitWidth="66.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                    <image>
+                        <Image url="@../Images/logoIcon2.png" />
+                    </image>
+                </ImageView>
+                <Pane layoutX="272.0" layoutY="28.0" prefHeight="3.0" prefWidth="520.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
+                <Pane layoutX="17.0" layoutY="114.0" prefHeight="236.0" prefWidth="784.0" stylesheets="@../CSS/styles.css">
+                    <children>
+                        <TableView fx:id="tblSelld" layoutY="26.0" prefHeight="181.0" prefWidth="784.0">
+                            <columns>
+                                <TableColumn prefWidth="75.0" text="C1" />
+                                <TableColumn prefWidth="75.0" text="C2" />
+                            </columns>
+                        </TableView>
+                  <Label layoutX="14.0" layoutY="4.0" prefHeight="17.0" prefWidth="319.0" text="Stock Selled" underline="true">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblProfitSum" layoutX="588.0" layoutY="211.0" prefHeight="20.0" prefWidth="98.0" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblTotalSum" layoutX="686.0" layoutY="211.0" prefHeight="20.0" prefWidth="98.0" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                    </children>
+               <styleClass>
+                  <String fx:value="table_pane" />
+                  <String fx:value="shadow" />
+               </styleClass>
+                </Pane>
+                <Button layoutX="732.0" layoutY="750.0" mnemonicParsing="false" onMouseClicked="#onBtnPDF" stylesheets="@../CSS/styles.css" text="Get PDF">
+               <styleClass>
+                  <String fx:value="login-button" />
+                  <String fx:value="shadow" />
+               </styleClass></Button>
+            <DatePicker fx:id="dateChooser" layoutX="82.0" layoutY="68.0" promptText="Choose Date" styleClass="shadow" stylesheets="@../CSS/styles.css" />
+            <Label layoutX="30.0" layoutY="71.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Date">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Pane layoutX="17.0" layoutY="368.0" prefHeight="236.0" prefWidth="784.0" stylesheets="@../CSS/styles.css">
+               <children>
+                  <TableView fx:id="tblPurchased" layoutY="26.0" prefHeight="181.0" prefWidth="784.0">
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="C1" />
+                        <TableColumn prefWidth="75.0" text="C2" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="14.0" layoutY="4.0" prefHeight="17.0" prefWidth="319.0" text="Stock Purchased" underline="true">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblTotulPurchase" layoutX="653.0" layoutY="212.0" prefHeight="20.0" prefWidth="117.0" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <styleClass>
+                  <String fx:value="table_pane" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </Pane>
+            <Button layoutX="272.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#onGenerateButton" text="Generate">
+               <styleClass>
+                  <String fx:value="shadow" />
+                  <String fx:value="login-button" />
+               </styleClass>
+            </Button>
+            <Label fx:id="lblOnThisDay" layoutX="18.0" layoutY="637.0" underline="true">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="18.0" layoutY="676.0" text="Total Revenue  :  ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalRevenue" layoutX="131.0" layoutY="676.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="18.0" layoutY="702.0" text="Total Profit       :  ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalProfit" layoutX="131.0" layoutY="702.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="380.0" layoutY="676.0" text="Total Expences  :  ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalExpenses" layoutX="512.0" layoutY="676.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

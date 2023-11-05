@@ -84,7 +84,20 @@ public class EditProfile implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //dropPosition.setItems(FXCollections.observableArrayList("Portfolio Manager", "Accounting Manager", "HR Manager", "Stock keeper"));
+        txtUserID.setEditable(false);
 
+        loadFromDB();
+        txtUserID.setText(userId);
+        txtUserName.setText(userName);
+        txtPwd.setText(pwd);
+        txtFname.setText(Fname);
+        txtLname.setText(Lname);
+        txtNIC.setText(NIC);
+        //dropPosition.setValue(position);
+        txtContact.setText(contact);
+    }
+
+    private void loadFromDB(){
         String sql = "SELECT * FROM users WHERE Username = ? AND Password = ?";
 
         try {
@@ -107,14 +120,6 @@ public class EditProfile implements Initializable{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        txtUserID.setText(userId);
-        txtUserName.setText(userName);
-        txtPwd.setText(pwd);
-        txtFname.setText(Fname);
-        txtLname.setText(Lname);
-        txtNIC.setText(NIC);
-        //dropPosition.setValue(position);
-        txtContact.setText(contact);
     }
     @FXML
     void onChooseBtn(ActionEvent event) {

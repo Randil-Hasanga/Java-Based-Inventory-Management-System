@@ -179,6 +179,13 @@ public class StockKeeperController implements Initializable {
         }
     }
 
+    @FXML
+    void onRefreshButton(MouseEvent event) {
+        loadFromDB();
+    }
+
+
+
 
     @FXML
     void onSupplierButton(MouseEvent event) throws IOException {
@@ -198,6 +205,10 @@ public class StockKeeperController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadFromDB();
+    }
+
+    private void loadFromDB(){
         String sql = "SELECT Pic FROM Users WHERE Username = ?";
 
         try {
@@ -298,7 +309,6 @@ public class StockKeeperController implements Initializable {
                 data.nameProperty().setValue(data.getName() + "\nAmount: " + ((int) data.getPieValue()))
         );
     }
-
     public static void dbUpdate(){
         String stockTotal = "UPDATE stock SET Total = Selling_price*Qty";
 

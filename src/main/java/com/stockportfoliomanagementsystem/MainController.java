@@ -136,7 +136,7 @@ public class MainController {
                         stage.setResizable(false);
                         stage.show();
                     }else if(position.equals("Accounting Manager")) {
-                        root = FXMLLoader.load(getClass().getResource("AccountingManagerDashboard.fxml"));
+                        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/AccountingManager/AccountingManagerDashboard.fxml"));
                         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setHeight(700);
                         stage.setWidth(1210);

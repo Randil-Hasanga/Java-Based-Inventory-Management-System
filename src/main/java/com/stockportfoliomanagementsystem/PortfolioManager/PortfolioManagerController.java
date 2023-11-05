@@ -147,11 +147,33 @@ public class PortfolioManagerController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadFromDB();
+    }
 
-        editButton.setOnAction(editEvent -> {
-            editProfile();
-        });
-        //Profile picture
+    @FXML
+    void onEditProfile(MouseEvent event) {
+        try {
+            // Load the FXML file for the new window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/EditProfilePM.fxml"));
+            Parent root = loader.load();
+
+            // Create a new stage
+            Stage newStage = new Stage();
+
+            // Set the FXML content as the scene for the new stage
+            Scene scene = new Scene(root);
+            newStage.setScene(scene);
+            newStage.setResizable(false);
+            // Show the new stage
+            newStage.close();
+            newStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadFromDB(){
         String sql = "SELECT Pic FROM Users WHERE Username = ?";
 
         try {
@@ -255,27 +277,6 @@ public class PortfolioManagerController implements Initializable{
         );
     }
 
-    private void editProfile() {
-        try {
-            // Load the FXML file for the new window
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/EditProfilePM.fxml"));
-            Parent root = loader.load();
-
-            // Create a new stage
-            Stage newStage = new Stage();
-
-            // Set the FXML content as the scene for the new stage
-            Scene scene = new Scene(root);
-            newStage.setScene(scene);
-            newStage.setResizable(false);
-            // Show the new stage
-            newStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private ObservableList<PieChart.Data> fetchDataFromDatabase() {
 
 
@@ -315,5 +316,10 @@ public class PortfolioManagerController implements Initializable{
         } catch (IOException e) {
         } catch (NullPointerException e) {
         }
+    }
+
+    @FXML
+    void onRefreshButton(MouseEvent event) {
+        loadFromDB();
     }
 }

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="705.0" prefWidth="1210.0" styleClass="anchorPane" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.AccountingManager.ManageReports">
+    <children>
+        <Pane layoutX="-2.0" layoutY="-7.0" prefHeight="667.0" prefWidth="280.0" style="-fx-background-color: #075E54;">
+            <children>
+                <Label layoutX="96.0" layoutY="20.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Book Nook" textAlignment="CENTER" textFill="#c0e8fb">
+                    <font>
+                        <Font name="Bookshelf Symbol 7" size="34.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="54.0" fitWidth="66.0" layoutX="22.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                    <image>
+                        <Image url="@../Images/logoIcon2.png" />
+                    </image>
+                </ImageView>
+            <Pane layoutX="20.0" layoutY="77.0" prefHeight="566.0" prefWidth="241.0" stylesheets="@../CSS/styles.css">
+               <children>
+                  <Pane layoutX="12.0" layoutY="67.0" prefHeight="347.0" prefWidth="218.0">
+                     <children>
+                        <Pane layoutY="162.0" prefHeight="54.0" prefWidth="218.0">
+                           <children>
+                              <Pane onMouseClicked="#onCustomers" prefHeight="54.0" prefWidth="218.0" styleClass="selected-button" stylesheets="@../CSS/styles.css">
+                                 <children>
+                                    <SVGPath content="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112h32c24 0 46.2 7.5 64.4 20.3zM448 416V394.5c20-24.7 32-56.2 32-90.5c0-42.8-18.7-81.3-48.4-107.7C449.8 183.5 472 176 496 176h32c61.9 0 112 50.1 112 112c0 44.7-26.2 83.2-64 101.2V416c0 17.7-14.3 32-32 32H480c-17.7 0-32-14.3-32-32zm8-328a56 56 0 1 1 112 0A56 56 0 1 1 456 88zM576 245.7v84.7c10-11.3 16-26.1 16-42.3s-6-31.1-16-42.3zM320 32a64 64 0 1 1 0 128 64 64 0 1 1 0-128zM240 304c0 16.2 6 31 16 42.3V261.7c-10 11.3-16 26.1-16 42.3zm144-42.3v84.7c10-11.3 16-26.1 16-42.3s-6-31.1-16-42.3zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z" fill="#94ffeb" layoutX="-298.0" layoutY="-229.0" scaleX="0.05" scaleY="0.05" />
+                                    <Label layoutX="51.0" layoutY="12.0" prefHeight="31.0" prefWidth="134.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Customers" textFill="#94ffeb">
+                                       <font>
+                                          <Font name="Calibri" size="27.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </Pane>
+                        <Pane layoutY="216.0" onMouseClicked="#onStock" prefHeight="54.0" prefWidth="218.0" styleClass="selected-button" stylesheets="@../CSS/styles.css">
+                           <children>
+                              <SVGPath content="M248 0H208c-26.5 0-48 21.5-48 48V160c0 35.3 28.7 64 64 64H352c35.3 0 64-28.7 64-64V48c0-26.5-21.5-48-48-48H328V80c0 8.8-7.2 16-16 16H264c-8.8 0-16-7.2-16-16V0zM64 256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H224c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H184v80c0 8.8-7.2 16-16 16H120c-8.8 0-16-7.2-16-16V256H64zM352 512H512c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H472v80c0 8.8-7.2 16-16 16H408c-8.8 0-16-7.2-16-16V256H352c-15 0-28.8 5.1-39.7 13.8c4.9 10.4 7.7 22 7.7 34.2V464c0 12.2-2.8 23.8-7.7 34.2C323.2 506.9 337 512 352 512z" fill="#94ffeb" layoutX="-264.0" layoutY="-229.0" scaleX="0.05" scaleY="0.05" />
+                              <Label layoutX="52.0" layoutY="12.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Stock" textFill="#94ffeb">
+                                 <font>
+                                    <Font name="Calibri" size="27.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutY="114.0" onMouseClicked="#onSuppliers" prefHeight="54.0" prefWidth="218.0" styleClass="selected-button" stylesheets="@../CSS/styles.css">
+                           <children>
+                              <SVGPath content="M383.5 192c.3-5.3 .5-10.6 .5-16c0-51-15.9-96-40.2-127.6C319.5 16.9 288.2 0 256 0s-63.5 16.9-87.8 48.4C143.9 80 128 125 128 176c0 5.4 .2 10.7 .5 16H240V320H208c-7 0-13.7 1.5-19.7 4.2L68.2 192H96.5c-.3-5.3-.5-10.6-.5-16c0-64 22.2-121.2 57.1-159.3C62 49.3 18.6 122.6 4.2 173.6C1.5 183.1 9 192 18.9 192h6L165.2 346.3c-3.3 6.5-5.2 13.9-5.2 21.7v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V368c0-7.8-1.9-15.2-5.2-21.7L487.1 192h6c9.9 0 17.4-8.9 14.7-18.4C493.4 122.6 450 49.3 358.9 16.7C393.8 54.8 416 112.1 416 176c0 5.4-.2 10.7-.5 16h28.3L323.7 324.2c-6-2.7-12.7-4.2-19.7-4.2H272V192H383.5z" fill="#94ffeb" layoutX="-233.0" layoutY="-229.0" scaleX="0.05" scaleY="0.05" />
+                              <Label layoutX="52.0" layoutY="12.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Suppliers" textFill="#94ffeb">
+                                 <font>
+                                    <Font name="Calibri" size="27.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="14.0" layoutY="14.0" onMouseClicked="#onBackButton" prefHeight="31.0" prefWidth="29.0">
+                     <children>
+                        <SVGPath content="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" fill="#94ffeb" layoutX="-208.0" layoutY="-241.0" scaleX="0.05" scaleY="0.05" />
+                     </children>
+                     <styleClass>
+                        <String fx:value="selected-button" />
+                        <String fx:value="button_radius" />
+                     </styleClass>
+                  </Pane>
+               </children>
+               <styleClass>
+                  <String fx:value="container_" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </Pane>
+            </children>
+        </Pane>
+        <Pane layoutX="489.0" layoutY="31.0" prefHeight="3.0" prefWidth="700.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
+        <Label layoutX="296.0" layoutY="15.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Manage Reports" textFill="#94ffeb">
+            <font>
+                <Font name="Calibri" size="24.0" />
+            </font>
+        </Label>
+        <Pane layoutX="293.0" layoutY="129.0" prefHeight="428.0" prefWidth="892.0" styleClass="table_pane" stylesheets="@../CSS/styles.css">
+            <children>
+                <TableView fx:id="tblReports" layoutX="12.0" prefHeight="372.0" prefWidth="867.0" styleClass="table_properties" stylesheets="@../CSS/styles.css">
+                    <columns>
+                        <TableColumn prefWidth="75.0" text="User ID" />
+                        <TableColumn prefWidth="157.0" text="Username" />
+                        <TableColumn prefWidth="105.0" text="First Name" />
+                        <TableColumn prefWidth="111.0" text="Last Name" />
+                        <TableColumn prefWidth="122.0" text="NIC" />
+                        <TableColumn prefWidth="138.0" text="Position" />
+                        <TableColumn prefWidth="158.0" text="Contact Number" />
+                    </columns>
+                </TableView>
+                <Button layoutX="613.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#onOpenButton" prefHeight="31.0" prefWidth="121.0" style="-fx-background-color: #5E7AC7FF;" stylesheets="@../CSS/styles.css" text="Open">
+                    <styleClass>
+                        <String fx:value="login-button" />
+                        <String fx:value="shadow" />
+                    </styleClass>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Button layoutX="462.0" layoutY="382.0" mnemonicParsing="false" onMouseClicked="#onRefresh" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Refresh">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <styleClass>
+                        <String fx:value="shadow" />
+                        <String fx:value="login-button" />
+                        <String fx:value="yellow-button" />
+                    </styleClass>
+                </Button>
+            </children>
+        </Pane>
+        <Button layoutX="1051.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#onDeleteButton" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Delete">
+            <styleClass>
+                <String fx:value="shadow" />
+                <String fx:value="login-button" />
+                <String fx:value="red-button" />
+            </styleClass>
+            <font>
+                <Font size="14.0" />
+            </font></Button>
+    </children>
+</AnchorPane>

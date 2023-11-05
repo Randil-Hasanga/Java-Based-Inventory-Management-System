@@ -170,7 +170,7 @@ public class BuyyExisting implements Initializable {
 
 
         // Define column names for the cart table
-        String[] cartColumnNames = {"Product ID", "Name", "Price", "Description", "Supplier", "Quantity"};
+        String[] cartColumnNames = {"Product ID", "Name", "Price taken", "Description", "Supplier", "Quantity"};
 
         double cartColumnWidth = tblCart.getPrefWidth() / cartColumnNames.length;
 
@@ -452,7 +452,7 @@ public class BuyyExisting implements Initializable {
         columns.clear();
 
         // Define fixed column names
-        String[] columnNames = {"Product ID","Name","Price","Quantity","Description","Supplier"};
+        String[] columnNames = {"Product ID","Name","Price taken","Quantity","Description","Supplier"};
 
         double columnWidth = tblProducts.getPrefWidth() / columnNames.length;
 
@@ -465,7 +465,7 @@ public class BuyyExisting implements Initializable {
             columns.add(column);
         }
 
-        String sql = "SELECT stock.P_ID, stock.P_Name, stock.Selling_price, stock.Qty, stock.P_Description, supplier.S_Name FROM stock, supplier WHERE stock.S_ID = supplier.S_ID AND supplier.S_ID = ?";
+        String sql = "SELECT stock.P_ID, stock.P_Name, stock.Price_taken, stock.Qty, stock.P_Description, supplier.S_Name FROM stock, supplier WHERE stock.S_ID = supplier.S_ID AND supplier.S_ID = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,index);
