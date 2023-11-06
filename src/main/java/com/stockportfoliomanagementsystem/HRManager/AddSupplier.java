@@ -91,13 +91,13 @@ public class AddSupplier implements Initializable {
         }
 
         if(numericId == 0){
-            txtSupID.setText("C_001");
+            txtSupID.setText("S001");
         }else if(numericId < 9) {
-            txtSupID.setText("C_00" + (numericId + 1));
+            txtSupID.setText("S00" + (numericId + 1));
         }else if(numericId < 99){
-            txtSupID.setText("C_0" + (numericId + 1));
+            txtSupID.setText("S0" + (numericId + 1));
         }else{
-            txtSupID.setText("C_" + (numericId + 1));
+            txtSupID.setText("S" + (numericId + 1));
         }
         txtSupID.setEditable(false);
     }

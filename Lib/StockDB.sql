@@ -32,10 +32,10 @@ INSERT INTO users
 (User_id, Username, Password, FName, Lname, NIC, Position, Contact, Pic)
 VALUES
 
-("U001","randil@gmail.com","randil@123", "John", "Dorie", "1234356V","Portfolio Manager", "0711234567", null),
-("U002","vinod@gmail.com","vinod@123", "Vinod", "Kavinda", "1234356V","HR Manager", "0711254347",null),
-("U003","dinuka@gmail.com","dinuka@123", "Dinuka", "Dulanjana", "1234356V","Accounting Manager", "0711234647",null),
-("U004","deshani@gmail.com","deshani@123", "Deshani", "Bandara", "1234356V","Stock keeper", "0711254634",null);
+("1","randil@gmail.com","randil@123", "John", "Dorie", "1234356V","Portfolio Manager", "0711234567", null),
+("2","vinod@gmail.com","vinod@123", "Vinod", "Kavinda", "1234356V","HR Manager", "0711254347",null),
+("3","dinuka@gmail.com","dinuka@123", "Dinuka", "Dulanjana", "1234356V","Accounting Manager", "0711234647",null),
+("4","deshani@gmail.com","deshani@123", "Deshani", "Bandara", "1234356V","Stock keeper", "0711254634",null);
 
 CREATE TABLE if not exists customer (
   C_ID varchar(5) NOT NULL PRIMARY KEY,
@@ -84,10 +84,10 @@ DELIMITER ;
   
 INSERT INTO supplier
 VALUES
-('S001','Sammanee','076-3963385','books','Colobmo'),
-('S002','Atlas','071-4563218','water bottle','rathnapura'),
-('S003','Weerodara','076-7895412','pen, pencil','Anuradhapura'),
-('S004','Promate','078-8521456','bags','Matara');
+('1','Sammanee','076-3963385','books','Colobmo'),
+('2','Atlas','071-4563218','water bottle','rathnapura'),
+('3','Weerodara','076-7895412','pen, pencil','Anuradhapura'),
+('4','Promate','078-8521456','bags','Matara');
 
 CREATE TABLE if not exists report (
   R_ID varchar(5) NOT NULL PRIMARY KEY,
@@ -122,18 +122,12 @@ CREATE TABLE if not exists stock (
 
 INSERT INTO stock
 VALUES
-('P001','CR pg120 SR',140.00,150.00,100,NULL,'S001',15000.00),
-('P002','CR pg80 SR',90.00,100.00,200,NULL,'S002',20000.00),
-('P003','CR pg80 SQR',92.00,100.00,200,NULL,'S003',20000),
-('P004','Blue pens',35.00,40.00,200,NULL,'S004',8000.00),
-('P005','Pencils',16.00,20.00,400,NULL,'S003',8000);
+('1','CR pg120 SR',140.00,150.00,100,NULL,'S001',15000.00),
+('2','CR pg80 SR',90.00,100.00,200,NULL,'S002',20000.00),
+('3','CR pg80 SQR',92.00,100.00,200,NULL,'S003',20000),
+('4','Blue pens',35.00,40.00,200,NULL,'S004',8000.00),
+('5','Pencils',16.00,20.00,400,NULL,'S003',8000);
 
--- CREATE TABLE if not exists product_customer (
---   C_ID varchar(5) DEFAULT NULL,
---   P_ID varchar(5) DEFAULT NULL,
---   FOREIGN KEY (C_ID) REFERENCES customer (C_ID),
---   FOREIGN KEY (P_ID) REFERENCES stock (P_ID)
--- );
 
 ALTER TABLE stock AUTO_INCREMENT = 1;
 

@@ -35,10 +35,11 @@ public class PortfolioManagerController implements Initializable{
 
     Connection conn = MySqlCon.MysqlMethod();
     MainController mainController = new MainController();
-    String Fname = mainController.getFname();
-    String Lname = mainController.getLname();
     String username = mainController.getUsername();
     String password = mainController.getPwd();
+
+    private String Fname;
+    private String Lname;
 
     byte[] image = new byte[1024];
     @FXML
@@ -74,11 +75,6 @@ public class PortfolioManagerController implements Initializable{
     @FXML
     private Label lblAVG;
 
-
-    @FXML
-    void onReportButton(MouseEvent event) {
-        //To Complete -------------------------------------------------------------
-    }
     @FXML
     public void manageUsers(MouseEvent event){
         try {
@@ -200,7 +196,6 @@ public class PortfolioManagerController implements Initializable{
 
                     Image image = new Image(new FileInputStream("photo.jpg"));
                     circle.setFill(new ImagePattern(image));
-
                 }else{
                     System.out.println("No image");
                 }
@@ -227,6 +222,24 @@ public class PortfolioManagerController implements Initializable{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        String sql3 = "SELECT FName,Lname FROM Users WHERE Username = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql3);
+            preparedStatement.setString(1,username);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                Fname = rs.getString("FName");
+                Lname = rs.getString("Lname");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
         System.out.println(Fname+" PM "+Lname);
         txtName.setAlignment(Pos.CENTER);
         txtName.setText(Fname+" "+Lname);
