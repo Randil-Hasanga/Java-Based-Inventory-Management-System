@@ -45,6 +45,8 @@ public class BuyyExisting implements Initializable {
 
     @FXML
     private Button btnReduce;
+    @FXML
+    private Label lblTotal;
 
     @FXML
     private Button btnRemove;
@@ -83,6 +85,7 @@ public class BuyyExisting implements Initializable {
 
 
     private BooleanProperty isTableViewNotEmpty = new SimpleBooleanProperty(false);
+    private double total;
 
 
     @FXML
@@ -355,6 +358,25 @@ public class BuyyExisting implements Initializable {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+
+                String sql2 = "INSERT INTO temp_invoice_sup (transaction_id,Date_, Qty, Price, Total, S_ID, P_ID)\n" +
+                        "VALUES\n" +
+                        "(?,?,?,?,?,?,?)";
+                try {
+                    PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+                    pstmt2.setString(1, String.valueOf(numericId + 1));
+                    pstmt2.setDate(2, Date.valueOf(LocalDate.now()));
+                    pstmt2.setInt(3, Integer.parseInt(cartItem2.get(5)));
+                    pstmt2.setDouble(4, Double.parseDouble(cartItem2.get(2)));
+                    pstmt2.setDouble(5, Double.parseDouble(cartItem2.get(2)) * Integer.parseInt(cartItem2.get(5)));
+                    pstmt2.setString(6, index);
+                    pstmt2.setString(7, cartItem2.get(0));
+
+                    pstmt2.executeUpdate();
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 System.out.println("DB updated");
                 StockKeeperController.dbUpdate();
                 loadFromDB();
@@ -362,6 +384,30 @@ public class BuyyExisting implements Initializable {
             ObservableList<ObservableList<String>> data = tblCart.getItems();
             data.clear();
             lblSuccess.setText("Products Bought Successfully");
+
+            String sql4 = "SELECT SUM(Total) AS TT FROM temp_invoice_sup";
+
+            try {
+                PreparedStatement ps = conn.prepareStatement(sql4);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()){
+                    total = rs.getDouble(1);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            lblTotal.setText(String.valueOf(total));
+
+            String sql5 = "DELETE FROM temp_invoice_sup";
+
+            try {
+                PreparedStatement pstmt2 = conn.prepareStatement(sql5);
+                pstmt2.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
         }else{
             showTableEmptyDialog();
@@ -459,7 +505,7 @@ public class BuyyExisting implements Initializable {
         columns.clear();
 
         // Define fixed column names
-        String[] columnNames = {"Product ID","Name","Price taken","Quantity","Description","Supplier"};
+        String[] columnNames = {"Product ID", "Name", "Price taken", "Description", "Supplier", "Quantity"};
 
         double columnWidth = tblProducts.getPrefWidth() / columnNames.length;
 

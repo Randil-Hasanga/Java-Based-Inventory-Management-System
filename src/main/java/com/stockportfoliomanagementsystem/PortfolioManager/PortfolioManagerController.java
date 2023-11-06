@@ -60,8 +60,7 @@ public class PortfolioManagerController implements Initializable{
     private Parent root;
     @FXML
     private ImageView imageView;
-    @FXML
-    private Image image1;
+
     private double total;
 
     @FXML
@@ -74,6 +73,8 @@ public class PortfolioManagerController implements Initializable{
     private Label lblSold;
     @FXML
     private Label lblAVG;
+
+
 
     @FXML
     public void manageUsers(MouseEvent event){
@@ -183,7 +184,8 @@ public class PortfolioManagerController implements Initializable{
                 // Read the image data and save it to a file
 
                 if(is!=null) {
-                    // Read the image data and save it to a file
+
+                    imageView.setVisible(false);
                     OutputStream os = new FileOutputStream(new File("photo.jpg"));
                     byte[] content = new byte[1024];
                     int size = 0;
@@ -197,6 +199,7 @@ public class PortfolioManagerController implements Initializable{
                     Image image = new Image(new FileInputStream("photo.jpg"));
                     circle.setFill(new ImagePattern(image));
                 }else{
+                    imageView.setVisible(true);
                     System.out.println("No image");
                 }
             }

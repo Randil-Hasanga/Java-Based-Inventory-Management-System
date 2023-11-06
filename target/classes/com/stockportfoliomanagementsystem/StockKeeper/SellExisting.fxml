@@ -113,7 +113,7 @@
                   </TableView>
                </content>
             </ScrollPane>
-            <Button fx:id="onSellBtn" layoutX="678.0" layoutY="221.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Sell">
+            <Button fx:id="onSellBtn" layoutX="757.0" layoutY="218.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Sell">
                <font>
                   <Font size="14.0" />
                </font>
@@ -122,7 +122,7 @@
                   <String fx:value="shadow" />
                </styleClass>
             </Button>
-            <Button fx:id="btnRemove" layoutX="544.0" layoutY="221.0" mnemonicParsing="false" onMouseClicked="#onAddBtnClick" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Remove Item">
+            <Button fx:id="btnRemove" layoutX="623.0" layoutY="218.0" mnemonicParsing="false" onMouseClicked="#onAddBtnClick" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Remove Item">
                <styleClass>
                   <String fx:value="red-button" />
                   <String fx:value="shadow" />
@@ -131,7 +131,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnReduce" layoutX="404.0" layoutY="221.0" mnemonicParsing="false" onMouseClicked="#onAddBtnClick" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Reduce Quantity">
+            <Button fx:id="btnReduce" layoutX="483.0" layoutY="218.0" mnemonicParsing="false" onMouseClicked="#onAddBtnClick" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Reduce Quantity">
                <styleClass>
                   <String fx:value="yellow-button" />
                   <String fx:value="shadow" />

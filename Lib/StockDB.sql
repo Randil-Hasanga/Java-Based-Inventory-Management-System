@@ -2,6 +2,7 @@ CREATE DATABASE if not exists StockDB;
 
 USE StockDB;
 
+
 CREATE TABLE if not exists users
 (
 	User_Id VARCHAR(10) NOT NULL PRIMARY KEY,
@@ -32,10 +33,11 @@ INSERT INTO users
 (User_id, Username, Password, FName, Lname, NIC, Position, Contact, Pic)
 VALUES
 
-("1","randil@gmail.com","randil@123", "John", "Dorie", "1234356V","Portfolio Manager", "0711234567", null),
-("2","vinod@gmail.com","vinod@123", "Vinod", "Kavinda", "1234356V","HR Manager", "0711254347",null),
-("3","dinuka@gmail.com","dinuka@123", "Dinuka", "Dulanjana", "1234356V","Accounting Manager", "0711234647",null),
-("4","deshani@gmail.com","deshani@123", "Deshani", "Bandara", "1234356V","Stock keeper", "0711254634",null);
+("1","randil@gmail.com","Randil@123", "Randil", "Hasanga", "364852648V","Stock keeper", "0711234567", null),
+("2","vinod@gmail.com","Vinod@123", "Vinod", "Kavinda", "364826374V","HR Manager", "0711254347",null),
+("3","dinuka@gmail.com","Dinuka@123", "Dinuka", "Dulanjana", "1234356789345","Accounting Manager", "0711234647",null),
+("4","deshani@gmail.com","Deshani@123", "Deshani", "Bandara", "1234356453v","Portfolio Manager", "0711254634",null);
+
 
 CREATE TABLE if not exists customer (
   C_ID varchar(5) NOT NULL PRIMARY KEY,

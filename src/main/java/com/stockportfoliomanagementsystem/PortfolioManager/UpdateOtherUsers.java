@@ -1,5 +1,6 @@
 package com.stockportfoliomanagementsystem.PortfolioManager;
 
+import com.stockportfoliomanagementsystem.MainController;
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,25 +55,49 @@ public class UpdateOtherUsers implements Initializable {
 
     @FXML
     void onUpdateButton(MouseEvent event) {
-        String sql = "UPDATE users SET Username = ?, Fname = ?, Lname = ?, NIC = ?, Contact = ? WHERE User_Id = ?";
 
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, txtUserName.getText());
-            pstmt.setString(2, txtFname.getText());
-            pstmt.setString(3, txtLname.getText());
-            pstmt.setString(4, txtNIC.getText());
-            pstmt.setString(5, txtContact.getText());
-            pstmt.setString(6, userId);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        userName = txtUserName.getText();
+        //pwd = txtPwd.getText();
+        Fname = txtFname.getText();
+        Lname = txtLname.getText();
+        NIC = txtNIC.getText();
+        //position = dropPosition.getValue();
+        contact = txtContact.getText();
+
+        if((userId.isEmpty() || userName.isEmpty() || Fname.isEmpty() || Lname.isEmpty() || NIC.isEmpty() || contact.isEmpty())){
+            MainController.fillAllTheFieldsAlert();
+        }else {
+            if(MainController.isPhoneNumberValid(contact)) {
+                if(MainController.isNICValid(NIC)){
+                    String sql = "UPDATE users SET Username = ?, Fname = ?, Lname = ?, NIC = ?, Contact = ? WHERE User_Id = ?";
+
+                    try {
+                        PreparedStatement pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, txtUserName.getText());
+                        pstmt.setString(2, txtFname.getText());
+                        pstmt.setString(3, txtLname.getText());
+                        pstmt.setString(4, txtNIC.getText());
+                        pstmt.setString(5, txtContact.getText());
+                        pstmt.setString(6, userId);
+                        pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                    lblSuccess.setText("Successfully Updated");
+                }else{
+                    MainController.invalidNICAlert();
+                }
+            }else{
+                MainController.invalidPhoneNumberAlert();
+            }
         }
-        lblSuccess.setText("Successfully Updated");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        txtUserName.setEditable(false);
+        txtUserID.setEditable(false);
+
         String sql = "SELECT * FROM users WHERE User_Id = ?";
 
         try {

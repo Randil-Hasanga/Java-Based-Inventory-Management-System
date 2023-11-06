@@ -27,6 +27,8 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.stockportfoliomanagementsystem.MainController.*;
+
 public class EditProfile implements Initializable{
 
     Connection conn = MySqlCon.MysqlMethod();
@@ -85,6 +87,7 @@ public class EditProfile implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //dropPosition.setItems(FXCollections.observableArrayList("Portfolio Manager", "Accounting Manager", "HR Manager", "Stock keeper"));
         txtUserID.setEditable(false);
+        txtUserName.setEditable(false);
 
         loadFromDB();
         txtUserID.setText(userId);
@@ -148,54 +151,50 @@ public class EditProfile implements Initializable{
         NIC = txtNIC.getText();
         contact = txtContact.getText();
 
+            if ((userId.isEmpty()) || (userName.isEmpty()) || (pwd.isEmpty()) || (Fname.isEmpty()) || (Lname.isEmpty()) || (NIC.isEmpty()) || (contact.isEmpty())) {
+                MainController.fillAllTheFieldsAlert();
+            }else {
+                    if (isEmailValid(userName)) {
+                        if (isPasswordValid(pwd)) {
+                            if(isPhoneNumberValid(contact)) {
+                                if(isNICValid(NIC)){
+                                    System.out.println("Password is valid.");
 
-        if (isPasswordValid(pwd)) {
-            System.out.println("Password is valid.");
-            if((userId.isEmpty())||(userName.isEmpty())||(pwd.isEmpty())||(Fname.isEmpty())||(Lname.isEmpty())||(NIC.isEmpty())||(contact.isEmpty())){
-                lblWarning.setText("Please Fill All The Fields");
-            }else{
-                String sql = "UPDATE users SET User_id = ?, Username = ?, Password = ?, FName = ?, Lname = ?, NIC = ?, Contact = ?, Pic = ? WHERE Username = ? AND Password = ?";
+                                    String sql = "UPDATE users SET User_id = ?, Username = ?, Password = ?, FName = ?, Lname = ?, NIC = ?, Contact = ?, Pic = ? WHERE Username = ? AND Password = ?";
 
-                try {
-                    PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, userId);
-                    pstmt.setString(2, userName);
-                    pstmt.setString(3, pwd);
-                    pstmt.setString(4, Fname);
-                    pstmt.setString(5, Lname);
-                    pstmt.setString(6, NIC);
-                    pstmt.setString(7, contact);
-                    pstmt.setBinaryStream(8, fis);
-                    pstmt.setString(9, mc.getUsername());
-                    pstmt.setString(10, mc.getPwd());
-                    pstmt.executeUpdate();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                lblWarning.setText("Profile Updated");
-            }
-        } else {
-            Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
-            confirmationDialog.setTitle("Warning !");
-            confirmationDialog.setHeaderText("Password Not Valid");
-            confirmationDialog.setContentText("Minimum length of 8 characters.\n" +
-                    "At least one uppercase letter.\n" +
-                    "At least one lowercase letter.\n" +
-                    "At least one digit.\n" +
-                    "At least one special character ( @, #, $, etc.)");
+                                    try {
+                                        PreparedStatement pstmt = conn.prepareStatement(sql);
+                                        pstmt.setString(1, userId);
+                                        pstmt.setString(2, userName);
+                                        pstmt.setString(3, pwd);
+                                        pstmt.setString(4, Fname);
+                                        pstmt.setString(5, Lname);
+                                        pstmt.setString(6, NIC);
+                                        pstmt.setString(7, contact);
+                                        pstmt.setBinaryStream(8, fis);
+                                        pstmt.setString(9, mc.getUsername());
+                                        pstmt.setString(10, mc.getPwd());
+                                        pstmt.executeUpdate();
+                                    } catch (SQLException e) {
+                                        System.out.println("Error: " + e.getMessage());
+                                    }
+                                    lblWarning.setText("Profile Updated");
+                                }else{
+                                    MainController.invalidNICAlert();
+                                }
 
-            ButtonType okButton = new ButtonType("OK");
-
-            confirmationDialog.showAndWait().ifPresent(response -> {
-                if (response == okButton) {
-                    System.out.println("OK button clicked");
-                    confirmationDialog.close();
-                }
-            });
+                            }else{
+                                MainController.invalidPhoneNumberAlert();
+                            }
+                        } else {
+                            MainController.invalidPasswordAlert();
+                        }
+                    }else{
+                        MainController.invalidEmailAlert();
+                    }
         }
-
-
     }
+
 
     @FXML
     void onClearButton(MouseEvent event) {
@@ -206,15 +205,4 @@ public class EditProfile implements Initializable{
         txtLname.setText("");
         txtNIC.setText("");
     }
-
-    public static boolean isPasswordValid(String password) {
-
-        String regexPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$";
-        Pattern pattern = Pattern.compile(regexPattern);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
-
-
-
 }

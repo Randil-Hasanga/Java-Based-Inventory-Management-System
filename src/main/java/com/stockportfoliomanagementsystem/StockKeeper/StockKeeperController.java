@@ -61,8 +61,10 @@ public class StockKeeperController implements Initializable {
     private ImageView imageView;
 
     MainController mainController = new MainController();
-    String Fname = mainController.getFname();
-    String Lname = mainController.getLname();
+    private String Fname;
+    private String Lname;
+
+
     String username = mainController.getUsername();
     String password = mainController.getPwd();
     private double total;
@@ -222,6 +224,7 @@ public class StockKeeperController implements Initializable {
                 // Read the image data and save it to a file
 
                 if(is!=null) {
+                    imageView.setVisible(false);
                     // Read the image data and save it to a file
                     OutputStream os = new FileOutputStream(new File("photo.jpg"));
                     byte[] content = new byte[1024];
@@ -235,7 +238,8 @@ public class StockKeeperController implements Initializable {
 
                     Image image = new Image(new FileInputStream("photo.jpg"));
                     circle.setFill(new ImagePattern(image));
-
+                }else{
+                    imageView.setVisible(true);
                 }
             }
         } catch (SQLException e) {
@@ -260,6 +264,23 @@ public class StockKeeperController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        String sql3 = "SELECT FName,Lname FROM Users WHERE Username = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql3);
+            preparedStatement.setString(1,username);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                Fname = rs.getString("FName");
+                Lname = rs.getString("Lname");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println(Fname+" PM "+Lname);
         txtName.setAlignment(Pos.CENTER);
         txtName.setText(Fname+" "+Lname);

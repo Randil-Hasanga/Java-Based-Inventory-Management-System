@@ -1,5 +1,6 @@
 package com.stockportfoliomanagementsystem.HRManager;
 
+import com.stockportfoliomanagementsystem.MainController;
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -108,21 +111,29 @@ public class AddSupplier implements Initializable {
         supContact = txtSupContact.getText();
         supID = txtSupID.getText();
 
-        String sql = "INSERT INTO supplier (S_ID, S_Name, S_Location, S_Contact) VALUES (?, ?, ?, ?)";
+        if((supName.isEmpty())||(supAddress.isEmpty()||(supContact.isEmpty()||supID.isEmpty()))){
+            MainController.fillAllTheFieldsAlert();
+        }else{
+            if(MainController.isPhoneNumberValid(supContact)) {
+                String sql = "INSERT INTO supplier (S_ID, S_Name, S_Location, S_Contact) VALUES (?, ?, ?, ?)";
 
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, String.valueOf(numericId+1));
-            pstmt.setString(2, supName);
-            pstmt.setString(3, supAddress);
-            pstmt.setString(4, supContact);
-            pstmt.executeUpdate();
+                try {
+                    PreparedStatement pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, String.valueOf(numericId + 1));
+                    pstmt.setString(2, supName);
+                    pstmt.setString(3, supAddress);
+                    pstmt.setString(4, supContact);
+                    pstmt.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    System.out.println("Error : " + e.getMessage());
+                }
+
+                lblSuccess.setText("Customer Added Successfully");
+            }else{
+                MainController.invalidPhoneNumberAlert();
+            }
         }
-
-        lblSuccess.setText("Customer Added Successfully");
     }
     @FXML
     void onBackButton(MouseEvent event) {

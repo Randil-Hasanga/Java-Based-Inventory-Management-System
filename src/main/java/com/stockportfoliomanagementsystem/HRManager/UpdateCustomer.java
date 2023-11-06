@@ -1,5 +1,6 @@
 package com.stockportfoliomanagementsystem.HRManager;
 
+import com.stockportfoliomanagementsystem.MainController;
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -110,19 +113,28 @@ public class UpdateCustomer implements Initializable {
         cusAddress = txtCusAddress.getText();
         cusContact = txtCusContact.getText();
 
-        String sql = "UPDATE customer SET C_Name = ?, C_Location = ?, C_Contact = ? WHERE C_ID = ?";
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,cusName);
-            pstmt.setString(2,cusAddress);
-            pstmt.setString(3,cusContact);
-            pstmt.setString(4,cusID);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if((cusName.isEmpty())||(cusAddress.isEmpty()||(cusContact.isEmpty()))){
+            MainController.fillAllTheFieldsAlert();
+        }else {
+            if(MainController.isPhoneNumberValid(cusContact)) {
+                System.out.println("Valid Phone Number");
+                String sql = "UPDATE customer SET C_Name = ?, C_Location = ?, C_Contact = ? WHERE C_ID = ?";
+                try {
+                    PreparedStatement pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, cusName);
+                    pstmt.setString(2, cusAddress);
+                    pstmt.setString(3, cusContact);
+                    pstmt.setString(4, cusID);
+                    pstmt.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+                System.out.println("customer table updated");
+                lblSuccess.setText("Customer table updated !");
+            }else{
+                MainController.invalidPhoneNumberAlert();
+            }
         }
-        System.out.println("customer table updated");
-        lblSuccess.setText("Customer table updated !");
     }
 
     @FXML
