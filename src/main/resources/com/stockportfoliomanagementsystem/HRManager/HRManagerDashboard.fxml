@@ -72,7 +72,7 @@
                         <Pane layoutX="-6.0" layoutY="8.0" prefHeight="3.0" prefWidth="235.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
                             </children>
                         </Pane>
-                  <Circle fx:id="circle" fill="DODGERBLUE" layoutX="126.0" layoutY="99.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" styleClass="shadow" />
+                  <Circle fx:id="circle" layoutX="126.0" layoutY="99.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" styleClass="shadow" />
                   <Label fx:id="txtName" layoutX="67.0" layoutY="166.0" prefHeight="26.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" textAlignment="CENTER" textFill="#a5c7ad">
                      <font>
                         <Font size="17.0" />
@@ -105,6 +105,11 @@
                         <JFXButton layoutX="8.0" layoutY="6.0" onMouseClicked="#onEditProfile" prefHeight="25.0" prefWidth="106.0" style="-fx-background-color: transparent;" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Edit Profile" textFill="#94ffeb" />
                      </children>
                   </Pane>
+                  <ImageView fx:id="imageView" fitHeight="120.0" fitWidth="120.0" layoutX="66.0" layoutY="39.0">
+                     <image>
+                        <Image url="@../Images/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png" />
+                     </image>
+                  </ImageView>
                     </children>
                     <styleClass>
                         <String fx:value="container_" />

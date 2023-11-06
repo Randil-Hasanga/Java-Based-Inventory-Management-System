@@ -1,5 +1,6 @@
 package com.stockportfoliomanagementsystem.PortfolioManager;
 
+import com.stockportfoliomanagementsystem.MainController;
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -27,6 +28,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.stockportfoliomanagementsystem.MainController.*;
 
 public class AddUser implements Initializable {
     Connection conn = MySqlCon.MysqlMethod();
@@ -67,6 +70,8 @@ public class AddUser implements Initializable {
     private Label lblWarning;
     private String max;
     private int numericId;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -137,69 +142,69 @@ public class AddUser implements Initializable {
     @FXML
     void onInsertButton(MouseEvent event) {
 
+
+
         userName = txtUserName.getText();
         pwd = txtPwd.getText();
         Fname = txtFname.getText();
         Lname = txtLname.getText();
         NIC = txtNIC.getText();
         contact = txtContact.getText();
+        position = dropPosition.getValue();
 
-        if (isPasswordValid(pwd)) {
-            System.out.println("Password is valid.");
-            if((userName.isEmpty())||(pwd.isEmpty())||(Fname.isEmpty())||(Lname.isEmpty())||(NIC.isEmpty())||(contact.isEmpty())||(position.isEmpty())){
-                lblWarning.setText("Please Fill All The Fields");
+        if((userName.isEmpty())||(pwd.isEmpty())||(Fname.isEmpty())||(Lname.isEmpty())||(NIC.isEmpty())||(contact.isEmpty())||(position.isEmpty())||(selectedFile == null)){
+            MainController.fillAllTheFieldsAlert();
+        }else{
+            if(isEmailValid(userName)){
+                if (isPasswordValid(pwd)) {
+                    if(isPhoneNumberValid(contact)) {
+                        if(isNICValid(NIC)){
+                            System.out.println("Password is valid.");
+
+                            String sql = "INSERT INTO users (User_id, Username, Password, FName, Lname, NIC, Position, Contact, Pic)\n" +
+                                    "VALUES (?,?,?,?,?,?,?,?,?)";
+
+                            try {
+                                PreparedStatement pstmt = conn.prepareStatement(sql);
+                                pstmt.setString(1, String.valueOf(numericId + 1));
+                                pstmt.setString(2, userName);
+                                pstmt.setString(3, pwd);
+                                pstmt.setString(4, Fname);
+                                pstmt.setString(5, Lname);
+                                pstmt.setString(6, NIC);
+                                pstmt.setString(7, position);
+                                pstmt.setString(8, contact);
+                                pstmt.setBinaryStream(9, fis, (int) selectedFile.length());
+
+                                pstmt.executeUpdate();
+                                lblWarning.setText("Successfully updated");
+
+                                ManageUsersCtrl mg = new ManageUsersCtrl();
+                            } catch (SQLException e) {
+                                System.out.println("Error: " + e.getMessage());
+                            }
+
+                            txtUserName.clear();
+                            txtPwd.clear();
+                            txtFname.clear();
+                            txtLname.clear();
+                            txtNIC.clear();
+                            txtContact.clear();
+                            dropPosition.setValue(null);
+                        }else{
+                            MainController.invalidNICAlert();
+                        }
+                    }else{
+                        MainController.invalidPhoneNumberAlert();
+                    }
+                } else {
+                    MainController.invalidPasswordAlert();
+                }
             }else{
-                String sql = "INSERT INTO users (User_id, Username, Password, FName, Lname, NIC, Position, Contact, Pic)\n" +
-                        "VALUES (?,?,?,?,?,?,?,?,?)";
-
-                try {
-                    PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, String.valueOf(numericId+1));
-                    pstmt.setString(2, userName);
-                    pstmt.setString(3, pwd);
-                    pstmt.setString(4, Fname);
-                    pstmt.setString(5, Lname);
-                    pstmt.setString(6, NIC);
-                    pstmt.setString(7, position);
-                    pstmt.setString(8, contact);
-                    pstmt.setBinaryStream(9, fis, (int)selectedFile.length());
-
-                    pstmt.executeUpdate();
-                    lblWarning.setText("Successfully updated");
-
-                    ManageUsersCtrl mg = new ManageUsersCtrl();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                MainController.invalidEmailAlert();
             }
-        } else {
-            Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
-            confirmationDialog.setTitle("Warning !");
-            confirmationDialog.setHeaderText("Password Not Valid");
-            confirmationDialog.setContentText("Minimum length of 8 characters.\n" +
-                    "At least one uppercase letter.\n" +
-                    "At least one lowercase letter.\n" +
-                    "At least one digit.\n" +
-                    "At least one special character ( @, #, $, etc.)");
-
-            ButtonType okButton = new ButtonType("OK");
-
-            confirmationDialog.showAndWait().ifPresent(response -> {
-                if (response == okButton) {
-                    System.out.println("OK button clicked");
-                    confirmationDialog.close();
-                }
-            });
         }
 
-
     }
 
-    public static boolean isPasswordValid(String password) {
-
-        String regexPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$";
-        Pattern pattern = Pattern.compile(regexPattern);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
 }

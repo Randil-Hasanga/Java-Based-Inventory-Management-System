@@ -16,6 +16,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -54,10 +55,14 @@ public class AccountingManagerController implements Initializable {
     private double total;
 
     MainController mainController = new MainController();
-    String Fname = mainController.getFname();
-    String Lname = mainController.getLname();
+    private String Fname ;
+    private String Lname ;
     String username = mainController.getUsername();
     String password = mainController.getPwd();
+
+
+    @FXML
+    private ImageView imageView;
 
     private void setScene(Scene scene) {
         this.scene2 = scene;
@@ -206,6 +211,7 @@ public class AccountingManagerController implements Initializable {
                 // Read the image data and save it to a file
 
                 if(is!=null) {
+                    imageView.setVisible(false);
                     // Read the image data and save it to a file
                     OutputStream os = new FileOutputStream(new File("photo.jpg"));
                     byte[] content = new byte[1024];
@@ -221,6 +227,7 @@ public class AccountingManagerController implements Initializable {
                     circle.setFill(new ImagePattern(image));
                 }else{
                     System.out.println("No image");
+                    imageView.setVisible(true);
                 }
             }
         } catch (SQLException e) {
@@ -245,6 +252,23 @@ public class AccountingManagerController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        String sql3 = "SELECT FName,Lname FROM Users WHERE Username = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql3);
+            preparedStatement.setString(1,username);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                Fname = rs.getString("FName");
+                Lname = rs.getString("Lname");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println(Fname+" PM "+Lname);
         txtName.setAlignment(Pos.CENTER);
         txtName.setText(Fname+" "+Lname);

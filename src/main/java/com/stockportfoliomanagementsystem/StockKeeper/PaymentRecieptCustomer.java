@@ -228,18 +228,9 @@ public class PaymentRecieptCustomer implements Initializable{
 
         txtTotal.setText(String.valueOf(Total));
 
-        String sql2 = "DELETE FROM temp_invoice";
 
-        try {
-            PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-            pstmt2.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
-        Platform.runLater(() -> {
-            captureScne();
-        });
+
     }
 
     private void captureScne() {
@@ -318,7 +309,6 @@ public class PaymentRecieptCustomer implements Initializable{
     }
 
     private void showPDF() {
-
         try {
             InputStream pdfInputStream = new FileInputStream(pdfFilePath);
             Path tempPdfFile = Files.createTempFile("temp_pdf_", ".pdf");
@@ -339,25 +329,8 @@ public class PaymentRecieptCustomer implements Initializable{
 
     @FXML
     void onBtnPDF(MouseEvent event) {
+        captureScne();
         showPDF();
     }
 
-    public void showClickErrorDialog() {
-        Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initStyle(StageStyle.UTILITY);
-        dialog.setTitle("Warning !");
-
-        Label messageLabel = new Label("Already Done !");
-        javafx.scene.control.Button closeButton = new Button("Close");
-        closeButton.setOnAction(event -> dialog.close());
-
-        VBox dialogVBox = new VBox(10);
-        dialogVBox.getChildren().addAll(messageLabel, closeButton);
-        dialogVBox.setStyle("-fx-alignment: center; -fx-padding: 20;");
-
-        Scene dialogScene = new Scene(dialogVBox, 300, 100);
-        dialog.setScene(dialogScene);
-        dialog.showAndWait();
-    }
 }

@@ -32,7 +32,7 @@
                         <String fx:value="text_center" />
                      </styleClass>
                   </Label>
-                  <Circle fx:id="circle" fill="DODGERBLUE" layoutX="128.0" layoutY="74.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="circle" layoutX="128.0" layoutY="74.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
                         <Pane layoutX="9.0" layoutY="198.0" prefHeight="284.0" prefWidth="240.0">
                             <children>
                                 <Pane layoutY="14.0" onMouseClicked="#onBuyProduct" prefHeight="54.0" prefWidth="240.0" styleClass="selected-button" stylesheets="@../CSS/styles.css">
@@ -120,6 +120,11 @@
                         <String fx:value="button_radius" />
                      </styleClass>
                   </Pane>
+                  <ImageView fx:id="imageView" fitHeight="120.0" fitWidth="120.0" layoutX="68.0" layoutY="14.0">
+                     <image>
+                        <Image url="@../Images/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png" />
+                     </image>
+                  </ImageView>
                     </children>
                     <styleClass>
                         <String fx:value="container_" />

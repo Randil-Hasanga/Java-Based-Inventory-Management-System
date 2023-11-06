@@ -54,18 +54,16 @@ public class HRManagerController implements Initializable {
     private double bought;
 
     MainController mainController = new MainController();
-    String Fname = mainController.getFname();
-    String Lname = mainController.getLname();
     String username = mainController.getUsername();
     String password = mainController.getPwd();
 
-
     private double total;
+    private String Fname;
+    private String Lname;
 
     @FXML
-    void onReportsButton(MouseEvent event) {
-        //Complete this
-    }
+    private ImageView imageView;
+
 
     @FXML
     void onEditProfile(MouseEvent event) {
@@ -151,6 +149,7 @@ public class HRManagerController implements Initializable {
                 // Read the image data and save it to a file
                 if(is!=null) {
                     // Read the image data and save it to a file
+                    imageView.setVisible(false);
                     OutputStream os = new FileOutputStream(new File("photo.jpg"));
                     byte[] content = new byte[1024];
                     int size = 0;
@@ -165,6 +164,7 @@ public class HRManagerController implements Initializable {
                     circle.setFill(new ImagePattern(image));
                 }else{
                     System.out.println("No image");
+                    imageView.setVisible(true);
                 }
             }
         } catch (SQLException e) {
@@ -186,6 +186,22 @@ public class HRManagerController implements Initializable {
             }
             System.out.println(total);
             lblAVG.setText("LKR "+total);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql3 = "SELECT FName,Lname FROM Users WHERE Username = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql3);
+            preparedStatement.setString(1,username);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                Fname = rs.getString("FName");
+                Lname = rs.getString("Lname");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

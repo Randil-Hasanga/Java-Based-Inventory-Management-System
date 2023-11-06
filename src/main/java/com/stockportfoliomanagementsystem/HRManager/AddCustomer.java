@@ -1,5 +1,6 @@
 package com.stockportfoliomanagementsystem.HRManager;
 
+import com.stockportfoliomanagementsystem.MainController;
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -105,21 +108,31 @@ public class AddCustomer implements Initializable{
         cusContact = txtCusContact.getText();
         cusID = txtCusID.getText();
 
-        String sql = "INSERT INTO customer (C_ID, C_Name, C_Location, C_Contact) VALUES (?, ?, ?, ?)";
+        if((cusName.isEmpty())||(cusAddress.isEmpty())||(cusContact.isEmpty())||(cusID.isEmpty())) {
+            MainController.fillAllTheFieldsAlert();
+        }else{
+            if(MainController.isPhoneNumberValid(cusContact)) {
+                System.out.println("Valid");
+                String sql = "INSERT INTO customer (C_ID, C_Name, C_Location, C_Contact) VALUES (?, ?, ?, ?)";
 
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, String.valueOf(numericId+1));
-            pstmt.setString(2, cusName);
-            pstmt.setString(3, cusAddress);
-            pstmt.setString(4, cusContact);
-            pstmt.executeUpdate();
+                try {
+                    PreparedStatement pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, String.valueOf(numericId + 1));
+                    pstmt.setString(2, cusName);
+                    pstmt.setString(3, cusAddress);
+                    pstmt.setString(4, cusContact);
+                    pstmt.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+                lblSuccess.setText("Customer Added Successfully");
+            }else{
+                MainController.invalidPhoneNumberAlert();
+            }
         }
 
-        lblSuccess.setText("Customer Added Successfully");
+
     }
     @FXML
     void onBackButton(MouseEvent event) {

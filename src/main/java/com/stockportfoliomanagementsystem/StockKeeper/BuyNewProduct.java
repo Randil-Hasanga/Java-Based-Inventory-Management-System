@@ -1,5 +1,7 @@
 package com.stockportfoliomanagementsystem.StockKeeper;
 
+import com.stockportfoliomanagementsystem.Main;
+import com.stockportfoliomanagementsystem.MainController;
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -81,39 +83,27 @@ public class BuyNewProduct implements Initializable {
         quantity = 0;
         description = txtDescription.getText();
 
-        String sql = "INSERT INTO stock (P_ID, P_Name, Price_taken, Selling_price,Qty, P_Description, S_ID) VALUES (?,?,?,?,?,?,?)";
+        if(productName.isEmpty() || txtPriceTaken.getText().isEmpty() || txtSellingPrice.getText().isEmpty() || txtDescription.getText().isEmpty()){
+            MainController.fillAllTheFieldsAlert();
+        }else{
+            String sql = "INSERT INTO stock (P_ID, P_Name, Price_taken, Selling_price,Qty, P_Description, S_ID) VALUES (?,?,?,?,?,?,?)";
 
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, String.valueOf(numericId+1));
-            pstmt.setString(2,productName);
-            pstmt.setDouble(3,priseTaken);
-            pstmt.setDouble(4,sellingPrice);
-            pstmt.setInt(5,quantity);
-            pstmt.setString(6,description);
-            pstmt.setString(7,supID);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("Stock updated");
+            try {
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, String.valueOf(numericId+1));
+                pstmt.setString(2,productName);
+                pstmt.setDouble(3,priseTaken);
+                pstmt.setDouble(4,sellingPrice);
+                pstmt.setInt(5,quantity);
+                pstmt.setString(6,description);
+                pstmt.setString(7,supID);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+            System.out.println("Stock updated");
 
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/BuyyExisting.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-
-
-    }
-
-    @FXML
-    void onLogOutButton(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/Main.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/BuyyExisting.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setHeight(700);
             stage.setWidth(1210);
@@ -121,10 +111,9 @@ public class BuyNewProduct implements Initializable {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
-        } catch (IOException e) {
-        } catch (NullPointerException e) {
         }
     }
+
     @FXML
     void onCustomersButton(MouseEvent event) throws IOException {
         try {

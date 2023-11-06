@@ -20,6 +20,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainController {
 
@@ -53,6 +55,8 @@ public class MainController {
     private Parent root;
     private static String DBPw;
 
+
+
     public void setFname(String Fname){
         this.Fname = Fname;
     }
@@ -79,6 +83,119 @@ public class MainController {
         return DBUsername;
     }
 
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
+    public static boolean isEmailValid(String email) {
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+    private static final String PHONE_NUMBER_REGEX = "^[0-9]{10}$";
+    public static boolean isPhoneNumberValid(String phoneNumber) {
+        Pattern pattern = Pattern.compile(PHONE_NUMBER_REGEX);
+        Matcher matcher = pattern.matcher(phoneNumber);
+        return matcher.matches();
+    }
+
+    private static final String NIC_REGEX_V = "^[0-9]{9}[vV]$";
+    private static final String NIC_REGEX = "^[0-9]{12}$";
+
+    public static boolean isNICValid(String nic) {
+        Pattern pattern = Pattern.compile(NIC_REGEX);
+        Pattern pattern1 = Pattern.compile(NIC_REGEX_V);
+        Matcher matcher = pattern.matcher(nic);
+        Matcher matcher1 = pattern1.matcher(nic);
+        return matcher.matches()||matcher1.matches();
+    }
+    public static boolean isPasswordValid(String password) {
+
+        String regexPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$";
+        Pattern pattern = Pattern.compile(regexPattern);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+
+    public static void fillAllTheFieldsAlert(){
+        Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
+        confirmationDialog.setTitle("Warning !");
+        confirmationDialog.setContentText("Please Fill All The Fields");
+
+        ButtonType okButton = new ButtonType("OK");
+
+        confirmationDialog.showAndWait().ifPresent(response -> {
+            if (response == okButton) {
+                System.out.println("OK button clicked.");
+            }
+        });
+    }
+
+    public static void invalidNICAlert() {
+        Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
+        confirmationDialog.setTitle("Warning !");
+        confirmationDialog.setContentText("Invalid NIC number");
+        confirmationDialog.setContentText("Please Enter a Valid NIC Number\n" +
+                "Ex: 123456789v or 123456789123");
+
+        ButtonType okButton = new ButtonType("OK");
+
+        confirmationDialog.showAndWait().ifPresent(response -> {
+            if (response == okButton) {
+                System.out.println("OK button clicked.");
+            }
+        });
+    }
+    public static void invalidPhoneNumberAlert(){
+        Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
+        confirmationDialog.setTitle("Warning !");
+        confirmationDialog.setHeaderText("Invalid Phone Number");
+        confirmationDialog.setContentText("Please Enter a Valid Phone Number\n" +
+                "Ex: 0771234567");
+
+        ButtonType okButton = new ButtonType("OK");
+
+        confirmationDialog.showAndWait().ifPresent(response -> {
+            if (response == okButton) {
+                System.out.println("OK button clicked.");
+            }
+        });
+    }
+
+    public static void invalidEmailAlert(){
+        Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
+        confirmationDialog.setTitle("Warning !");
+        confirmationDialog.setHeaderText("Invalid Email Address");
+        confirmationDialog.setContentText("Please Enter a Valid Email Address\n" +
+                "Ex: john@gmail.com");
+
+        ButtonType okButton = new ButtonType("OK");
+
+        confirmationDialog.showAndWait().ifPresent(response -> {
+            if (response == okButton) {
+                System.out.println("OK button clicked.");
+            }
+        });
+    }
+
+    public static void invalidPasswordAlert(){
+        Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
+        confirmationDialog.setTitle("Warning !");
+        confirmationDialog.setHeaderText("Password Not Valid");
+        confirmationDialog.setContentText("Minimum length of 8 characters.\n" +
+                "At least one uppercase letter.\n" +
+                "At least one lowercase letter.\n" +
+                "At least one digit.\n" +
+                "At least one special character ( @, #, $, etc.)");
+
+        ButtonType okButton = new ButtonType("OK");
+
+        confirmationDialog.showAndWait().ifPresent(response -> {
+            if (response == okButton) {
+                System.out.println("OK button clicked");
+                confirmationDialog.close();
+            }
+        });
+    }
+
+
 
     @FXML
     void clearText(ActionEvent event) {
@@ -88,88 +205,91 @@ public class MainController {
 
     @FXML
     public void onLoginButton(MouseEvent event) throws IOException {
-
         username = txtUserName.getText();
         password = txtPwd.getText();
 
-        if((username.isEmpty())&&(password.isEmpty())){
-            lblWarning.setText("Please Fill All The Fields");
+        if((username.isEmpty())||(password.isEmpty())){
+            fillAllTheFieldsAlert();
         }else{
-            String sql = "SELECT Password, Position, Fname, Lname FROM Users WHERE Username = ?";
+            if (isEmailValid(username)) {
+                String sql = "SELECT Password, Position, Fname, Lname FROM Users WHERE Username = ?";
 
-            try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-                pstmt.setString(1,username);
-                ResultSet rs = pstmt.executeQuery();
+                try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                    pstmt.setString(1, username);
+                    ResultSet rs = pstmt.executeQuery();
 
-                while(rs.next()){
-                    DBPwd = rs.getString("Password");
-                    position = rs.getString("Position");
-                    Fname = rs.getString("Fname");
-                    Lname = rs.getString("Lname");
-                }
-                System.out.println(Fname+" "+Lname);
-                MainController mainController = new MainController();
-                mainController.setFname(Fname);
-                mainController.setLname(Lname);
-
-                if((DBPwd!=null)&&(DBPwd.equals(password))){
-                    lblWarning.setText("Password correct");
-                    mainController.setPwd(DBPwd);
-                    mainController.setUsername(username);
-
-                    if(position.equals("Portfolio Manager")){
-                        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/PortfolioManagerDashboard.fxml"));
-                        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                        stage.setHeight(700);
-                        stage.setWidth(1210);
-                        scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.setResizable(false);
-                        stage.show();
-                    }else if(position.equals("HR Manager")) {
-                        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/HRManagerDashboard.fxml"));
-                        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        stage.setHeight(700);
-                        stage.setWidth(1210);
-                        scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.setResizable(false);
-                        stage.show();
-                    }else if(position.equals("Accounting Manager")) {
-                        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/AccountingManager/AccountingManagerDashboard.fxml"));
-                        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        stage.setHeight(700);
-                        stage.setWidth(1210);
-                        scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.setResizable(false);
-                        stage.show();
-                    }else if(position.equals("Stock keeper")) {
-                        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
-                        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        stage.setHeight(700);
-                        stage.setWidth(1210);
-                        scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.setResizable(false);
-                        stage.show();
+                    while (rs.next()) {
+                        DBPwd = rs.getString("Password");
+                        position = rs.getString("Position");
+                        Fname = rs.getString("Fname");
+                        Lname = rs.getString("Lname");
                     }
-                }else{
-                    Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
-                    confirmationDialog.setTitle("Warning !");
-                    confirmationDialog.setHeaderText("Username or Password incorrect");
+                    System.out.println(Fname + " " + Lname);
+                    MainController mainController = new MainController();
+                    mainController.setFname(Fname);
+                    mainController.setLname(Lname);
 
-                    ButtonType okButton = new ButtonType("OK");
+                    if ((DBPwd != null) && (DBPwd.equals(password))) {
+                        lblWarning.setText("Password correct");
+                        mainController.setPwd(DBPwd);
+                        mainController.setUsername(username);
 
-                    confirmationDialog.showAndWait().ifPresent(response -> {
-                        if (response == okButton) {
-                            System.out.println("OK button clicked.");
+                        if (position.equals("Portfolio Manager")) {
+                            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/PortfolioManager/PortfolioManagerDashboard.fxml"));
+                            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            stage.setHeight(700);
+                            stage.setWidth(1210);
+                            scene = new Scene(root);
+                            stage.setScene(scene);
+                            stage.setResizable(false);
+                            stage.show();
+                        } else if (position.equals("HR Manager")) {
+                            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/HRManager/HRManagerDashboard.fxml"));
+                            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            stage.setHeight(700);
+                            stage.setWidth(1210);
+                            scene = new Scene(root);
+                            stage.setScene(scene);
+                            stage.setResizable(false);
+                            stage.show();
+                        } else if (position.equals("Accounting Manager")) {
+                            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/AccountingManager/AccountingManagerDashboard.fxml"));
+                            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            stage.setHeight(700);
+                            stage.setWidth(1210);
+                            scene = new Scene(root);
+                            stage.setScene(scene);
+                            stage.setResizable(false);
+                            stage.show();
+                        } else if (position.equals("Stock keeper")) {
+                            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
+                            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            stage.setHeight(700);
+                            stage.setWidth(1210);
+                            scene = new Scene(root);
+                            stage.setScene(scene);
+                            stage.setResizable(false);
+                            stage.show();
                         }
-                    });
-                }
+                    } else {
+                        Alert confirmationDialog = new Alert(Alert.AlertType.WARNING);
+                        confirmationDialog.setTitle("Warning !");
+                        confirmationDialog.setHeaderText("Username or Password incorrect");
 
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                        ButtonType okButton = new ButtonType("OK");
+
+                        confirmationDialog.showAndWait().ifPresent(response -> {
+                            if (response == okButton) {
+                                System.out.println("OK button clicked.");
+                            }
+                        });
+                    }
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }else {
+                invalidEmailAlert();
             }
         }
     }

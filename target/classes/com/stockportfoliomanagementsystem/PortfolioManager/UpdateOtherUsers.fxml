@@ -27,7 +27,7 @@
                   <String fx:value="shadow" />
                </styleClass>
                 </Label>
-                <TextField fx:id="txtUserID" editable="false" layoutX="202.0" layoutY="21.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
+                <TextField fx:id="txtUserID" layoutX="202.0" layoutY="21.0" prefHeight="37.0" prefWidth="407.0" styleClass="shadow" stylesheets="@../CSS/styles.css">
                <font>
                   <Font size="14.0" />
                </font></TextField>

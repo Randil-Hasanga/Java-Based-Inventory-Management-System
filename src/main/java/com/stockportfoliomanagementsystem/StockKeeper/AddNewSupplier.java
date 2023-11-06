@@ -1,5 +1,6 @@
 package com.stockportfoliomanagementsystem.StockKeeper;
 
+import com.stockportfoliomanagementsystem.MainController;
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -76,32 +77,40 @@ public class AddNewSupplier implements Initializable {
         supContact = txtSupContact.getText();
         supID = txtSupID.getText();
 
-        String sql = "INSERT INTO supplier (S_ID, S_Name, S_Location, S_Contact) VALUES (?, ?, ?, ?)";
+        if((supName.isEmpty() || supAddress.isEmpty() || supContact.isEmpty())){
+            MainController.fillAllTheFieldsAlert();
+        }else{
+            if(MainController.isPhoneNumberValid(supContact)){
+                String sql = "INSERT INTO supplier (S_ID, S_Name, S_Location, S_Contact) VALUES (?, ?, ?, ?)";
 
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, String.valueOf(numericId+1));
-            pstmt.setString(2, supName);
-            pstmt.setString(3, supAddress);
-            pstmt.setString(4, supContact);
-            pstmt.executeUpdate();
+                try {
+                    PreparedStatement pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, String.valueOf(numericId+1));
+                    pstmt.setString(2, supName);
+                    pstmt.setString(3, supAddress);
+                    pstmt.setString(4, supContact);
+                    pstmt.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    System.out.println("Error : " + e.getMessage());
+                }
+
+                lblSuccess.setText("Customer Added Successfully");
+                setSupplierType("New");
+                SelectExistingSupplier.supplierType = null;
+
+                root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/BuyNewProduct.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setHeight(700);
+                stage.setWidth(1210);
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
+            }else{
+                MainController.invalidPhoneNumberAlert();
+            }
         }
-
-        lblSuccess.setText("Customer Added Successfully");
-        setSupplierType("New");
-        SelectExistingSupplier.supplierType = null;
-
-        root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/BuyNewProduct.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setHeight(700);
-        stage.setWidth(1210);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
     }
 
 

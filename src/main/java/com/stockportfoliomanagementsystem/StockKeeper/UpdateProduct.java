@@ -1,5 +1,6 @@
 package com.stockportfoliomanagementsystem.StockKeeper;
 
+import com.stockportfoliomanagementsystem.MainController;
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -109,20 +110,24 @@ public class UpdateProduct implements Initializable {
         p_sellingPrice = Double.parseDouble(txtSellingPrice.getText());
         p_quantity = Integer.parseInt(txtQuantity.getText());
 
-        String sql = "UPDATE stock SET P_Name = ?, P_Description = ?, Price_taken = ?, Selling_price = ?, Qty = ? WHERE P_ID = ?";
+        if(p_name.isEmpty() || p_description.isEmpty() || txtPriceTaken.getText().isEmpty() || txtSellingPrice.getText().isEmpty() || txtQuantity.getText().isEmpty()){
+            MainController.fillAllTheFieldsAlert();
+        }else{
+            String sql = "UPDATE stock SET P_Name = ?, P_Description = ?, Price_taken = ?, Selling_price = ?, Qty = ? WHERE P_ID = ?";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1,p_name);
-            preparedStatement.setString(2,p_description);
-            preparedStatement.setDouble(3,p_priceTaken);
-            preparedStatement.setDouble(4,p_sellingPrice);
-            preparedStatement.setInt(5,p_quantity);
-            preparedStatement.setString(6,pid);
-            preparedStatement.executeUpdate();
-            lblSuccess.setText("Product Updated Successfully");
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1,p_name);
+                preparedStatement.setString(2,p_description);
+                preparedStatement.setDouble(3,p_priceTaken);
+                preparedStatement.setDouble(4,p_sellingPrice);
+                preparedStatement.setInt(5,p_quantity);
+                preparedStatement.setString(6,pid);
+                preparedStatement.executeUpdate();
+                lblSuccess.setText("Product Updated Successfully");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
