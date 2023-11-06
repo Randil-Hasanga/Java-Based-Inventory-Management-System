@@ -72,10 +72,59 @@ public class GenerateReports implements Initializable {
     private FileInputStream fis;
     private byte[] pdf;
 
+
+
     @FXML
     void onBtnPDF(MouseEvent event) {
+
         captureScne();
         showPDF();
+
+        String sql1 = "SELECT MAX(R_ID) FROM report";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql1);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                max = rs.getString(1);
+                System.out.println("Last : "+max);
+            }
+            Pattern pattern = Pattern.compile("\\d+");
+
+            // Use a Matcher to find the numeric part
+            if(max == null){
+                max = "R_000";
+            }
+            Matcher matcher = pattern.matcher(max);
+
+            if (matcher.find()) {
+                // Extract the numeric part as a string
+                String numericPart = matcher.group();
+
+                // Convert the numeric part to an integer if needed
+                numericId = Integer.parseInt(numericPart);
+
+                // Now you have the numeric ID as an integer
+                System.out.println("Numeric ID: " + numericId);
+            } else {
+                System.out.println("No numeric part found in the C_ID value.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(numericId == 0){
+            txtReportID.setText("R_001");
+        }else if(numericId < 9) {
+            txtReportID.setText("R_00" + (numericId + 1));
+        }else if(numericId < 99){
+            txtReportID.setText("R_0" + (numericId + 1));
+        }else{
+            txtReportID.setText("R_" + (numericId + 1));
+        }
+
     }
     @FXML
     void onGenerateButton(MouseEvent event) {
@@ -88,6 +137,8 @@ public class GenerateReports implements Initializable {
 
             System.out.println("Selected date as string: " + dateString);
 //=======================================================================================================================
+
+
             ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblSelld.getColumns();
             columns.clear();
 
