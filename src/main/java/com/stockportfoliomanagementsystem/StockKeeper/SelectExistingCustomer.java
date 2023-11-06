@@ -114,7 +114,7 @@ public class SelectExistingCustomer implements Initializable {
         columns.clear();
 
         // Define fixed column names
-        String[] columnNames = {"Customer Id","Customer Name","Address","Contact"};
+        String[] columnNames = {"Customer Id","Customer Name","Contact","Description"};
 
         double columnWidth = (tblCustomers.getPrefWidth()) / (columnNames.length)-1;
 

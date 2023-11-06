@@ -149,7 +149,6 @@ public class HRManagerController implements Initializable {
                 InputStream is = rs.getBinaryStream("Pic");
 
                 // Read the image data and save it to a file
-
                 if(is!=null) {
                     // Read the image data and save it to a file
                     OutputStream os = new FileOutputStream(new File("photo.jpg"));
