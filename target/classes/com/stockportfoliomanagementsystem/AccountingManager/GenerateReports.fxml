@@ -66,7 +66,7 @@
                   <String fx:value="shadow" />
                </styleClass>
                 </Pane>
-                <Button layoutX="732.0" layoutY="750.0" mnemonicParsing="false" onMouseClicked="#onBtnPDF" stylesheets="@../CSS/styles.css" text="Get PDF">
+                <Button layoutX="732.0" layoutY="750.0" mnemonicParsing="false" onMouseClicked="#onBtnPDF" prefHeight="30.0" prefWidth="66.0" stylesheets="@../CSS/styles.css" text="PDF">
                <styleClass>
                   <String fx:value="login-button" />
                   <String fx:value="shadow" />
