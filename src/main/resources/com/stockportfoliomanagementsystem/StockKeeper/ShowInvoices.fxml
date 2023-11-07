@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="705.0" prefWidth="1210.0" styleClass="anchorPane" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.StockKeeper.ShowInvoices">
+    <children>
+        <Pane layoutX="-2.0" layoutY="-7.0" prefHeight="667.0" prefWidth="280.0" style="-fx-background-color: #075E54;">
+            <children>
+                <Label layoutX="96.0" layoutY="20.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Book Nook" textAlignment="CENTER" textFill="#c0e8fb">
+                    <font>
+                        <Font name="Bookshelf Symbol 7" size="34.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="54.0" fitWidth="66.0" layoutX="22.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                    <image>
+                        <Image url="@../Images/logoIcon2.png" />
+                    </image>
+                </ImageView>
+            <Pane layoutX="12.0" layoutY="87.0" prefHeight="566.0" prefWidth="256.0" stylesheets="@../CSS/styles.css">
+               <children>
+                  <Pane layoutX="8.0" layoutY="91.0" prefHeight="344.0" prefWidth="240.0">
+                     <children>
+                        <Pane layoutY="54.0" onMouseClicked="#onBuyProduct" prefHeight="54.0" prefWidth="240.0" styleClass="selected-button" stylesheets="@../CSS/styles.css">
+                           <children>
+                              <SVGPath content="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM252 160c0 11 9 20 20 20h44v44c0 11 9 20 20 20s20-9 20-20V180h44c11 0 20-9 20-20s-9-20-20-20H356V96c0-11-9-20-20-20s-20 9-20 20v44H272c-11 0-20 9-20 20z" fill="#94ffeb" layoutX="-264.0" layoutY="-229.0" scaleX="0.05" scaleY="0.05" />
+                              <Label layoutX="52.0" layoutY="12.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Buy Products" textFill="#94ffeb">
+                                 <font>
+                                    <Font name="Calibri" size="27.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutY="108.0" onMouseClicked="#onSellProducts" prefHeight="54.0" prefWidth="240.0" styleClass="selected-button" stylesheets="@../CSS/styles.css">
+                           <children>
+                              <SVGPath content="M312 24V34.5c6.4 1.2 12.6 2.7 18.2 4.2c12.8 3.4 20.4 16.6 17 29.4s-16.6 20.4-29.4 17c-10.9-2.9-21.1-4.9-30.2-5c-7.3-.1-14.7 1.7-19.4 4.4c-2.1 1.3-3.1 2.4-3.5 3c-.3 .5-.7 1.2-.7 2.8c0 .3 0 .5 0 .6c.2 .2 .9 1.2 3.3 2.6c5.8 3.5 14.4 6.2 27.4 10.1l.9 .3c11.1 3.3 25.9 7.8 37.9 15.3c13.7 8.6 26.1 22.9 26.4 44.9c.3 22.5-11.4 38.9-26.7 48.5c-6.7 4.1-13.9 7-21.3 8.8V232c0 13.3-10.7 24-24 24s-24-10.7-24-24V220.6c-9.5-2.3-18.2-5.3-25.6-7.8c-2.1-.7-4.1-1.4-6-2c-12.6-4.2-19.4-17.8-15.2-30.4s17.8-19.4 30.4-15.2c2.6 .9 5 1.7 7.3 2.5c13.6 4.6 23.4 7.9 33.9 8.3c8 .3 15.1-1.6 19.2-4.1c1.9-1.2 2.8-2.2 3.2-2.9c.4-.6 .9-1.8 .8-4.1l0-.2c0-1 0-2.1-4-4.6c-5.7-3.6-14.3-6.4-27.1-10.3l-1.9-.6c-10.8-3.2-25-7.5-36.4-14.4c-13.5-8.1-26.5-22-26.6-44.1c-.1-22.9 12.9-38.6 27.7-47.4c6.4-3.8 13.3-6.4 20.2-8.2V24c0-13.3 10.7-24 24-24s24 10.7 24 24zM568.2 336.3c13.1 17.8 9.3 42.8-8.5 55.9L433.1 485.5c-23.4 17.2-51.6 26.5-80.7 26.5H192 32c-17.7 0-32-14.3-32-32V416c0-17.7 14.3-32 32-32H68.8l44.9-36c22.7-18.2 50.9-28 80-28H272h16 64c17.7 0 32 14.3 32 32s-14.3 32-32 32H288 272c-8.8 0-16 7.2-16 16s7.2 16 16 16H392.6l119.7-88.2c17.8-13.1 42.8-9.3 55.9 8.5zM193.6 384l0 0-.9 0c.3 0 .6 0 .9 0z" fill="#94ffeb" layoutX="-264.0" layoutY="-229.0" scaleX="0.05" scaleY="0.05" />
+                              <Label layoutX="52.0" layoutY="12.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Sell Products" textFill="#94ffeb">
+                                 <font>
+                                    <Font name="Calibri" size="27.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutY="162.0" onMouseClicked="#onUpdateProducts" prefHeight="54.0" prefWidth="240.0" styleClass="selected-button" stylesheets="@../CSS/styles.css">
+                           <children>
+                              <SVGPath content="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z" fill="#94ffeb" layoutX="-231.0" layoutY="-229.0" scaleX="0.05" scaleY="0.05" />
+                              <Label layoutX="52.0" layoutY="12.0" prefHeight="31.0" prefWidth="185.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Update Products" textFill="#94ffeb">
+                                 <font>
+                                    <Font name="Calibri" size="27.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutY="216.0" onMouseClicked="#onSupplierButton" prefHeight="54.0" prefWidth="240.0" styleClass="selected-button" stylesheets="@../CSS/styles.css">
+                           <children>
+                              <SVGPath content="M383.5 192c.3-5.3 .5-10.6 .5-16c0-51-15.9-96-40.2-127.6C319.5 16.9 288.2 0 256 0s-63.5 16.9-87.8 48.4C143.9 80 128 125 128 176c0 5.4 .2 10.7 .5 16H240V320H208c-7 0-13.7 1.5-19.7 4.2L68.2 192H96.5c-.3-5.3-.5-10.6-.5-16c0-64 22.2-121.2 57.1-159.3C62 49.3 18.6 122.6 4.2 173.6C1.5 183.1 9 192 18.9 192h6L165.2 346.3c-3.3 6.5-5.2 13.9-5.2 21.7v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V368c0-7.8-1.9-15.2-5.2-21.7L487.1 192h6c9.9 0 17.4-8.9 14.7-18.4C493.4 122.6 450 49.3 358.9 16.7C393.8 54.8 416 112.1 416 176c0 5.4-.2 10.7-.5 16h28.3L323.7 324.2c-6-2.7-12.7-4.2-19.7-4.2H272V192H383.5z" fill="#94ffeb" layoutX="-233.0" layoutY="-229.0" scaleX="0.05" scaleY="0.05" />
+                              <Label layoutX="52.0" layoutY="12.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Suppliers" textFill="#94ffeb">
+                                 <font>
+                                    <Font name="Calibri" size="27.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="14.0" layoutY="14.0" onMouseClicked="#onBackButton" prefHeight="31.0" prefWidth="29.0">
+                     <children>
+                        <SVGPath content="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" fill="#94ffeb" layoutX="-208.0" layoutY="-241.0" scaleX="0.05" scaleY="0.05" />
+                     </children>
+                     <styleClass>
+                        <String fx:value="selected-button" />
+                        <String fx:value="button_radius" />
+                     </styleClass>
+                  </Pane>
+               </children>
+               <styleClass>
+                  <String fx:value="container_" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </Pane>
+            </children>
+        </Pane>
+        <Pane layoutX="489.0" layoutY="31.0" prefHeight="3.0" prefWidth="700.0" styleClass="line-color" stylesheets="@../CSS/styles.css" />
+        <Label layoutX="296.0" layoutY="15.0" styleClass="shadow" stylesheets="@../CSS/styles.css" text="Manage Invoices" textFill="#94ffeb">
+            <font>
+                <Font name="Calibri" size="24.0" />
+            </font>
+        </Label>
+        <Pane layoutX="293.0" layoutY="129.0" prefHeight="428.0" prefWidth="892.0" styleClass="table_pane" stylesheets="@../CSS/styles.css">
+            <children>
+                <TableView fx:id="tblInvoices" layoutX="12.0" prefHeight="372.0" prefWidth="867.0" styleClass="table_properties" stylesheets="@../CSS/styles.css">
+                    <columns>
+                        <TableColumn prefWidth="75.0" text="User ID" />
+                        <TableColumn prefWidth="157.0" text="Username" />
+                        <TableColumn prefWidth="105.0" text="First Name" />
+                        <TableColumn prefWidth="111.0" text="Last Name" />
+                        <TableColumn prefWidth="122.0" text="NIC" />
+                        <TableColumn prefWidth="138.0" text="Position" />
+                        <TableColumn prefWidth="158.0" text="Contact Number" />
+                    </columns>
+                </TableView>
+                <Button layoutX="613.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#onOpenButton" prefHeight="31.0" prefWidth="121.0" style="-fx-background-color: #5E7AC7FF;" stylesheets="@../CSS/styles.css" text="Open">
+                    <styleClass>
+                        <String fx:value="login-button" />
+                        <String fx:value="shadow" />
+                    </styleClass>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Button layoutX="462.0" layoutY="382.0" mnemonicParsing="false" onMouseClicked="#onRefresh" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Refresh">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <styleClass>
+                        <String fx:value="shadow" />
+                        <String fx:value="login-button" />
+                        <String fx:value="yellow-button" />
+                    </styleClass>
+                </Button>
+            </children>
+        </Pane>
+        <Button layoutX="1051.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#onDeleteButton" prefHeight="25.0" prefWidth="121.0" stylesheets="@../CSS/styles.css" text="Delete">
+            <styleClass>
+                <String fx:value="shadow" />
+                <String fx:value="login-button" />
+                <String fx:value="red-button" />
+            </styleClass>
+            <font>
+                <Font size="14.0" />
+            </font></Button>
+    </children>
+</AnchorPane>

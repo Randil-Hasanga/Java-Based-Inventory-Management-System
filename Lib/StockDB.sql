@@ -2,7 +2,6 @@ CREATE DATABASE if not exists StockDB;
 
 USE StockDB;
 
-
 CREATE TABLE if not exists users
 (
 	User_Id VARCHAR(10) NOT NULL PRIMARY KEY,

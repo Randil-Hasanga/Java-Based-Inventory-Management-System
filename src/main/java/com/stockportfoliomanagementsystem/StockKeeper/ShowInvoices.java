@@ -1,4 +1,4 @@
-package com.stockportfoliomanagementsystem.AccountingManager;
+package com.stockportfoliomanagementsystem.StockKeeper;
 
 import com.stockportfoliomanagementsystem.MySqlCon;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,7 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
+import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,30 +28,62 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.awt.*;
 
-public class ManageReports implements Initializable {
+public class ShowInvoices implements Initializable {
+
     Connection conn = MySqlCon.MysqlMethod();
-    @FXML
-    private TableView<ObservableList<String>> tblReports;
     @FXML
     private Stage stage;
     private Scene scene;
     private Parent root;
+    @FXML
+    private TableView<ObservableList<String>> tblInvoices;
+    private InputStream pdfInputStream;
 
-    InputStream pdfInputStream;
+    @FXML
+    void onBackButton(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/StockKeeperDashboard.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+        }
+    }
+
+    @FXML
+    void onBuyProduct(MouseEvent event) throws IOException {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectSupplierType.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new IOException(e);
+        } catch (NullPointerException e) {
+        }
+    }
 
     @FXML
     void onDeleteButton(MouseEvent event) {
-        int selectedIndex = tblReports.getSelectionModel().getSelectedIndex();
+        int selectedIndex = tblInvoices.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            ObservableList<String> selectedRow = tblReports.getItems().get(selectedIndex);
+            ObservableList<String> selectedRow = tblInvoices.getItems().get(selectedIndex);
             String r_id = selectedRow.get(0);
 
-            tblReports.getItems().remove(selectedIndex);
+            tblInvoices.getItems().remove(selectedIndex);
 
-            String sql = "DELETE FROM report WHERE R_ID = ?";
+            String sql = "DELETE FROM PDF_invoices WHERE invoice_id = ?";
             try {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1,r_id);
@@ -65,13 +97,13 @@ public class ManageReports implements Initializable {
 
     @FXML
     void onOpenButton(MouseEvent event) {
-        int selectedIndex = tblReports.getSelectionModel().getSelectedIndex();
+        int selectedIndex = tblInvoices.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            ObservableList<String> selectedRow = tblReports.getItems().get(selectedIndex);
+            ObservableList<String> selectedRow = tblInvoices.getItems().get(selectedIndex);
             String r_id = selectedRow.get(0);
 
-            String sql = "SELECT pdf FROM report WHERE R_ID = ?";
+            String sql = "SELECT pdf FROM PDF_invoices WHERE invoice_id = ?";
             try {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1,r_id);
@@ -85,7 +117,6 @@ public class ManageReports implements Initializable {
                 throw new RuntimeException(e);
             }
         }
-
     }
 
     private void showPDF(InputStream pdfInputStream) {
@@ -105,26 +136,14 @@ public class ManageReports implements Initializable {
         }
     }
 
-    @FXML
-    void onRefresh(MouseEvent event) {
-        loadFromDB();
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        tblReports.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        loadFromDB();
-
-    }
-
     private void loadFromDB(){
-        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblReports.getColumns();
+        ObservableList<TableColumn<ObservableList<String>, ?>> columns = tblInvoices.getColumns();
         columns.clear();
 
         // Define fixed column names
-        String[] columnNames = {"Report ID","Date"};
+        String[] columnNames = {"Invoice ID", "Date", "Customer ID"};
 
-        double columnWidth = tblReports.getPrefWidth() / columnNames.length;
+        double columnWidth = tblInvoices.getPrefWidth() / columnNames.length;
 
         // Add the columns to the TableView with fixed names
         for (int i = 0; i < columnNames.length; i++) {
@@ -135,7 +154,7 @@ public class ManageReports implements Initializable {
             columns.add(column);
         }
 
-        String sql = "SELECT R_ID, Date_ FROM report";
+        String sql = "SELECT invoice_id, date_,C_ID  FROM PDF_invoices";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
@@ -149,47 +168,21 @@ public class ManageReports implements Initializable {
                 data.add(row);
             }
 
-            tblReports.setItems(data);
+            tblInvoices.setItems(data);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void onCustomers(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/AccountingManager/ShowCustomers.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setHeight(700);
-            stage.setWidth(1210);
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        } catch (IOException e) {
-        } catch (NullPointerException e) {
-        }
-    }
-    @FXML
-    void onStock(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/AccountingManager/ShowStock.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setHeight(700);
-            stage.setWidth(1210);
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        } catch (IOException e) {
-        } catch (NullPointerException e) {
-        }
+    void onRefresh(MouseEvent event) {
+        loadFromDB();
     }
 
     @FXML
-    void onSuppliers(MouseEvent event) {
+    void onSellProducts(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/AccountingManager/ShowSuppliers.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/SelectCustomerType.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setHeight(700);
             stage.setWidth(1210);
@@ -203,10 +196,26 @@ public class ManageReports implements Initializable {
     }
 
     @FXML
-    void onBackButton(MouseEvent event) throws IOException {
+    void onSupplierButton(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/AccountingManager/AccountingManagerDashboard.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/viewSuppliers.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setHeight(700);
+            stage.setWidth(1210);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+        } catch (NullPointerException e) {
+        }
+    }
+
+    @FXML
+    void onUpdateProducts(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/stockportfoliomanagementsystem/StockKeeper/ManageProducts.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setHeight(700);
             stage.setWidth(1210);
             scene = new Scene(root);
@@ -218,4 +227,10 @@ public class ManageReports implements Initializable {
         }
     }
 
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        tblInvoices.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        loadFromDB();
+    }
 }
