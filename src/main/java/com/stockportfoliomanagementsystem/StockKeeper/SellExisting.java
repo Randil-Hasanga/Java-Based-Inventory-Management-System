@@ -507,8 +507,8 @@ public class SellExisting implements Initializable {
 
                 System.out.println("DB updated");
             }
-            ObservableList<ObservableList<String>> data = tblCart.getItems();
-            data.clear();
+
+            table.clear();
 
             try {
                 // Load the FXML file for the new window
