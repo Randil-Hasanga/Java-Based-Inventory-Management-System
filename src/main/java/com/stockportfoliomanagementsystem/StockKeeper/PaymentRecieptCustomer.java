@@ -225,12 +225,17 @@ public class PaymentRecieptCustomer implements Initializable{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        String sql5= "DELETE FROM temp_invoice";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql5);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         txtTotal.setText(String.valueOf(Total));
-
-
-
-
     }
 
     private void captureScne() {
