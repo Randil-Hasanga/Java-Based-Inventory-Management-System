@@ -117,7 +117,7 @@ public class AccountingManagerController implements Initializable {
             newStage.setY(boundY);
 
             newStage.setResizable(false);
-            newStage.setTitle("Invoice");
+            newStage.setTitle("Reports");
 
             String relativePath = "/com/stockportfoliomanagementsystem/Images/logoIcon.png";
             InputStream iconStream = Main.class.getResourceAsStream(relativePath);

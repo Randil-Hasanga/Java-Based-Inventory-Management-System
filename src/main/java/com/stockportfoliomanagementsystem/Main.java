@@ -18,6 +18,8 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         sqlUpdates();
 
+
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Main.fxml"));
         stage.setHeight(700);
         stage.setWidth(1200);

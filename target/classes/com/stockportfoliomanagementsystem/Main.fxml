@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.MainController">
+<AnchorPane fx:id="aPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stockportfoliomanagementsystem.MainController">
    <children>
       <ImageView fitHeight="742.0" fitWidth="1234.0" layoutX="-18.0" layoutY="-24.0" pickOnBounds="true">
          <image>
@@ -25,7 +25,7 @@
             <GaussianBlur radius="6.29" />
          </effect>
       </ImageView>
-      <Pane layoutX="345.0" layoutY="157.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="389.0" prefWidth="782.0" stylesheets="@CSS/styles.css">
+      <Pane fx:id="loginPane" layoutX="345.0" layoutY="157.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="389.0" prefWidth="782.0" stylesheets="@CSS/styles.css">
          <children>
             <Label contentDisplay="CENTER" layoutX="355.0" layoutY="50.0" prefHeight="53.0" prefWidth="134.0" styleClass="shadow" stylesheets="@CSS/styles.css" text="Sign in">
                <font>
@@ -79,9 +79,10 @@
          <styleClass>
             <String fx:value="loginContainer" />
             <String fx:value="shadow" />
+            <String fx:value="fade-in-container" />
          </styleClass>
       </Pane>
-      <Label layoutX="345.0" layoutY="112.0" styleClass="shadow" stylesheets="@CSS/styles.css" text="INVENTORY MANAGEMENT SYSTEM">
+      <Label fx:id="lblIMS" layoutX="345.0" layoutY="112.0" styleClass="shadow" stylesheets="@CSS/styles.css" text="INVENTORY MANAGEMENT SYSTEM">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
