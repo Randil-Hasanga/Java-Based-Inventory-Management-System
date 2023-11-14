@@ -3,9 +3,12 @@ package com.stockportfoliomanagementsystem;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,19 +16,31 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainController {
+public class MainController implements Initializable {
 
     Connection conn = MySqlCon.MysqlMethod();
+    @FXML
+    private AnchorPane aPane;
+    @FXML
+    private Label lblIMS;
+
+    @FXML
+    private Pane loginPane;
     private static String DBUsername;
     private String DBPwd;
     private String position;
@@ -292,5 +307,32 @@ public class MainController {
                 invalidEmailAlert();
             }
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        animations();
+    }
+
+    private void animations(){
+        FadeTransition fd = new FadeTransition(Duration.seconds(1),loginPane);
+        fd.setFromValue(0.0);
+        fd.setToValue(1.0);
+        fd.play();
+
+        FadeTransition fd2 = new FadeTransition(Duration.seconds(1),lblIMS);
+        fd2.setFromValue(0.0);
+        fd2.setToValue(1.0);
+        fd2.play();
+
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), loginPane);
+        translateTransition.setFromY(-100);
+        translateTransition.setToY(0);
+        translateTransition.play();
+
+        TranslateTransition translateTransition2 = new TranslateTransition(Duration.seconds(1), lblIMS);
+        translateTransition2.setFromY(-100);
+        translateTransition2.setToY(0);
+        translateTransition2.play();
     }
 }
