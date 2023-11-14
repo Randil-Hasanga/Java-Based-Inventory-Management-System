@@ -1,4 +1,4 @@
-# Stock-Portfolio-Management-System
+# Java-Based-Stock-Portfolio-Management-System
 
 Installation guide_____
 
